@@ -1,5 +1,8 @@
 package com.itinordic.interop.util;
 
+import java.util.Objects;
+import java.util.logging.Logger;
+
 /**
  *
  * @author developer
@@ -33,6 +36,33 @@ public class Option {
     public void setCode(String code) {
         this.code = code;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.code);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Option other = (Option) obj;
+        if (!Objects.equals(this.code, other.code)) {
+            return false;
+        }
+        return true;
+    }
+   
+    
 
     @Override
     public String toString() {

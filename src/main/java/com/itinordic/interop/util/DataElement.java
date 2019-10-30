@@ -1,5 +1,7 @@
 package com.itinordic.interop.util;
 
+import java.util.Objects;
+
 /**
  *
  * @author Charles Chigoriwa
@@ -69,6 +71,31 @@ public class DataElement {
     public void setOptionSet(OptionSet optionSet) {
         this.optionSet = optionSet;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DataElement other = (DataElement) obj;
+        return Objects.equals(this.id, other.id);
+    }
+    
+    
+    
 
     @Override
     public String toString() {
