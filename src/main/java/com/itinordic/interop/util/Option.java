@@ -1,11 +1,10 @@
 package com.itinordic.interop.util;
 
 import java.util.Objects;
-import java.util.logging.Logger;
 
 /**
  *
- * @author developer
+ * @author Charles Chigoriwa
  */
 public class Option {
     
@@ -56,10 +55,7 @@ public class Option {
             return false;
         }
         final Option other = (Option) obj;
-        if (!Objects.equals(this.code, other.code)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.code, other.code);
     }
    
     

@@ -16,27 +16,28 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Charles Chigoriwa
  */
-public class NhisRestUtility {
-
-    public static void main(String[] args) {
-
+public class NhisDataSetRestUtility {
+    
+    
+    
+    public static DataSet getDataSet(){        
         String uri = "https://dev.itin.africa/nhis/api/29/dataSets/G6yc7dpLflo?fields=id,name,code,dataSetElements[dataElement[id,name,code,categoryCombo[id,categories[id,name,code],categoryOptionCombos[id,name,code]]]]";
-
         RestTemplate restTemplate = new RestTemplate();
-
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setBasicAuth("cchigoriwa", "Dhis123#");
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-
         ResponseEntity<DataSet> result = restTemplate.exchange(uri, HttpMethod.GET, entity, DataSet.class);
+        return result.getBody();
+    }
 
-        System.out.println(result);
+    public static void main(String[] args) {
+
+        DataSet dataSet=getDataSet();
 
         try {
             try (PrintWriter printWriter = new PrintWriter(new File("output/T9_DataSet_Elements_With_Category_Options.csv"))) {
-                DataSet dataSet = result.getBody();
-                if (dataSet != null) {
+              if (dataSet != null) {
                     printWriter.print("data_element_id,");
                     printWriter.print("data_element_code,");
                     printWriter.print("data_element_name,");
@@ -74,22 +75,6 @@ public class NhisRestUtility {
             System.out.println(ex);
         }
 
-    }
-
-    public static void main2(String[] args) {
-
-        String uri = "https://dev.itin.africa/nhis/api/29/dataSets/G6yc7dpLflo?fields=id,name,code,dataSetElements[dataElement[id,name,code,categoryCombo[id,categories[id,name,code],categoryOptionCombos[id,name,code]]]]";
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.setBasicAuth("cchigoriwa", "Dhis123#");
-        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-
-        ResponseEntity<DataSet> result = restTemplate.exchange(uri, HttpMethod.GET, entity, DataSet.class);
-
-        System.out.println(result);
     }
 
 }
