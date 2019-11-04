@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class ProgramIndicator implements Serializable{
     
+    private String id;
     private String program;
     private String aggregationType;
     private String analyticsType;
@@ -16,6 +17,7 @@ public class ProgramIndicator implements Serializable{
     private String shortName;
     private String code;
     private String name;
+    private String dimensionItemType;
 
     public String getProgram() {
         return program;
@@ -79,6 +81,29 @@ public class ProgramIndicator implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDimensionItemType() {
+        return dimensionItemType;
+    }
+
+    public void setDimensionItemType(String dimensionItemType) {
+        this.dimensionItemType = dimensionItemType;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return "ProgramIndicator{" + "program=" + program + ", aggregationType=" + aggregationType + ", analyticsType=" + analyticsType + ", expression=" + expression + ", filter=" + filter + ", shortName=" + shortName + ", code=" + code + ", name=" + name + '}';
     }
     
     

@@ -1,7 +1,8 @@
 package com.itinordic.interop.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import org.springframework.http.HttpEntity;
@@ -34,7 +35,7 @@ public class ImmisIndicatorRestUtility {
     public static String _5_PLUS_D = "qQ0nS3DX1vA";
     public static String _5_PLUS_T = "X16NoX8ZPp3";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JsonProcessingException {
 
         List<ProgramIndicator> programIndicators = getProgramIndicators();
 
@@ -45,8 +46,9 @@ public class ImmisIndicatorRestUtility {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setBasicAuth("cchigoriwa", "Dhis123#");
             HttpEntity<ProgramIndicator> entity = new HttpEntity<>(programIndicator, headers);
-            ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+            ResponseEntity<String> result = restTemplate.postForEntity(uri, entity, String.class);
             System.out.println(result);
+            break;
         }
 
     }
@@ -76,6 +78,7 @@ public class ImmisIndicatorRestUtility {
 
     public static ProgramIndicator getProgramIndicator(DataElement dataElement, CategoryOptionCombo categoryOptionCombo, Set<Option> options) {
         ProgramIndicator programIndicator = new ProgramIndicator();
+        programIndicator.setId(CodeGenerator.generateUid());
         programIndicator.setProgram("SXNeRfGsKc");
         String name = getIndicatorName(dataElement, categoryOptionCombo);
         programIndicator.setName(name);
@@ -83,8 +86,10 @@ public class ImmisIndicatorRestUtility {
         programIndicator.setExpression("V{event_count}");
         programIndicator.setFilter(getFilter(dataElement, categoryOptionCombo, options));
         programIndicator.setCode(dataElement.getId() + categoryOptionCombo.getId());
-        programIndicator.setAggregationType("Count");
-        programIndicator.setAnalyticsType("Event");
+        programIndicator.setAggregationType("COUNT");
+        programIndicator.setAnalyticsType("EVENT");
+        programIndicator.setDimensionItemType("PROGRAM_INDICATOR");
+        
         return programIndicator;
     }
 
