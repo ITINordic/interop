@@ -39,10 +39,9 @@ public class ImmisIndicatorRestUtility {
         List<ProgramIndicator> programIndicators = getProgramIndicators();
 
         for (ProgramIndicator programIndicator : programIndicators) {
-            String uri = "https://dev.itin.africa/immis/api/programIndicators";
+            String uri = "https://dev.itin.africa/immis/api/programIndicators.json?strategy=CREATE";
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
-            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setBasicAuth("cchigoriwa", "Dhis123#");
             HttpEntity<ProgramIndicator> entity = new HttpEntity<>(programIndicator, headers);

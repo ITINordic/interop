@@ -11,9 +11,8 @@ import java.util.Map;
  * @author Charles Chigoriwa
  */
 public class MappingRestUtility {
-    
-    
-      public static MappingResult getMappingResult() {
+
+    public static MappingResult getMappingResult() {
         DataSet dataSet = NhisDataSetRestUtility.getDataSet();
         OptionSet optionSet = ImmisOptionSetRestUtility.getOptionSet();
 
@@ -22,7 +21,7 @@ public class MappingRestUtility {
 
         MappingResult mappingResult = new MappingResult();
         mappingResult.setInputDataSet(dataSet);
-        
+
         for (DataSetElement dataSetElement : dataSet.getDataSetElements()) {
             DataElement dataElement = dataSetElement.getDataElement();
             String mappingName = dataElement.getName().split("-")[1].trim().toLowerCase().replaceAll("\\W+|_", "");
@@ -30,7 +29,15 @@ public class MappingRestUtility {
         }
 
         for (Option option : optionSet.getOptions()) {
-            String mappingName = option.getName().substring(option.getName().indexOf(" ")).trim().toLowerCase().replaceAll("\\W+|_", "");
+            String optionCode = option.getCode();
+            String optionName=option.getName().trim();
+            String mappingName;
+            if (optionName.startsWith(optionCode)) {
+                mappingName = optionName.substring(optionName.indexOf(" ")).trim().toLowerCase().replaceAll("\\W+|_", "");
+            } else {
+                mappingName = optionName;
+            }
+
             optionMap.put(mappingName, option);
         }
 
@@ -49,13 +56,13 @@ public class MappingRestUtility {
                 mappingResult.addToUnmapped(dataElement);
             }
         }
-        
+
         return mappingResult;
 
     }
-      
-      protected static void printMappingResult(MappingResult mappingResult){
-            try {
+
+    protected static void printMappingResult(MappingResult mappingResult) {
+        try {
             try (PrintWriter printWriter = new PrintWriter(new File("output/Mapped_DataElement_Option.csv"))) {
 
                 printWriter.print("data_element_id,");
@@ -96,14 +103,11 @@ public class MappingRestUtility {
         } catch (FileNotFoundException ex) {
             System.out.println(ex);
         }
-      }
-
-  
-    
-    public static void main(String[] args) {
-        MappingResult mappingResult=getMappingResult();
-        printMappingResult(mappingResult);
     }
 
+    public static void main(String[] args) {
+        MappingResult mappingResult = getMappingResult();
+        printMappingResult(mappingResult);
+    }
 
 }
