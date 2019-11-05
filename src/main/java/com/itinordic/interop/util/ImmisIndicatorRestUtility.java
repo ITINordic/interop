@@ -43,6 +43,8 @@ public class ImmisIndicatorRestUtility {
 
     public static void saveIndicators() {
         List<ProgramIndicator> programIndicators = getProgramIndicators();
+        
+        System.out.println("ProgramIndicators "+programIndicators.size());
 
         for (ProgramIndicator programIndicator : programIndicators) {
             try{
