@@ -2,10 +2,12 @@ package com.itinordic.interop.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -34,7 +36,7 @@ public class ImmisIndicatorRestUtility {
     public static String _5_PLUS_T = "X16NoX8ZPp3";
 
     public static void main(String[] args) throws JsonProcessingException {
-          saveIndicators();        
+        saveIndicators();
     }
 
     public static void saveIndicators() {
@@ -53,7 +55,29 @@ public class ImmisIndicatorRestUtility {
 
     }
     
-    protected static void saveSampleTestIndicator(){
+    public static ProgramIndicator getIndicatorByName(String name){
+        String uri = "https://dev.itin.africa/immis/api/programIndicators?paging=false&filter=name:eq:"+name;
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setBasicAuth("cchigoriwa", "Dhis123#");
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<ProgramIndicator> result = restTemplate.exchange(uri, HttpMethod.GET, entity, ProgramIndicator.class);
+        return result.getBody();
+    }
+    
+    public static ProgramIndicator getIndicatorByCode(String code){
+        String uri = "https://dev.itin.africa/immis/api/programIndicators?paging=false&filter=code:eq:"+code;
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setBasicAuth("cchigoriwa", "Dhis123#");
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<ProgramIndicator> result = restTemplate.exchange(uri, HttpMethod.GET, entity, ProgramIndicator.class);
+        return result.getBody();
+    }
+
+    protected static void saveSampleTestIndicator() {
         ProgramIndicator programIndicator = new ProgramIndicator();
         String id = CodeGenerator.generateUid();
         programIndicator.setId(id);
@@ -75,6 +99,7 @@ public class ImmisIndicatorRestUtility {
     }
 
     public static List<ProgramIndicator> getProgramIndicators() {
+        Program program = ImmisProgramRestUtility.getProgram();
         List<ProgramIndicator> programIndicators = new ArrayList<>();
         MappingResult mappingResult = MappingRestUtility.getMappingResult();
         DataSet dataSet = mappingResult.getInputDataSet();
@@ -87,7 +112,7 @@ public class ImmisIndicatorRestUtility {
                     List<CategoryOptionCombo> categoryOptionCombos = categoryCombo.getCategoryOptionCombos();
                     if (categoryOptionCombos != null && !categoryOptionCombos.isEmpty()) {
                         for (CategoryOptionCombo categoryOptionCombo : categoryOptionCombos) {
-                            programIndicators.add(getProgramIndicator(dataElement, categoryOptionCombo, options));
+                            programIndicators.add(getProgramIndicator(dataElement, categoryOptionCombo, options, program));
                         }
                     }
 
@@ -97,11 +122,11 @@ public class ImmisIndicatorRestUtility {
         return programIndicators;
     }
 
-    public static ProgramIndicator getProgramIndicator(DataElement dataElement, CategoryOptionCombo categoryOptionCombo, Set<Option> options) {
+    public static ProgramIndicator getProgramIndicator(DataElement dataElement, CategoryOptionCombo categoryOptionCombo, Set<Option> options, Program program) {
         ProgramIndicator programIndicator = new ProgramIndicator();
         String id = CodeGenerator.generateUid();
         programIndicator.setId(id);
-        programIndicator.setProgram(ImmisProgramRestUtility.getProgram());
+        programIndicator.setProgram(program);
         String name = getIndicatorName(dataElement, categoryOptionCombo);
         programIndicator.setName(name);
         programIndicator.setShortName(name.replaceAll("year", "yr"));
@@ -166,29 +191,29 @@ public class ImmisIndicatorRestUtility {
         if (categoryOptionComboId.equals(DEFAULT)) {
             suffix = "default";
         } else if (categoryOptionComboId.equals(UNDER_1_A)) {
-            suffix = "Under 1 year With A";
+            suffix = "under 1 year with A";
         } else if (categoryOptionComboId.equals(UNDER_1_C)) {
-            suffix = "Under 1 year With C";
+            suffix = "under 1 year with C";
         } else if (categoryOptionComboId.equals(UNDER_1_D)) {
-            suffix = "Under 1 year With D";
+            suffix = "under 1 year with D";
         } else if (categoryOptionComboId.equals(UNDER_1_T)) {
-            suffix = "Under 1 year With T";
+            suffix = "under 1 year with T";
         } else if (categoryOptionComboId.equals(_1_TO_4_A)) {
-            suffix = "1 to 4 years With A";
+            suffix = "1 to 4 years with A";
         } else if (categoryOptionComboId.equals(_1_TO_4_C)) {
-            suffix = "1 to 4 years With C";
+            suffix = "1 to 4 years with C";
         } else if (categoryOptionComboId.equals(_1_TO_4_D)) {
-            suffix = "1 to 4 years With D";
+            suffix = "1 to 4 years with D";
         } else if (categoryOptionComboId.equals(_1_TO_4_T)) {
-            suffix = "1 to 4 years With T";
+            suffix = "1 to 4 years with T";
         } else if (categoryOptionComboId.equals(_5_PLUS_A)) {
-            suffix = "5 plus years With A";
+            suffix = "5 plus years with A";
         } else if (categoryOptionComboId.equals(_5_PLUS_C)) {
-            suffix = "5 plus years With C";
+            suffix = "5 plus years with C";
         } else if (categoryOptionComboId.equals(_5_PLUS_D)) {
-            suffix = "5 plus years With D";
+            suffix = "5 plus years with D";
         } else if (categoryOptionComboId.equals(_5_PLUS_T)) {
-            suffix = "5 plus years With T";
+            suffix = "5 plus years with T";
         }
         return name + " " + suffix;
     }
