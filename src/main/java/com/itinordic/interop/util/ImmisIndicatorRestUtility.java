@@ -8,8 +8,10 @@ import java.util.Set;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -43,6 +45,7 @@ public class ImmisIndicatorRestUtility {
         List<ProgramIndicator> programIndicators = getProgramIndicators();
 
         for (ProgramIndicator programIndicator : programIndicators) {
+            try{
             String uri = "https://dev.itin.africa/immis/api/programIndicators.json?strategy=CREATE";
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
@@ -51,6 +54,13 @@ public class ImmisIndicatorRestUtility {
             HttpEntity<ProgramIndicator> entity = new HttpEntity<>(programIndicator, headers);
             ResponseEntity<String> result = restTemplate.postForEntity(uri, entity, String.class);
             System.out.println(result);
+            }catch(HttpClientErrorException ex){
+                if(ex.getStatusCode().equals(HttpStatus.CONFLICT)){
+                    System.out.println("Conflict "+programIndicator);
+                }else{
+                    throw ex;
+                }
+            }
         }
 
     }
@@ -62,8 +72,13 @@ public class ImmisIndicatorRestUtility {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setBasicAuth("cchigoriwa", "Dhis123#");
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<ProgramIndicator> result = restTemplate.exchange(uri, HttpMethod.GET, entity, ProgramIndicator.class);
-        return result.getBody();
+        ResponseEntity<ProgramIndicatorList> result = restTemplate.exchange(uri, HttpMethod.GET, entity, ProgramIndicatorList.class);
+        ProgramIndicatorList programIndicatorList= result.getBody();
+        if(programIndicatorList!=null && programIndicatorList.getProgramIndicators()!=null && !programIndicatorList.getProgramIndicators().isEmpty()){
+            return programIndicatorList.getProgramIndicators().get(0);
+        }else{
+            return null;
+        }
     }
     
     public static ProgramIndicator getIndicatorByCode(String code){
@@ -73,8 +88,13 @@ public class ImmisIndicatorRestUtility {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setBasicAuth("cchigoriwa", "Dhis123#");
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<ProgramIndicator> result = restTemplate.exchange(uri, HttpMethod.GET, entity, ProgramIndicator.class);
-        return result.getBody();
+        ResponseEntity<ProgramIndicatorList> result = restTemplate.exchange(uri, HttpMethod.GET, entity, ProgramIndicatorList.class);
+        ProgramIndicatorList programIndicatorList= result.getBody();
+        if(programIndicatorList!=null && programIndicatorList.getProgramIndicators()!=null && !programIndicatorList.getProgramIndicators().isEmpty()){
+            return programIndicatorList.getProgramIndicators().get(0);
+        }else{
+            return null;
+        }
     }
 
     protected static void saveSampleTestIndicator() {

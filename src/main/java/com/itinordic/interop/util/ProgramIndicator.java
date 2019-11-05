@@ -90,13 +90,14 @@ public class ProgramIndicator implements Serializable{
     public void setId(String id) {
         this.id = id;
     }
-    
-    
 
     @Override
     public String toString() {
-        return "ProgramIndicator{" + "program=" + program + ", aggregationType=" + aggregationType + ", analyticsType=" + analyticsType + ", expression=" + expression + ", filter=" + filter + ", shortName=" + shortName + ", code=" + code + ", name=" + name + '}';
+        return "ProgramIndicator{" + "id=" + id + ", aggregationType=" + aggregationType + ", analyticsType=" + analyticsType + ", expression=" + expression + ", filter=" + filter + ", shortName=" + shortName + ", code=" + code + ", name=" + name + '}';
     }
+    
+    
+
     
     
     
