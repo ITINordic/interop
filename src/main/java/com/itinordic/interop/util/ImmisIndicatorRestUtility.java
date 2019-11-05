@@ -34,8 +34,7 @@ public class ImmisIndicatorRestUtility {
     public static String _5_PLUS_T = "X16NoX8ZPp3";
 
     public static void main(String[] args) throws JsonProcessingException {
-
-        
+          saveIndicators();        
     }
 
     public static void saveIndicators() {
@@ -105,7 +104,7 @@ public class ImmisIndicatorRestUtility {
         programIndicator.setProgram(ImmisProgramRestUtility.getProgram());
         String name = getIndicatorName(dataElement, categoryOptionCombo);
         programIndicator.setName(name);
-        programIndicator.setShortName(name.replaceAll("year", "y"));
+        programIndicator.setShortName(name.replaceAll("year", "yr"));
         programIndicator.setExpression("V{event_count}");
         programIndicator.setFilter(getFilter(dataElement, categoryOptionCombo, options));
         programIndicator.setCode(dataElement.getId() + categoryOptionCombo.getId());
