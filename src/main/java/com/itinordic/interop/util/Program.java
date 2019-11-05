@@ -11,6 +11,7 @@ public class Program {
     private String id;
     private String code;
     private String name;
+    private String shortName;
     private List<ProgramStage> programStages;
 
     public String getId() {
@@ -37,6 +38,16 @@ public class Program {
         this.name = name;
     }
 
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+    
+    
+
     public List<ProgramStage> getProgramStages() {
         return programStages;
     }
@@ -47,8 +58,9 @@ public class Program {
 
     @Override
     public String toString() {
-        return "Program{" + "id=" + id + ", code=" + code + ", name=" + name + ", programStages=" + programStages + '}';
+        return "Program{" + "id=" + id + ", code=" + code + ", name=" + name + ", shortName=" + shortName + ", programStages=" + programStages + '}';
     }
+
     
     
     

@@ -1,13 +1,11 @@
 package com.itinordic.interop.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -37,6 +35,10 @@ public class ImmisIndicatorRestUtility {
 
     public static void main(String[] args) throws JsonProcessingException {
 
+        
+    }
+
+    public static void saveIndicators() {
         List<ProgramIndicator> programIndicators = getProgramIndicators();
 
         for (ProgramIndicator programIndicator : programIndicators) {
@@ -48,9 +50,29 @@ public class ImmisIndicatorRestUtility {
             HttpEntity<ProgramIndicator> entity = new HttpEntity<>(programIndicator, headers);
             ResponseEntity<String> result = restTemplate.postForEntity(uri, entity, String.class);
             System.out.println(result);
-            break;
         }
 
+    }
+    
+    protected static void saveSampleTestIndicator(){
+        ProgramIndicator programIndicator = new ProgramIndicator();
+        String id = CodeGenerator.generateUid();
+        programIndicator.setId(id);
+        programIndicator.setProgram(ImmisProgramRestUtility.getProgram());
+        programIndicator.setName("To be removed for testing");
+        programIndicator.setShortName("To be removed for testing");
+        programIndicator.setExpression("V{event_count}");
+        programIndicator.setAggregationType("COUNT");
+        programIndicator.setAnalyticsType("EVENT");
+
+        String uri = "https://dev.itin.africa/immis/api/programIndicators.json?strategy=CREATE";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBasicAuth("cchigoriwa", "Dhis123#");
+        HttpEntity<ProgramIndicator> entity = new HttpEntity<>(programIndicator, headers);
+        ResponseEntity<String> result = restTemplate.postForEntity(uri, entity, String.class);
+        System.out.println(result);
     }
 
     public static List<ProgramIndicator> getProgramIndicators() {
@@ -78,8 +100,9 @@ public class ImmisIndicatorRestUtility {
 
     public static ProgramIndicator getProgramIndicator(DataElement dataElement, CategoryOptionCombo categoryOptionCombo, Set<Option> options) {
         ProgramIndicator programIndicator = new ProgramIndicator();
-        programIndicator.setId(CodeGenerator.generateUid());
-        programIndicator.setProgram("SXNeRfGsKc");
+        String id = CodeGenerator.generateUid();
+        programIndicator.setId(id);
+        programIndicator.setProgram(ImmisProgramRestUtility.getProgram());
         String name = getIndicatorName(dataElement, categoryOptionCombo);
         programIndicator.setName(name);
         programIndicator.setShortName(name.replaceAll("year", "y"));
@@ -88,8 +111,6 @@ public class ImmisIndicatorRestUtility {
         programIndicator.setCode(dataElement.getId() + categoryOptionCombo.getId());
         programIndicator.setAggregationType("COUNT");
         programIndicator.setAnalyticsType("EVENT");
-        programIndicator.setDimensionItemType("PROGRAM_INDICATOR");
-        
         return programIndicator;
     }
 
@@ -99,11 +120,10 @@ public class ImmisIndicatorRestUtility {
         filter += "(";
         int i = 0;
         for (Option option : options) {
-            if (i > 0) {
+            if (i++ > 0) {
                 filter += " or ";
             }
             filter += "#{HWvCCLjpiWG.PvciLByskeE} == '" + option.getCode() + "'";
-            i++;
         }
         filter += ")";
 

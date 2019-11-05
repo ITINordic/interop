@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class ProgramIndicator implements Serializable{
     
     private String id;
-    private String program;
+    private Program program=new Program();
     private String aggregationType;
     private String analyticsType;
     private String expression;
@@ -17,15 +17,15 @@ public class ProgramIndicator implements Serializable{
     private String shortName;
     private String code;
     private String name;
-    private String dimensionItemType;
 
-    public String getProgram() {
+    public Program getProgram() {
         return program;
     }
 
-    public void setProgram(String program) {
+    public void setProgram(Program program) {
         this.program = program;
     }
+
 
     public String getAggregationType() {
         return aggregationType;
@@ -89,14 +89,6 @@ public class ProgramIndicator implements Serializable{
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getDimensionItemType() {
-        return dimensionItemType;
-    }
-
-    public void setDimensionItemType(String dimensionItemType) {
-        this.dimensionItemType = dimensionItemType;
     }
     
     
