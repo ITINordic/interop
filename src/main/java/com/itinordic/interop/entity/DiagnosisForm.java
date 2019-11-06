@@ -16,7 +16,7 @@ import javax.persistence.Temporal;
  * @author Charles Chigoriwa
  */
 @Entity
-public class DiagnosisForm implements Serializable {
+public class DiagnosisForm extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

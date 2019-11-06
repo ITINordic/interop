@@ -1,15 +1,19 @@
 package com.itinordic.interop.controller;
 
 import com.itinordic.interop.criteria.DiagnosisOrgnUnitSearchDto;
+import com.itinordic.interop.entity.DiagnosisOption;
 import com.itinordic.interop.entity.DiagnosisOrganizationUnit;
 import com.itinordic.interop.repo.DiagnosisOrganizationUnitRepository;
 import com.itinordic.interop.service.DiagnosisOrgnUnitService;
+import com.itinordic.interop.util.ImmisOrganizationUnitRestUtility;
+import com.itinordic.interop.util.OrganizationUnit;
 import com.itinordic.interop.util.PageUtil;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.Principal;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -39,11 +43,22 @@ public class DiagnosisOrgnUnitController {
         PageUtil.injectPageAspects(model, citiesPage);
         return "diagnosisOrgUnit/diagnosisOrgnUnits";
     }
-    
-    
+
     @RequestMapping(value = "/admin/diagnosis/organizationUnits/sync", method = RequestMethod.POST)
     public String sync(Principal principal, Model model) throws IOException {
-       return "redirect:/admin/diagnosis/organizationUnits";
+        List<OrganizationUnit> organizationUnits = ImmisOrganizationUnitRestUtility.getOrganizationUnits();
+        for (OrganizationUnit organizationUnit : organizationUnits) {
+            DiagnosisOrganizationUnit diagnosisOrganizationUnit = diagnosisOrganizationUnitRepository.findByDhisId(organizationUnit.getId());
+            if (diagnosisOrganizationUnit == null) {
+                diagnosisOrganizationUnit = new DiagnosisOrganizationUnit();
+                diagnosisOrganizationUnit.setDhisCode(organizationUnit.getCode());
+                diagnosisOrganizationUnit.setDhisName(organizationUnit.getName());
+                diagnosisOrganizationUnit.setDhisId(organizationUnit.getId());
+                diagnosisOrganizationUnitRepository.save(diagnosisOrganizationUnit);
+            }
+        }
+
+        return "redirect:/admin/diagnosis/organizationUnits";
 
     }
 

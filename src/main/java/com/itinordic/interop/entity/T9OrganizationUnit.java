@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
  * @author Charles Chigoriwa
  */
 @Entity
-public class T9OrganizationUnit implements Serializable {
+public class T9OrganizationUnit extends BaseEntity implements Serializable {
 
    
     private static final long serialVersionUID = 1L;

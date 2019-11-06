@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
  * @author Charles Chigoriwa
  */
 @Entity
-public class T9DataElement implements Serializable {
+public class T9DataElement extends BaseEntity implements Serializable {
 
    
     private static final long serialVersionUID = 1L;

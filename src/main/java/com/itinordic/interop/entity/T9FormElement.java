@@ -17,7 +17,7 @@ import javax.persistence.UniqueConstraint;
 @Table(uniqueConstraints = {
     @UniqueConstraint(columnNames = {"data_element_id", "categoryOptionComboId"})
 })
-public class T9FormElement implements Serializable {
+public class T9FormElement extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

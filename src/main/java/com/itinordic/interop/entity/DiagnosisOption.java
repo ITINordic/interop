@@ -12,7 +12,7 @@ import javax.persistence.Id;
  * @author Charles Chigoriwa
  */
 @Entity
-public class DiagnosisOption implements Serializable {
+public class DiagnosisOption extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

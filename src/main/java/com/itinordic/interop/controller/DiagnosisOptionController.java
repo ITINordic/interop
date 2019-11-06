@@ -4,12 +4,16 @@ import com.itinordic.interop.criteria.DiagnosisOptionSearchDto;
 import com.itinordic.interop.entity.DiagnosisOption;
 import com.itinordic.interop.repo.DiagnosisOptionRepository;
 import com.itinordic.interop.service.DiagnosisOptionService;
+import com.itinordic.interop.util.ImmisOptionSetRestUtility;
+import com.itinordic.interop.util.Option;
+import com.itinordic.interop.util.OptionSet;
 import com.itinordic.interop.util.PageUtil;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.Principal;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -42,8 +46,20 @@ public class DiagnosisOptionController {
     
     
     @RequestMapping(value = "/admin/diagnosis/options/sync", method = RequestMethod.POST)
-    public String sync(Principal principal, Model model) throws IOException {
-       return "redirect:/admin/diagnosis/options";
+    public synchronized String sync(Principal principal, Model model) throws IOException {
+        OptionSet optionSet=ImmisOptionSetRestUtility.getOptionSet();
+        List<Option> options=optionSet.getOptions();
+        for(Option option:options){
+            DiagnosisOption diagnosisOption=diagnosisOptionRepository.findByDhisId(option.getId());
+            if(diagnosisOption==null){
+                diagnosisOption=new DiagnosisOption();
+                diagnosisOption.setDhisCode(option.getCode());
+                diagnosisOption.setDhisName(option.getName());
+                diagnosisOption.setDhisId(option.getId());
+                diagnosisOptionRepository.save(diagnosisOption);
+            }
+        }
+        return "redirect:/admin/diagnosis/options";
 
     }
 
