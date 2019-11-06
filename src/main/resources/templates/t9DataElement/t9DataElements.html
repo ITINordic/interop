@@ -7,18 +7,26 @@
         <link th:include="imports :: css" th:remove="tag" />
     </head>
     <body>
-        
-         <div th:include="topNav :: topNav"></div>
-       
+
+        <div th:include="topNav :: topNav"></div>
+
         <div class="container">
 
 
             <h2>T9 Data Elements</h2>
 
             <div style="margin-bottom: 10px;">
-                
+
                 <form th:action="@{/admin/t9/dataElements/sync}" method="post">
                     <button class="btn btn-primary"  type="submit">Sync Data Elements</button>
+                </form>
+                
+                <form th:action="@{/admin/t9/dataElements/autoBindOptions}" method="post">
+                    <button class="btn btn-success"  type="submit">Auto bind options</button>
+                </form>
+                
+                <form th:action="@{/admin/t9/dataElements/bindOptionsFromFile}" method="post">
+                    <button class="btn btn-success"  type="submit">Bind options from File</button>
                 </form>
             </div>
 
@@ -27,16 +35,18 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>ID</th> 
                             <th>Name</th>
                             <th>Code</th>
-                            <th>ID</th> 
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="dataElement: ${dataElements}">
-                            <td th:text="${dataElement.dhisName}"></td>
-                            <td th:text="${dataElement.dhisCode}"></td>
                             <td th:text="${dataElement.dhisId}"></td>
+                            <td th:text="${dataElement.dhisCode}"></td>
+                            <td th:text="${dataElement.dhisName}"></td>
+                            <td th:text="${dataElement.optionsAsCodes}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -45,6 +55,6 @@
             </div>
 
         </div>
-          <script th:include="imports :: javascript" th:remove="tag"></script>
+        <script th:include="imports :: javascript" th:remove="tag"></script>
     </body>
 </html>

@@ -1,5 +1,6 @@
 package com.itinordic.interop.entity;
 
+import com.itinordic.interop.util.GeneralUtility;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -83,7 +84,18 @@ public class T9DataElement extends BaseEntity implements Serializable {
         this.options = options;
     }
     
-    
+    public String getOptionsAsCodes(){
+        String string="";
+        if(!GeneralUtility.isEmpty(options)){
+            for(DiagnosisOption option:options){
+                if(!string.isEmpty()){
+                    string+=", ";
+                }
+                string+=option.getDhisCode();
+            }
+        }
+        return string;
+    }
     
     
 

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head th:inline="text">
+        <title>Upload Cities | Endlini</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link th:include="components/imports :: lowerCss" th:remove="tag" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2> Upload Cities</h2>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div class="col-md-8">
+                    <strong>Upload your csv file</strong> <br />
+                    <span>You can upload a csv file (File size limit is 4 MB).</span>
+
+                    <div class="row client-errors-container" style="color: red; display: none;">
+                        <div class="large-6 columns">
+                            <ul class="client-errors">
+                                <li></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div th:if="${error!=null}" data-alert="" class="alert-box alert radius">
+                        <span th:text="${error}"></span>
+                        <a href="#" class="close">&times;</a>
+                    </div>
+
+                    <form method="POST" enctype="multipart/form-data">
+
+                        <input type="file" accept=".xlsx"  class="cv-input" name="csvInput" />
+
+
+                        <div>
+                            <hr />
+                            <button type="submit" class="btn btn-primary" style="margin-right: 30px;"><strong>Save</strong></button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+        <script th:include="components/imports :: javascript" th:remove="tag"></script>
+
+
+
+
+    </body>
+</html>
