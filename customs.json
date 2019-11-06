@@ -1,0 +1,25 @@
+{
+    "elements": {},
+    "attributes": {
+        "th:if": {},
+        "th:text": {},
+        "th:include": {},
+        "th:unless": {},
+        "th:src": {
+            "context": "script"
+        },
+        "th:action": {
+            "context": "form"
+        },
+        "th:href": {
+            "context": "a"
+        },
+        "th:each": {},
+        "th:inline": {
+            "context": "head"
+        },
+        "th:fragment": {
+            "context": "div"
+        }
+    }
+}

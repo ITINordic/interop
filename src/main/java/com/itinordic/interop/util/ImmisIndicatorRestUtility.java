@@ -151,7 +151,7 @@ public class ImmisIndicatorRestUtility {
         programIndicator.setProgram(program);
         String name = getIndicatorName(dataElement, categoryOptionCombo);
         programIndicator.setName(name);
-        programIndicator.setShortName(GeneralUtility.getSubstring(name.replaceAll("year", "yr"),50));
+        programIndicator.setShortName(SimpleGeneralUtility.getSubstring(name.replaceAll("year", "yr"),50));
         programIndicator.setExpression("V{event_count}");
         programIndicator.setFilter(getFilter(dataElement, categoryOptionCombo, options));
         programIndicator.setCode(dataElement.getId() + categoryOptionCombo.getId());

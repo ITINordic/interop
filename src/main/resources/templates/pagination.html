@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pagination Utilities</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <div th:fragment="pagination">
+            <ul class="pagination">
+
+                <li th:if="${isFirstPage}" class="disabled"><a href="#">&lt;&lt;</a></li>
+                <li th:if="${isFirstPage}" class="disabled"><a href="#">&lt;</a></li>
+
+                <li th:unless="${isFirstPage}"><a th:href="@{${baseUrl}(page=${1})}">&lt;&lt;</a></li>
+                <li th:unless="${isFirstPage}"><a th:href="@{${baseUrl}(page=${currentIndex - 1})}">&lt;</a></li>
+
+
+                <li  th:each="i : ${#numbers.sequence(beginIndex,endIndex)}"  th:classappend="${i==currentIndex} ? 'active'">
+                    <a  th:href="@{${baseUrl}(page=${i})}"><span th:text="${i}"></span></a>
+                </li>
+
+                <li th:if="${isLastPage}" class="disabled"><a href="#">&gt;</a></li>
+                <li th:if="${isLastPage}" class="disabled"><a href="#">&gt;&gt;</a></li>
+
+                <li th:unless="${isLastPage}"><a th:href="@{${baseUrl}(page=${currentIndex + 1})}">&gt;</a></li>
+                <li th:unless="${isLastPage}"><a th:href="@{${baseUrl}(page=${totalPages})}">&gt;&gt;</a></li>
+            </ul>
+        </div>
+    </body>
+</html>

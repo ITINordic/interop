@@ -4,11 +4,22 @@
         <title>Interop</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link th:include="imports :: css" th:remove="tag" />
     </head>
     <body>
-        <h1>Interoperability Bridge</h1>
-        <div>
-            Zimbabwe National Malaria Control Program(immis) -> Zimbabwe Health Information System (nhis) 
+
+        <div th:include="topNav :: topNav"></div>
+
+        <div class="container">
+
+
+            <h1>Interoperability Bridge</h1>
+            <div>
+                Zimbabwe National Malaria Control Program(immis) -> Zimbabwe Health Information System (nhis) 
+            </div>
+
         </div>
+
+        <script th:include="imports :: javascript" th:remove="tag"></script>
     </body>
 </html>

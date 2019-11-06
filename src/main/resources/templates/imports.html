@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Upload Imports</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <div th:fragment="css">
+            <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/dist/css/bootstrap.min.css}"/>
+            <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" />
+            <link rel="stylesheet" type="text/css" th:href="@{/webjars/jquery-ui/themes/smoothness/jquery-ui.min.css}" />
+            <link rel="stylesheet" type="text/css" th:href="@{/webjars/select2/dist/css/select2.css}" />
+            <link rel="stylesheet" type="text/css" th:href="@{/upload/upload.css}"   />
+        </div>
+
+        <div th:fragment="javascript">
+            <script type="text/javascript" th:src="@{/webjars/jquery/dist/jquery.min.js}"></script>
+            <script type="text/javascript" th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+            <script type="text/javascript" th:src="@{/webjars/select2/dist/js/select2.js}"></script>
+            <script type="text/javascript" th:src="@{/webjars/bootstrap/dist/js/bootstrap.min.js}"></script>
+            <script type="text/javascript" th:src="@{/upload/upload.js}"></script>
+        </div>
+    </body>
+</html>
