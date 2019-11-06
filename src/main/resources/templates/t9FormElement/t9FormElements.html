@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head th:inline="text">
+        <title>T9 Form Elements</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link th:include="imports :: css" th:remove="tag" />
+    </head>
+    <body>
+        
+         <div th:include="topNav :: topNav"></div>
+       
+        <div class="container">
+
+
+            <h2>T9 Form Elements</h2>
+
+            <div style="margin-bottom: 10px;">
+                
+                <form th:action="@{/admin/t9/formElements/sync}" method="post">
+                    <button class="btn btn-primary"  type="submit">Sync Form Elements</button>
+                </form>
+            </div>
+
+
+            <div th:if="${!formElements.content.empty}" style="background: #fff">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>ID</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="formElement: ${formElements}">
+                            <td th:text="${formElement.dhisName}"></td>
+                            <td th:text="${formElement.dhisCode}"></td>
+                            <td th:text="${formElement.dhisId}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div th:if="${defaultSearchDto.directSearch and formElements.content.empty}">No Cities found</div>
+                <div th:unless="${formElements.content.empty}" th:include="pagination :: pagination (baseUrl=@{|/admin/t9/formElements|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
+            </div>
+
+        </div>
+          <script th:include="imports :: javascript" th:remove="tag"></script>
+    </body>
+</html>

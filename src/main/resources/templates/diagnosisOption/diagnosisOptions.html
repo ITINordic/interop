@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head th:inline="text">
+        <title>Diagnosis Options</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link th:include="imports :: css" th:remove="tag" />
+    </head>
+    <body>
+        
+         <div th:include="topNav :: topNav"></div>
+       
+        <div class="container">
+
+
+            <h2>Diagnosis Options</h2>
+
+            <div style="margin-bottom: 10px;">
+                
+                <form th:action="@{/admin/diagnosis/options/sync}" method="post">
+                    <button class="btn btn-primary"  type="submit">Sync Options</button>
+                </form>
+            </div>
+
+
+            <div th:if="${!options.content.empty}" style="background: #fff">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>ID</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="option: ${options}">
+                            <td th:text="${option.dhisName}"></td>
+                            <td th:text="${option.dhisCode}"></td>
+                            <td th:text="${option.dhisId}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div th:if="${defaultSearchDto.directSearch and options.content.empty}">No Cities found</div>
+                <div th:unless="${options.content.empty}" th:include="pagination :: pagination (baseUrl=@{|/admin/diagnosis/options|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
+            </div>
+
+        </div>
+          <script th:include="imports :: javascript" th:remove="tag"></script>
+    </body>
+</html>
