@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import static com.itinordic.interop.util.CategoryOptionComboUtility.*;
 
 /**
  *
@@ -20,22 +21,7 @@ import org.springframework.web.client.RestTemplate;
  */
 public class ImmisIndicatorRestUtility {
 
-    public static String DEFAULT = "ylVaBBv3gZv";
-
-    public static String UNDER_1_A = "XVhXE8GBbNE";
-    public static String UNDER_1_C = "MohPCc2PzIj";
-    public static String UNDER_1_D = "C0gM7Xw6Ply";
-    public static String UNDER_1_T = "ZlDOdbPgREo";
-
-    public static String _1_TO_4_A = "JVsAEEbKwHJ";
-    public static String _1_TO_4_C = "lg4qk5sJusv";
-    public static String _1_TO_4_D = "SjKt2LmcIJF";
-    public static String _1_TO_4_T = "FQNs0dr09RE";
-
-    public static String _5_PLUS_A = "vtVARqV5pR7";
-    public static String _5_PLUS_C = "oNgL6EyJiQP";
-    public static String _5_PLUS_D = "qQ0nS3DX1vA";
-    public static String _5_PLUS_T = "X16NoX8ZPp3";
+  
 
     public static void main(String[] args) throws JsonProcessingException {
         saveIndicators();
@@ -208,36 +194,9 @@ public class ImmisIndicatorRestUtility {
 
     public static String getIndicatorName(DataElement dataElement, CategoryOptionCombo categoryOptionCombo) {
         String name = "Inpatient " + dataElement.getName().split("-")[1].trim();
-        String categoryOptionComboId = categoryOptionCombo.getId();
-        String suffix = "";
-        if (categoryOptionComboId.equals(DEFAULT)) {
-            suffix = "default";
-        } else if (categoryOptionComboId.equals(UNDER_1_A)) {
-            suffix = "under 1 year with A";
-        } else if (categoryOptionComboId.equals(UNDER_1_C)) {
-            suffix = "under 1 year with C";
-        } else if (categoryOptionComboId.equals(UNDER_1_D)) {
-            suffix = "under 1 year with D";
-        } else if (categoryOptionComboId.equals(UNDER_1_T)) {
-            suffix = "under 1 year with T";
-        } else if (categoryOptionComboId.equals(_1_TO_4_A)) {
-            suffix = "1 to 4 years with A";
-        } else if (categoryOptionComboId.equals(_1_TO_4_C)) {
-            suffix = "1 to 4 years with C";
-        } else if (categoryOptionComboId.equals(_1_TO_4_D)) {
-            suffix = "1 to 4 years with D";
-        } else if (categoryOptionComboId.equals(_1_TO_4_T)) {
-            suffix = "1 to 4 years with T";
-        } else if (categoryOptionComboId.equals(_5_PLUS_A)) {
-            suffix = "5 plus years with A";
-        } else if (categoryOptionComboId.equals(_5_PLUS_C)) {
-            suffix = "5 plus years with C";
-        } else if (categoryOptionComboId.equals(_5_PLUS_D)) {
-            suffix = "5 plus years with D";
-        } else if (categoryOptionComboId.equals(_5_PLUS_T)) {
-            suffix = "5 plus years with T";
-        }
-        return name + " " + suffix;
+        String categoryOptionComboId = categoryOptionCombo.getId();       
+        return name + " " + getCategoryOptionComboName(categoryOptionComboId);
     }
-
+    
+   
 }

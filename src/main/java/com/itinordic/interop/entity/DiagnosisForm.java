@@ -1,15 +1,15 @@
 package com.itinordic.interop.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -26,17 +26,12 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     @JoinColumn(nullable=false)
     private DiagnosisOption diagnosisOption;
     private Integer age;
-    private String outcome;
-    @ManyToOne
-    @JoinColumn(nullable=false)
-    private T9FormElement formElement;
+    private String outcome;    
+    @ManyToMany
+    private List<T9FormElement> formElements;
     @ManyToOne
     @JoinColumn(nullable=false)
     private T9OrganizationUnit organizationUnit;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date dateCreated;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date dateUpdated;
     @Column(unique=true, nullable=false)
     private String dhisId;
 
@@ -72,30 +67,13 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
         this.outcome = outcome;
     }
 
-    public T9FormElement getFormElement() {
-        return formElement;
+    public List<T9FormElement> getFormElements() {
+        return formElements;
     }
 
-    public void setFormElement(T9FormElement formElement) {
-        this.formElement = formElement;
+    public void setFormElements(List<T9FormElement> formElements) {
+        this.formElements = formElements;
     }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Date getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
-    }
-
    
     public String getDhisId() {
         return dhisId;

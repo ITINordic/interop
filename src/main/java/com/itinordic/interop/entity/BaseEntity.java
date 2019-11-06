@@ -1,5 +1,6 @@
 package com.itinordic.interop.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
@@ -12,7 +13,7 @@ import javax.persistence.Temporal;
  * @author developer
  */
 @MappedSuperclass
-public abstract class BaseEntity {
+public abstract class BaseEntity implements Serializable{
     
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(nullable = false, updatable = false)

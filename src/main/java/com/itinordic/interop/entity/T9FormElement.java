@@ -1,10 +1,13 @@
 package com.itinordic.interop.entity;
 
+import com.itinordic.interop.util.CategoryOptionComboUtility;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -19,6 +22,7 @@ import javax.persistence.UniqueConstraint;
 })
 public class T9FormElement extends BaseEntity implements Serializable {
 
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +30,9 @@ public class T9FormElement extends BaseEntity implements Serializable {
     @ManyToOne
     private T9DataElement dataElement;    
     private String categoryOptionComboId;
+    @ManyToMany(mappedBy = "formElements")
+    private List<DiagnosisForm> diagnosisForms;
+
 
     public Long getId() {
         return id;
@@ -50,8 +57,18 @@ public class T9FormElement extends BaseEntity implements Serializable {
     public void setCategoryOptionComboId(String categoryOptionComboId) {
         this.categoryOptionComboId = categoryOptionComboId;
     }
+
+    public List<DiagnosisForm> getDiagnosisForms() {
+        return diagnosisForms;
+    }
+
+    public void setDiagnosisForms(List<DiagnosisForm> diagnosisForms) {
+        this.diagnosisForms = diagnosisForms;
+    }
     
-    
+    public String getCategoryOptionComboName(){
+        return CategoryOptionComboUtility.getCategoryOptionComboName(categoryOptionComboId);
+    }
 
     @Override
     public int hashCode() {
@@ -62,15 +79,11 @@ public class T9FormElement extends BaseEntity implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof T9FormElement)) {
             return false;
         }
         T9FormElement other = (T9FormElement) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

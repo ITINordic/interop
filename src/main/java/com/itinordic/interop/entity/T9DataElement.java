@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,10 +30,11 @@ public class T9DataElement extends BaseEntity implements Serializable {
     private String dhisCode;
     @Column(unique=true,nullable=false)
     private String dhisName;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<DiagnosisOption> options;
     @OneToMany(mappedBy = "dataElement")
     private List<T9FormElement> formElements;
-    @ManyToMany
-    private List<DiagnosisOption> options;
+   
 
    
 
@@ -83,6 +85,8 @@ public class T9DataElement extends BaseEntity implements Serializable {
     public void setOptions(List<DiagnosisOption> options) {
         this.options = options;
     }
+    
+    
     
     public String getOptionsAsCodes(){
         String string="";

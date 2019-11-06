@@ -1,11 +1,14 @@
 package com.itinordic.interop.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -14,6 +17,7 @@ import javax.persistence.Id;
 @Entity
 public class DiagnosisOption extends BaseEntity implements Serializable {
 
+   
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,6 +28,9 @@ public class DiagnosisOption extends BaseEntity implements Serializable {
     private String dhisCode;
     @Column(unique=true,nullable=false)
     private String dhisName;
+    @ManyToMany(mappedBy = "options",fetch = FetchType.EAGER)
+    private List<T9DataElement> dataElements;
+
 
     public Long getId() {
         return id;
@@ -56,9 +63,15 @@ public class DiagnosisOption extends BaseEntity implements Serializable {
     public void setDhisName(String dhisName) {
         this.dhisName = dhisName;
     }
-    
-    
 
+    public List<T9DataElement> getDataElements() {
+        return dataElements;
+    }
+
+    public void setDataElements(List<T9DataElement> dataElements) {
+        this.dataElements = dataElements;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
