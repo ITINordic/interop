@@ -30,6 +30,7 @@
                             <th>ID</th>
                             <th>Option</th>
                             <th>OrgUnit</th> 
+                            <th>Period</th> 
                             <th>Age</th> 
                             <th>Outcome</th> 
                         </tr>
@@ -39,6 +40,7 @@
                             <td th:text="${form.dhisId}"></td>
                             <td th:text="${form.diagnosisOption.dhisCode}"></td>
                             <td th:text="${form.t9OrgUnit.dhisId}"></td>
+                            <td th:text="${form.t9OrgUnit.eventPeriod}"></td>
                             <td th:text="${form.age}"></td>
                             <td th:text="${form.outcome}"></td>
                         </tr>
