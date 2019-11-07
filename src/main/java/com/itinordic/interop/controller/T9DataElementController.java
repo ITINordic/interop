@@ -44,8 +44,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 public class T9DataElementController {
-    
-    
+
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -99,8 +98,8 @@ public class T9DataElementController {
                         DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisId(option.getId());
                         if (diagnosisOption != null) {
                             newDiagnosisOptionList.add(diagnosisOption);
-                        }else{
-                            logger.info("DiagnosisOption with id %s not found",option.getId());
+                        } else {
+                            logger.info("DiagnosisOption with id %s not found", option.getId());
                         }
                     }
 
@@ -142,30 +141,42 @@ public class T9DataElementController {
                     t9DataElement = t9DataElementRepository.findByDhisId(dataElementId);
                 }
 
-                if (t9DataElement != null) {
-                    String[] optionCodesArray = optionCodes.split(",");
-                    if (optionCodesArray.length > 0) {
-                        List<DiagnosisOption> newDiagnosisOptionList = new ArrayList<>();
-                        for (String optionCode : optionCodesArray) {
-                            if (!GeneralUtility.isEmpty(optionCode)) {
-                                optionCode=optionCode.trim();
-                                DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisCode(optionCode);
-                                if (diagnosisOption != null) {
-                                    newDiagnosisOptionList.add(diagnosisOption);
-                                }else{
-                                    logger.info("DiagnosisOption with code %s not found",optionCode);
-                                }
-                            }
-                        }
+                if (t9DataElement == null) {
+                    logger.info("DataElement with id %s not found", dataElementId);
+                    continue;
+                }
 
-                        if (!newDiagnosisOptionList.isEmpty()) {
-                            t9DataElement.setOptions(newDiagnosisOptionList);
-                            t9DataElement.setModificationDateTime(new Date());
-                            t9DataElementRepository.save(t9DataElement);
+                String[] optionCodesArray = optionCodes.split(",");
+                if (optionCodesArray.length < 1 && !GeneralUtility.isEmpty(optionCodes)) {
+                    optionCodesArray = new String[]{optionCodes.trim()};
+                }
+
+                if (optionCodesArray.length < 1) {
+                    logger.info("No any option code for dataElement with id %s", dataElementId);
+                    continue;
+                }
+
+                List<DiagnosisOption> newDiagnosisOptionList = new ArrayList<>();
+                for (String optionCode : optionCodesArray) {
+                    if (!GeneralUtility.isEmpty(optionCode)) {
+                        optionCode = optionCode.trim();
+                        DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisCode(optionCode);
+                        if (diagnosisOption != null) {
+                            newDiagnosisOptionList.add(diagnosisOption);
+                        } else {
+                            logger.info("DiagnosisOption with code %s not found", optionCode);
                         }
                     }
-
                 }
+
+                if (newDiagnosisOptionList.isEmpty()) {
+                    logger.info("Empty diagnosis option list for dataElement with id %s", dataElementId);
+                    continue;
+                }
+
+                t9DataElement.setOptions(newDiagnosisOptionList);
+                t9DataElement.setModificationDateTime(new Date());
+                t9DataElementRepository.save(t9DataElement);
 
             }
 
