@@ -155,16 +155,19 @@ public class DiagnosisFormController {
         List<T9DataElement> dataElements = diagnosisOption.getDataElements();
         for (T9DataElement dataElement : dataElements) {
             List<T9FormElement> formElements = dataElement.getFormElements();
+            //Default mapping/Bed Days
             if (formElements.size() == 1 && formElements.get(0).getCategoryOptionComboId().equals(CategoryOptionComboUtility.DEFAULT)) {
                 mappedT9FormElements.add(formElements.get(0));
             } else {
+                //Outcome and age mapping
                 String mappedCategoryOptionComboId = CategoryOptionComboUtility.getCategoryOptionComboId(outcome, age);
-                for (T9FormElement formElement : formElements) {
-                    if (formElement.getCategoryOptionComboId().equals(mappedCategoryOptionComboId)) {
-                        mappedT9FormElements.add(formElement);
-                        break;
-                    }
-                }
+                T9FormElement ageOutcomeT9FormElement = getT9FormElement(formElements, mappedCategoryOptionComboId);
+                mappedT9FormElements.add(ageOutcomeT9FormElement);
+
+                //Total per age mapping (C or Cases or Total)
+                String mappedTotalCategoryOptionComboId = CategoryOptionComboUtility.getTotalCategoryOptionComboId(age);
+                T9FormElement totalAgeT9FormElement = getT9FormElement(formElements, mappedTotalCategoryOptionComboId);
+                mappedT9FormElements.add(totalAgeT9FormElement);
             }
         }
 
@@ -175,5 +178,14 @@ public class DiagnosisFormController {
     private String getEventPeriod(Event event) {
         String[] eventDates = event.getEventDate().split("-");
         return eventDates[0] + eventDates[1];
+    }
+
+    private T9FormElement getT9FormElement(List<T9FormElement> formElements, String categoryOptionComboId) {
+        for (T9FormElement formElement : formElements) {
+            if (formElement.getCategoryOptionComboId().equals(categoryOptionComboId)) {
+                return formElement;
+            }
+        }
+        return null;
     }
 }

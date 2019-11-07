@@ -5,7 +5,7 @@ package com.itinordic.interop.util;
  * @author Charles Chigoriwa
  */
 public class CategoryOptionComboUtility {
-    
+
     public static String DEFAULT = "ylVaBBv3gZv";
 
     public static String UNDER_1_A = "XVhXE8GBbNE";
@@ -22,41 +22,50 @@ public class CategoryOptionComboUtility {
     public static String _5_PLUS_C = "oNgL6EyJiQP";
     public static String _5_PLUS_D = "qQ0nS3DX1vA";
     public static String _5_PLUS_T = "X16NoX8ZPp3";
-    
-    
-    public static String getCategoryOptionComboId(String outcome,Integer age){
-        if(age< 1 && outcome.equals("A")){
+
+    public static String getCategoryOptionComboId(String outcome, Integer age) {
+        if (age < 1 && outcome.equals("A")) {
             return UNDER_1_A;
-        }else if(age< 1 && outcome.equals("C")){
+        } else if (age < 1 && outcome.equals("C")) {
             return UNDER_1_C;
-        }else if(age< 1 && outcome.equals("D")){
+        } else if (age < 1 && outcome.equals("D")) {
             return UNDER_1_D;
-        }else if(age< 1 && outcome.equals("T")){
+        } else if (age < 1 && outcome.equals("T")) {
             return UNDER_1_T;
-        }else if(age>= 1 && age <=4 && outcome.equals("A")){
+        } else if (age >= 1 && age <= 4 && outcome.equals("A")) {
             return _1_TO_4_A;
-        }else if(age>= 1 && age <=4 && outcome.equals("C")){
+        } else if (age >= 1 && age <= 4 && outcome.equals("C")) {
             return _1_TO_4_C;
-        }else if(age>= 1 && age <=4 && outcome.equals("D")){
+        } else if (age >= 1 && age <= 4 && outcome.equals("D")) {
             return _1_TO_4_D;
-        }else if(age>= 1 && age <=4 && outcome.equals("T")){
+        } else if (age >= 1 && age <= 4 && outcome.equals("T")) {
             return _1_TO_4_T;
-        }else if(age>=5  && outcome.equals("A")){
+        } else if (age >= 5 && outcome.equals("A")) {
             return _5_PLUS_A;
-        }else if(age>=5  && outcome.equals("C")){
+        } else if (age >= 5 && outcome.equals("C")) {
             return _5_PLUS_C;
-        }else if(age>=5  && outcome.equals("D")){
+        } else if (age >= 5 && outcome.equals("D")) {
             return _5_PLUS_D;
-        }else if(age>=5  && outcome.equals("T")){
+        } else if (age >= 5 && outcome.equals("T")) {
             return _5_PLUS_T;
         }
-        
+
         return null;
     }
-    
-    
-     public static String getCategoryOptionComboName(String categoryOptionComboId){
-         String suffix = "";
+
+    public static String getTotalCategoryOptionComboId(Integer age) {
+        if (age < 1) {
+            return UNDER_1_C;
+        } else if (age >= 1 && age <= 4) {
+            return _1_TO_4_C;
+        } else if (age >= 5) {
+            return _5_PLUS_C;
+        }
+        return null;
+    }
+
+    public static String getCategoryOptionComboName(String categoryOptionComboId) {
+        String suffix = "";
         if (categoryOptionComboId.equals(DEFAULT)) {
             suffix = "default";
         } else if (categoryOptionComboId.equals(UNDER_1_A)) {
@@ -87,5 +96,4 @@ public class CategoryOptionComboUtility {
         return suffix;
     }
 
-    
 }
