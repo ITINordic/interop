@@ -41,7 +41,7 @@
                     </tbody>
                 </table>
                 <div th:if="${defaultSearchDto.directSearch and formElements.content.empty}">No Cities found</div>
-                <div th:unless="${formElements.content.empty}" th:include="pagination :: pagination (baseUrl=@{|/admin/t9/formElements|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
+                <div th:unless="${formElements.content.empty}" th:include="pagination :: pagination (baseUrl=@{|~/admin/t9/formElements|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
             </div>
 
         </div>

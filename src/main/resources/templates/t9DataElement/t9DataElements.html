@@ -17,16 +17,20 @@
 
             <div style="margin-bottom: 10px;">
 
-                <form th:action="@{/admin/t9/dataElements/sync}" method="post">
-                    <button class="btn btn-primary"  type="submit">Sync Data Elements</button>
-                </form>
-                
-                <form th:action="@{/admin/t9/dataElements/autoBindOptions}" method="post">
-                    <button class="btn btn-success"  type="submit">Auto bind options</button>
-                </form>
-                
+                <div style="margin-bottom: 10px;">
+                    <form th:action="@{/admin/t9/dataElements/sync}" method="post">
+                        <button class="btn btn-primary"  type="submit">Sync Data Elements</button>
+                    </form>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <form th:action="@{/admin/t9/dataElements/autoBindOptions}" method="post">
+                        <button class="btn btn-success"  type="submit">Auto bind options</button>
+                    </form>
+                </div>
+
                 <form th:action="@{/admin/t9/dataElements/bindOptionsFromFile}" method="post">
-                    <button class="btn btn-success"  type="submit">Bind options from File</button>
+                    <button class="btn btn-default"  type="submit">Bind options from File</button>
                 </form>
             </div>
 
@@ -51,7 +55,7 @@
                     </tbody>
                 </table>
                 <div th:if="${defaultSearchDto.directSearch and dataElements.content.empty}">No Cities found</div>
-                <div th:unless="${dataElements.content.empty}" th:include="pagination :: pagination (baseUrl=@{|/admin/t9/dataElements|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
+                <div th:unless="${dataElements.content.empty}" th:include="pagination :: pagination (baseUrl=@{|~/admin/t9/dataElements|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
             </div>
 
         </div>

@@ -41,7 +41,7 @@
                     </tbody>
                 </table>
                 <div th:if="${defaultSearchDto.directSearch and options.content.empty}">No Options found</div>
-                <div th:unless="${options.content.empty}" th:include="pagination :: pagination (baseUrl=@{|/admin/diagnosis/options|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
+                <div th:unless="${options.content.empty}" th:include="pagination :: pagination (baseUrl=@{|~/admin/diagnosis/options|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
             </div>
 
         </div>

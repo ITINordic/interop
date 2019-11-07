@@ -41,7 +41,7 @@
                     </tbody>
                 </table>
                 <div th:if="${defaultSearchDto.directSearch and organizationUnits.content.empty}">No Organization Units found</div>
-                <div th:unless="${organizationUnits.content.empty}" th:include="pagination :: pagination (baseUrl=@{|/admin/diagnosis/organizationUnits|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
+                <div th:unless="${organizationUnits.content.empty}" th:include="pagination :: pagination (baseUrl=@{|~/admin/diagnosis/organizationUnits|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
             </div>
 
         </div>
