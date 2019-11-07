@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Charles Chigoriwa
  */
-public class ProgramIndicatorList {
+public class ProgramIndicatorList extends PageableList{
     
     private List<ProgramIndicator> programIndicators;
 

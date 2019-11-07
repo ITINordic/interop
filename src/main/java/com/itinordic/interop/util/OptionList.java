@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Charles Chigoriwa
  */
-public class OptionList {
+public class OptionList extends PageableList{
     
     private List<Option> options;
 

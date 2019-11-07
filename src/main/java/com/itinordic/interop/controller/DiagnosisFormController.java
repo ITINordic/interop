@@ -15,9 +15,11 @@ import com.itinordic.interop.service.DiagnosisFormService;
 import com.itinordic.interop.util.CategoryOptionComboUtility;
 import com.itinordic.interop.util.DiagnosisFormUtility;
 import com.itinordic.interop.util.Event;
+import com.itinordic.interop.util.EventList;
 import com.itinordic.interop.util.GeneralUtility;
 import com.itinordic.interop.util.ImmisEventRestUtility;
 import com.itinordic.interop.util.PageUtil;
+import com.itinordic.interop.util.Pager;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -63,69 +65,81 @@ public class DiagnosisFormController {
     @RequestMapping(value = "/admin/diagnosis/forms/sync", method = RequestMethod.POST)
     public synchronized String sync(Principal principal, Model model) throws IOException {
 
-        List<Event> events = ImmisEventRestUtility.getEvents();
-        for (Event event : events) {
-            DiagnosisForm diagnosisForm = diagnosisFormRepository.findByDhisId(event.getEvent());
-            if (diagnosisForm == null) {
-                diagnosisForm = new DiagnosisForm();
-                diagnosisForm.setDhisId(event.getEvent());
-            }
+        int page = 1;
 
-            String outcome = getValue(event, DiagnosisFormUtility.OUTCOME_DATA_ELEMENT_ID);
-            String age = getValue(event, DiagnosisFormUtility.AGE_DATA_ELEMENT_ID);
-            String diagnosisOptionCode = getValue(event, DiagnosisFormUtility.DIAGNOSIS_DATA_ELEMENT_ID);
-            DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisCode(diagnosisOptionCode);
-            if (diagnosisOption == null) {
-                logger.info("DiagnosisOption with code {} not found", diagnosisOptionCode);
-                continue;
-            }
+        Pager pager;
 
-            DiagnosisOrganizationUnit diagnosisOrgUnit = diagnosisOrganizationUnitRepository.findByDhisId(event.getOrgUnit());
-            if (diagnosisOrgUnit == null) {
-                logger.info("DiagnosisOrganizationUnit with id {} not found", event.getOrgUnit());
-                continue;
-            }
-            
-            if (age==null) {
-                logger.info("Null age for formId={}",event.getEvent());
-                continue;
-            }
+        do {
 
-            T9OrganizationUnit t9OrganizationUnit;
-            t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisId(diagnosisOrgUnit.getDhisId());
+            EventList eventList = ImmisEventRestUtility.getEventList(page);
+            pager = eventList.getPager();
 
-            if (t9OrganizationUnit == null) {
-                if (!GeneralUtility.isEmpty(diagnosisOrgUnit.getDhisCode())) {
-                    t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisCode(diagnosisOrgUnit.getDhisCode());
-                } else {
-                    t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisName(diagnosisOrgUnit.getDhisName());
+            List<Event> events = eventList.getEvents();
+            for (Event event : events) {
+                DiagnosisForm diagnosisForm = diagnosisFormRepository.findByDhisId(event.getEvent());
+                if (diagnosisForm == null) {
+                    diagnosisForm = new DiagnosisForm();
+                    diagnosisForm.setDhisId(event.getEvent());
                 }
+
+                String outcome = getValue(event, DiagnosisFormUtility.OUTCOME_DATA_ELEMENT_ID);
+                String age = getValue(event, DiagnosisFormUtility.AGE_DATA_ELEMENT_ID);
+                String diagnosisOptionCode = getValue(event, DiagnosisFormUtility.DIAGNOSIS_DATA_ELEMENT_ID);
+                DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisCode(diagnosisOptionCode);
+                if (diagnosisOption == null) {
+                    logger.info("DiagnosisOption with code {} not found", diagnosisOptionCode);
+                    continue;
+                }
+
+                DiagnosisOrganizationUnit diagnosisOrgUnit = diagnosisOrganizationUnitRepository.findByDhisId(event.getOrgUnit());
+                if (diagnosisOrgUnit == null) {
+                    logger.info("DiagnosisOrganizationUnit with id {} not found", event.getOrgUnit());
+                    continue;
+                }
+
+                if (age == null) {
+                    logger.info("Null age for formId={}", event.getEvent());
+                    continue;
+                }
+
+                T9OrganizationUnit t9OrganizationUnit;
+                t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisId(diagnosisOrgUnit.getDhisId());
+
+                if (t9OrganizationUnit == null) {
+                    if (!GeneralUtility.isEmpty(diagnosisOrgUnit.getDhisCode())) {
+                        t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisCode(diagnosisOrgUnit.getDhisCode());
+                    } else {
+                        t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisName(diagnosisOrgUnit.getDhisName());
+                    }
+                }
+
+                if (t9OrganizationUnit == null) {
+                    logger.info("T9OrganizationUnit not found for " + diagnosisOrgUnit);
+                    continue;
+                }
+
+                double dAge = Double.valueOf(age);
+                int intAge = (int) dAge;
+
+                List<T9FormElement> mappedT9FormElements = getMappedT9FormElements(diagnosisOption, outcome, intAge);
+                if (GeneralUtility.isEmpty(mappedT9FormElements)) {
+                    logger.info("MappedT9FormElements not found for option.code={}, age={}, outcome={}", diagnosisOption.getDhisCode(), age, outcome);
+                    continue;
+                }
+
+                diagnosisForm.setDiagnosisOption(diagnosisOption);
+                diagnosisForm.setOutcome(outcome);
+                diagnosisForm.setAge(intAge);
+                diagnosisForm.setDiagnosisOrgUnit(diagnosisOrgUnit);
+                diagnosisForm.setT9OrgUnit(t9OrganizationUnit);
+                diagnosisForm.setFormElements(mappedT9FormElements);
+                diagnosisForm.setEventPeriod(getEventPeriod(event));
+                diagnosisFormRepository.save(diagnosisForm);
+
+                page++;
+
             }
-
-            if (t9OrganizationUnit == null) {
-                logger.info("T9OrganizationUnit not found for " + diagnosisOrgUnit);
-                continue;
-            }
-            
-            double dAge=Double.valueOf(age);
-            int intAge=(int)dAge;
-
-            List<T9FormElement> mappedT9FormElements = getMappedT9FormElements(diagnosisOption, outcome,intAge);
-            if (GeneralUtility.isEmpty(mappedT9FormElements)) {
-                logger.info("MappedT9FormElements not found for option.code={}, age={}, outcome={}",diagnosisOption.getDhisCode(),age,outcome);
-                continue;
-            }
-
-            diagnosisForm.setDiagnosisOption(diagnosisOption);
-            diagnosisForm.setOutcome(outcome);
-            diagnosisForm.setAge(intAge);
-            diagnosisForm.setDiagnosisOrgUnit(diagnosisOrgUnit);
-            diagnosisForm.setT9OrgUnit(t9OrganizationUnit);
-            diagnosisForm.setFormElements(mappedT9FormElements);
-            diagnosisForm.setEventPeriod(getEventPeriod(event));
-            diagnosisFormRepository.save(diagnosisForm);
-
-        }
+        } while (page <= pager.getPageCount());
 
         return "redirect:/admin/diagnosis/forms";
 

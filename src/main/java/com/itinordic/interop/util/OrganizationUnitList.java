@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Charles Chigoriwa
  */
-public class OrganizationUnitList {
+public class OrganizationUnitList extends PageableList{
     
     private List<OrganizationUnit> organisationUnits;
 

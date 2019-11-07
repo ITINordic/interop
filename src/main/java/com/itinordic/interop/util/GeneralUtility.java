@@ -397,10 +397,25 @@ public class GeneralUtility {
         return new DateTime(year, month, 25, 12, 12).toDate();
 
     }
+   
+    
+    public static boolean in(String string, String... otherStrings){
+        if(otherStrings==null || otherStrings.length < 1){
+            return false;
+        }
+        
+        for(String otherString: otherStrings){
+            if(otherString.equalsIgnoreCase(string)){
+                return true;
+            }
+        }
+        
+        
+        return false;
+    }
 
     public static void main(String[] args) {
-        String[] eventDates="2019-10-10T00:00:00.000".split("-");
-        System.out.println(eventDates[0]+eventDates[1]);
+      
     }
 
 }
