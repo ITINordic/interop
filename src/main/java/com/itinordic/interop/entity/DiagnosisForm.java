@@ -31,7 +31,10 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     private List<T9FormElement> formElements;
     @ManyToOne
     @JoinColumn(nullable=false)
-    private T9OrganizationUnit organizationUnit;
+    private DiagnosisOrganizationUnit diagnosisOrgUnit;
+    @ManyToOne
+    @JoinColumn(nullable=false)
+    private T9OrganizationUnit t9OrgUnit;
     @Column(unique=true, nullable=false)
     private String dhisId;
 
@@ -83,16 +86,22 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
         this.dhisId = dhisId;
     }
 
-    public T9OrganizationUnit getOrganizationUnit() {
-        return organizationUnit;
+    public DiagnosisOrganizationUnit getDiagnosisOrgUnit() {
+        return diagnosisOrgUnit;
     }
 
-    public void setOrganizationUnit(T9OrganizationUnit organizationUnit) {
-        this.organizationUnit = organizationUnit;
+    public void setDiagnosisOrgUnit(DiagnosisOrganizationUnit diagnosisOrgUnit) {
+        this.diagnosisOrgUnit = diagnosisOrgUnit;
+    }
+
+    public T9OrganizationUnit getT9OrgUnit() {
+        return t9OrgUnit;
+    }
+
+    public void setT9OrgUnit(T9OrganizationUnit t9OrgUnit) {
+        this.t9OrgUnit = t9OrgUnit;
     }
     
-    
-
     @Override
     public int hashCode() {
         int hash = 0;

@@ -54,6 +54,7 @@ public class T9OrgnUnitController {
                 t9OrganizationUnit.setDhisCode(organizationUnit.getCode());
                 t9OrganizationUnit.setDhisName(organizationUnit.getName());
                 t9OrganizationUnit.setDhisId(organizationUnit.getId());
+                t9OrganizationUnit.setDhisShortName(organizationUnit.getShortName());
                 t9OrganizationUnitRepository.save(t9OrganizationUnit);
             }
         }        

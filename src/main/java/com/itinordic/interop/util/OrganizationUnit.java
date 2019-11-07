@@ -9,6 +9,7 @@ public class OrganizationUnit {
     private String name;
     private String id;
     private String code;
+    private String shortName;
 
     public String getName() {
         return name;
@@ -34,10 +35,22 @@ public class OrganizationUnit {
         this.code = code;
     }
 
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
     @Override
     public String toString() {
-        return "OrganizationUnit{" + "name=" + name + ", id=" + id + ", code=" + code + '}';
+        return "OrganizationUnit{" + "name=" + name + ", id=" + id + ", code=" + code + ", shortName=" + shortName + '}';
     }
+    
+    
+
+   
     
     
     

@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -25,8 +24,7 @@ public class T9OrganizationUnit extends BaseEntity implements Serializable {
     private String dhisName;
     @Column(unique=true, nullable=true)
     private String dhisCode;
-    @OneToOne
-    private DiagnosisOrganizationUnit mappedOrganizationUnit;
+    private String dhisShortName;
 
 
     public Long getId() {
@@ -61,17 +59,16 @@ public class T9OrganizationUnit extends BaseEntity implements Serializable {
         this.dhisCode = dhisCode;
     }
 
-    public DiagnosisOrganizationUnit getMappedOrganizationUnit() {
-        return mappedOrganizationUnit;
+    public String getDhisShortName() {
+        return dhisShortName;
     }
 
-    public void setMappedOrganizationUnit(DiagnosisOrganizationUnit mappedOrganizationUnit) {
-        this.mappedOrganizationUnit = mappedOrganizationUnit;
+    public void setDhisShortName(String dhisShortName) {
+        this.dhisShortName = dhisShortName;
     }
+    
+    
 
-  
-    
-    
 
     @Override
     public int hashCode() {

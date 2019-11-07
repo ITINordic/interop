@@ -27,16 +27,16 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>ID</th> 
+                            <th>Data Element</th>
+                            <th>CategoryOptionComboId</th>
+                            <th>CategoryOptionComboName<</th> 
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="formElement: ${formElements}">
-                            <td th:text="${formElement.dhisName}"></td>
-                            <td th:text="${formElement.dhisCode}"></td>
-                            <td th:text="${formElement.dhisId}"></td>
+                            <td th:text="${formElement.dataElement.dhisName}"></td>
+                            <td th:text="${formElement.categoryOptionComboId}"></td>
+                            <td th:text="${formElement.categoryOptionComboName}"></td>
                         </tr>
                     </tbody>
                 </table>

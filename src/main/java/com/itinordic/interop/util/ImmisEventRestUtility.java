@@ -13,24 +13,24 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Charles Chigoriwa
  */
-public class ImmisOrganizationUnitRestUtility {
+public class ImmisEventRestUtility {
 
-    public static List<OrganizationUnit> getOrganizationUnits() {
-        String uri = "https://dev.itin.africa/immis/api/organisationUnits?paging=false&fields=[id,code,name,shortName]";
+    public static List<Event> getEvents() {
+        String uri = "https://dev.itin.africa/immis/api/events?program=SXNeRfGsKcW&paging=false";
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setBasicAuth("cchigoriwa", "Dhis123#");
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<OrganizationUnitList> result = restTemplate.exchange(uri, HttpMethod.GET, entity, OrganizationUnitList.class);
+        ResponseEntity<EventList> result = restTemplate.exchange(uri, HttpMethod.GET, entity, EventList.class);
         if (result != null && result.getBody() != null) {
-            return result.getBody().getOrganisationUnits();
+            return result.getBody().getEvents();
         }
         return null;
     }
 
     public static void main(String[] args) {
-        System.out.println(getOrganizationUnits());
+        System.out.println(getEvents());
 
     }
 

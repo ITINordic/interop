@@ -8,16 +8,14 @@ import java.util.List;
  */
 public class OrganizationUnitList {
     
-    private List<OrganizationUnit> organizationUnits;
+    private List<OrganizationUnit> organisationUnits;
 
-    public List<OrganizationUnit> getOrganizationUnits() {
-        return organizationUnits;
+    public List<OrganizationUnit> getOrganisationUnits() {
+        return organisationUnits;
     }
 
-    public void setOrganizationUnits(List<OrganizationUnit> organizationUnits) {
-        this.organizationUnits = organizationUnits;
+    public void setOrganisationUnits(List<OrganizationUnit> organisationUnits) {
+        this.organisationUnits = organisationUnits;
     }
-    
-    
     
 }

@@ -1,7 +1,6 @@
 package com.itinordic.interop.controller;
 
 import com.itinordic.interop.criteria.DiagnosisOrgnUnitSearchDto;
-import com.itinordic.interop.entity.DiagnosisOption;
 import com.itinordic.interop.entity.DiagnosisOrganizationUnit;
 import com.itinordic.interop.repo.DiagnosisOrganizationUnitRepository;
 import com.itinordic.interop.service.DiagnosisOrgnUnitService;
@@ -45,7 +44,7 @@ public class DiagnosisOrgnUnitController {
     }
 
     @RequestMapping(value = "/admin/diagnosis/organizationUnits/sync", method = RequestMethod.POST)
-    public String sync(Principal principal, Model model) throws IOException {
+    public synchronized String sync(Principal principal, Model model) throws IOException {
         List<OrganizationUnit> organizationUnits = ImmisOrganizationUnitRestUtility.getOrganizationUnits();
         for (OrganizationUnit organizationUnit : organizationUnits) {
             DiagnosisOrganizationUnit diagnosisOrganizationUnit = diagnosisOrganizationUnitRepository.findByDhisId(organizationUnit.getId());
@@ -54,6 +53,7 @@ public class DiagnosisOrgnUnitController {
                 diagnosisOrganizationUnit.setDhisCode(organizationUnit.getCode());
                 diagnosisOrganizationUnit.setDhisName(organizationUnit.getName());
                 diagnosisOrganizationUnit.setDhisId(organizationUnit.getId());
+                diagnosisOrganizationUnit.setDhisShortName(organizationUnit.getShortName());
                 diagnosisOrganizationUnitRepository.save(diagnosisOrganizationUnit);
             }
         }

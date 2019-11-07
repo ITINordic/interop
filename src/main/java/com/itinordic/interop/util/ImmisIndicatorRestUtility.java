@@ -180,13 +180,13 @@ public class ImmisIndicatorRestUtility {
         } else if (categoryOptionComboId.equals(_1_TO_4_T)) {
             filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
         } else if (categoryOptionComboId.equals(_5_PLUS_A)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'A' and #{HWvCCLjpiWG.bl1Dflv1nag} > 5";
+            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'A' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
         } else if (categoryOptionComboId.equals(_5_PLUS_C)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'C' and #{HWvCCLjpiWG.bl1Dflv1nag} > 5";
+            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'C' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
         } else if (categoryOptionComboId.equals(_5_PLUS_D)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'D' and #{HWvCCLjpiWG.bl1Dflv1nag} > 5";
+            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'D' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
         } else if (categoryOptionComboId.equals(_5_PLUS_T)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} > 5";
+            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
         }
 
         return filter;
