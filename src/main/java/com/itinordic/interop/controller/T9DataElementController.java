@@ -27,6 +27,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -42,6 +44,9 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 public class T9DataElementController {
+    
+    
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private T9DataElementRepository t9DataElementRepository;
@@ -94,6 +99,8 @@ public class T9DataElementController {
                         DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisId(option.getId());
                         if (diagnosisOption != null) {
                             newDiagnosisOptionList.add(diagnosisOption);
+                        }else{
+                            logger.info("DiagnosisOption with id %s not found",option.getId());
                         }
                     }
 
@@ -145,6 +152,8 @@ public class T9DataElementController {
                                 DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisCode(optionCode);
                                 if (diagnosisOption != null) {
                                     newDiagnosisOptionList.add(diagnosisOption);
+                                }else{
+                                    logger.info("DiagnosisOption with code %s not found",optionCode);
                                 }
                             }
                         }

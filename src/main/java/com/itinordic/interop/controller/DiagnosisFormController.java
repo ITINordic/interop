@@ -13,6 +13,7 @@ import com.itinordic.interop.repo.DiagnosisOrganizationUnitRepository;
 import com.itinordic.interop.repo.T9OrganizationUnitRepository;
 import com.itinordic.interop.service.DiagnosisFormService;
 import com.itinordic.interop.util.CategoryOptionComboUtility;
+import com.itinordic.interop.util.DiagnosisFormUtility;
 import com.itinordic.interop.util.Event;
 import com.itinordic.interop.util.GeneralUtility;
 import com.itinordic.interop.util.ImmisEventRestUtility;
@@ -21,6 +22,8 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -35,6 +38,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class DiagnosisFormController {
+
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private DiagnosisFormRepository diagnosisFormRepository;
@@ -62,34 +67,55 @@ public class DiagnosisFormController {
         for (Event event : events) {
             DiagnosisForm diagnosisForm = diagnosisFormRepository.findByDhisId(event.getEvent());
             if (diagnosisForm == null) {
-
-                String outcome = getValue(event, "emFE351TuNs");
-                String age = getValue(event, "bl1Dflv1nag");
-                String diagnosisOptionCode = getValue(event, "PvciLByskeE");
-                DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisCode(diagnosisOptionCode);
-                DiagnosisOrganizationUnit diagnosisOrgUnit = diagnosisOrganizationUnitRepository.findByDhisId(event.getOrgUnit());
-                T9OrganizationUnit t9OrganizationUnit;
-                t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisId(diagnosisOrgUnit.getDhisId());
-
-                if (t9OrganizationUnit == null) {
-                    if (!GeneralUtility.isEmpty(diagnosisOrgUnit.getDhisCode())) {
-                        t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisCode(diagnosisOrgUnit.getDhisCode());
-                    } else {
-                        t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisName(diagnosisOrgUnit.getDhisName());
-                    }
-                }
-
                 diagnosisForm = new DiagnosisForm();
-                diagnosisForm.setDiagnosisOption(diagnosisOption);
-                diagnosisForm.setOutcome(outcome);
-                diagnosisForm.setAge(Integer.valueOf(age));
                 diagnosisForm.setDhisId(event.getEvent());
-                diagnosisForm.setDiagnosisOrgUnit(diagnosisOrgUnit);
-                diagnosisForm.setT9OrgUnit(t9OrganizationUnit);
-                diagnosisForm.setFormElements(getMappedT9FormElements(diagnosisOption, outcome, Integer.valueOf(age)));
-                diagnosisForm.setEventPeriod(getEventPeriod(event));
-                diagnosisFormRepository.save(diagnosisForm);
             }
+
+            String outcome = getValue(event, DiagnosisFormUtility.OUTCOME_DATA_ELEMENT_ID);
+            String age = getValue(event, DiagnosisFormUtility.AGE_DATA_ELEMENT_ID);
+            String diagnosisOptionCode = getValue(event, DiagnosisFormUtility.DIAGNOSIS_DATA_ELEMENT_ID);
+            DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisCode(diagnosisOptionCode);
+            if (diagnosisOption == null) {
+                logger.info("DiagnosisOption with code %s not found", diagnosisOptionCode);
+                continue;
+            }
+
+            DiagnosisOrganizationUnit diagnosisOrgUnit = diagnosisOrganizationUnitRepository.findByDhisId(event.getOrgUnit());
+            if (diagnosisOrgUnit == null) {
+                logger.info("DiagnosisOrganizationUnit with id %s not found", event.getOrgUnit());
+                continue;
+            }
+
+            T9OrganizationUnit t9OrganizationUnit;
+            t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisId(diagnosisOrgUnit.getDhisId());
+
+            if (t9OrganizationUnit == null) {
+                if (!GeneralUtility.isEmpty(diagnosisOrgUnit.getDhisCode())) {
+                    t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisCode(diagnosisOrgUnit.getDhisCode());
+                } else {
+                    t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisName(diagnosisOrgUnit.getDhisName());
+                }
+            }
+
+            if (t9OrganizationUnit == null) {
+                logger.info("T9OrganizationUnit not found for " + diagnosisOrgUnit);
+                continue;
+            }
+
+            List<T9FormElement> mappedT9FormElements = getMappedT9FormElements(diagnosisOption, outcome, Integer.valueOf(age));
+            if (GeneralUtility.isEmpty(mappedT9FormElements)) {
+                logger.info("MappedT9FormElements not found for option.code=%s, age=%s, outcome=%s",diagnosisOption.getDhisCode(),age,outcome);
+                continue;
+            }
+
+            diagnosisForm.setDiagnosisOption(diagnosisOption);
+            diagnosisForm.setOutcome(outcome);
+            diagnosisForm.setAge(Integer.valueOf(age));
+            diagnosisForm.setDiagnosisOrgUnit(diagnosisOrgUnit);
+            diagnosisForm.setT9OrgUnit(t9OrganizationUnit);
+            diagnosisForm.setFormElements(mappedT9FormElements);
+            diagnosisForm.setEventPeriod(getEventPeriod(event));
+            diagnosisFormRepository.save(diagnosisForm);
 
         }
 
@@ -123,9 +149,9 @@ public class DiagnosisFormController {
         return mappedT9FormElements;
 
     }
-    
-    private String getEventPeriod(Event event){
-        String[] eventDates=event.getEventDate().split("-");
-        return eventDates[0]+eventDates[1];
+
+    private String getEventPeriod(Event event) {
+        String[] eventDates = event.getEventDate().split("-");
+        return eventDates[0] + eventDates[1];
     }
 }

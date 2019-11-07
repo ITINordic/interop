@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -32,6 +34,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class T9DataSetValueController {
+    
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private DataSetValueDao dataSetValueDao;

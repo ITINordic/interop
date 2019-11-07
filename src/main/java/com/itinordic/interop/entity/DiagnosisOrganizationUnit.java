@@ -87,7 +87,9 @@ public class DiagnosisOrganizationUnit extends BaseEntity implements Serializabl
 
     @Override
     public String toString() {
-        return "com.itinordic.interop.entity.DiagnosisOrganizationUnit[ id=" + id + " ]";
+        return "DiagnosisOrganizationUnit{" + "id=" + id + ", dhisId=" + dhisId + ", dhisName=" + dhisName + ", dhisCode=" + dhisCode + ", dhisShortName=" + dhisShortName + '}';
     }
+
+    
     
 }

@@ -90,7 +90,9 @@ public class DiagnosisOption extends BaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "com.itinordic.interop.entity.DiagnosisOption[ id=" + id + " ]";
+        return "DiagnosisOption{" + "dhisId=" + dhisId + ", dhisCode=" + dhisCode + ", dhisName=" + dhisName + '}';
     }
+
+   
     
 }
