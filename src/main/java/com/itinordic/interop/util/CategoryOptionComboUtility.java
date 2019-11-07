@@ -53,6 +53,7 @@ public class CategoryOptionComboUtility {
         return null;
     }
 
+    //Total per age mapping (C or Cases or Total)
     public static String getTotalCategoryOptionComboId(Integer age) {
         if (age < 1) {
             return UNDER_1_C;
