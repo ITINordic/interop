@@ -18,6 +18,28 @@
                 Zimbabwe National Malaria Control Program(immis) -> Zimbabwe Health Information System (nhis) 
             </div>
 
+            <div th:if="${alertUnmappedDataElements}">
+                 
+                <hr />
+
+                <div class="row">
+                    <div class="col-md-4">
+
+                        <div class="panel panel-warning">
+                            <div class="panel-heading"><b><span th:text="${unmappedDataElementCount}"></span> unmapped data elements</b></div>
+                            <div class="panel-body">
+                                
+                                <span style="font-size: 50px; text-align: center; color: grey;" th:text="${unmappedDataElementCount}"></span>
+
+                                <div>
+                                    <a class="btn btn-warning" th:href="@{|/admin/t9/dataElements/unmapped|}"><b>View unmapped data elements</b></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <script th:include="imports :: javascript" th:remove="tag"></script>

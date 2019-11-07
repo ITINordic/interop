@@ -13,28 +13,11 @@
         <div class="container">
 
 
-            <h2>T9 Data Elements</h2>
+            <h2>Unmapped T9 Data Elements</h2>
             
             <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${dataElements.totalElements}"></span></b></h4>
 
-            <div style="margin-bottom: 10px;">
-
-                <div style="margin-bottom: 10px;">
-                    <form th:action="@{/admin/t9/dataElements/sync}" method="post">
-                        <button class="btn btn-primary"  type="submit">Sync Data Elements</button>
-                    </form>
-                </div>
-
-                <div style="margin-bottom: 10px;">
-                    <form th:action="@{/admin/t9/dataElements/autoBindOptions}" method="post">
-                        <button class="btn btn-success"  type="submit">Auto bind options</button>
-                    </form>
-                </div>
-
-                <form th:action="@{/admin/t9/dataElements/bindOptionsFromFile}" method="post">
-                    <button class="btn btn-default"  type="submit">Bind options from File</button>
-                </form>
-            </div>
+            
 
 
             <div th:if="${!dataElements.content.empty}" style="background: #fff">
@@ -44,7 +27,6 @@
                             <th>ID</th> 
                             <th>Name</th>
                             <th>Code</th>
-                            <th>Options</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
@@ -53,7 +35,6 @@
                             <td th:text="${dataElement.dhisId}"></td>                            
                             <td th:text="${dataElement.dhisName}"></td>
                             <td th:text="${dataElement.dhisCode}"></td>
-                            <td th:text="${dataElement.optionsAsCodes}"></td>
                             <td>
                                 <a  th:href="@{|/admin/t9/formElements/${dataElement.id}/edit|}">Set options</a>
                             </td>
@@ -61,7 +42,7 @@
                     </tbody>
                 </table>
                 <div th:if="${defaultSearchDto.directSearch and dataElements.content.empty}">No Cities found</div>
-                <div th:unless="${dataElements.content.empty}" th:include="pagination :: pagination (baseUrl=@{|~/admin/t9/dataElements|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
+                <div th:unless="${dataElements.content.empty}" th:include="pagination :: pagination (baseUrl=@{|~/admin/t9/dataElements/unmapped|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
             </div>
 
         </div>

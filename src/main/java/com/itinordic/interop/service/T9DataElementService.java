@@ -11,4 +11,7 @@ import org.springframework.data.domain.Page;
 public interface T9DataElementService {
     
     public Page<T9DataElement> findT9DataElements(T9DataElementSearchDto diagnosisOptionSearchDto, String orderField, boolean desc, Integer pageSize);
+
+    public long getT9DataElementCount(T9DataElementSearchDto dataElementSearchDto);
+
 }

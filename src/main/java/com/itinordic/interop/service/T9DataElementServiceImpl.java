@@ -23,17 +23,23 @@ public class T9DataElementServiceImpl implements T9DataElementService{
     private T9DataElementRepository diagnosisOptionRepository;
 
     @Override
-    public Page<T9DataElement> findT9DataElements(T9DataElementSearchDto diagnosisOptionSearchDto, String orderField, boolean desc, Integer pageSize) {
+    public Page<T9DataElement> findT9DataElements(T9DataElementSearchDto dataElementSearchDto, String orderField, boolean desc, Integer pageSize) {
         Sort.Direction sortDirection = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
-        int pageNumber =diagnosisOptionSearchDto.getPageNumber();
+        int pageNumber =dataElementSearchDto.getPageNumber();
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize, sortDirection, orderField);
         
-        Predicate predicate = T9DataElementPredicateUtil.getPredicate(diagnosisOptionSearchDto);
+        Predicate predicate = T9DataElementPredicateUtil.getPredicate(dataElementSearchDto);
         if (predicate != null) {
             return diagnosisOptionRepository.findAll(predicate, pageRequest);
         } else {
             return diagnosisOptionRepository.findAll(pageRequest);
         }
+    }
+    
+     @Override
+    public long getT9DataElementCount(T9DataElementSearchDto dataElementSearchDto) {
+        Predicate predicate = T9DataElementPredicateUtil.getPredicate(dataElementSearchDto);
+        return diagnosisOptionRepository.count(predicate);
     }
     
     

@@ -158,6 +158,15 @@ public class T9DataElementController {
     public String getUploadForm(Model model, Principal principal) {
         return "t9DataElement/bindOptionsFromFile";
     }
+    
+    @RequestMapping(value = "/admin/t9/dataElements/unmapped", method = RequestMethod.GET)
+    public String unmappedDataElements(Principal principal, Model model, @ModelAttribute("defaultSearchDto") T9DataElementSearchDto searchDto) {
+        searchDto.setNoOptions(true);
+        Page<T9DataElement> dataElementsPage = t9DataElementService.findT9DataElements(searchDto, "modificationDateTime", true, 10);
+        model.addAttribute("dataElements", dataElementsPage);
+        PageUtil.injectPageAspects(model, dataElementsPage);
+        return "t9DataElement/t9UnmappedDataElements";
+    }
 
     @RequestMapping(value = "/admin/t9/dataElements/bindOptionsFromFile", method = RequestMethod.POST)
     public synchronized String upload(MultipartFile excelInput, Principal principal, Model model) throws IOException {
