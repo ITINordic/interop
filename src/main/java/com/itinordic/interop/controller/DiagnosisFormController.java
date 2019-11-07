@@ -87,6 +87,7 @@ public class DiagnosisFormController {
                 diagnosisForm.setDiagnosisOrgUnit(diagnosisOrgUnit);
                 diagnosisForm.setT9OrgUnit(t9OrganizationUnit);
                 diagnosisForm.setFormElements(getMappedT9FormElements(diagnosisOption, outcome, Integer.valueOf(age)));
+                diagnosisForm.setEventPeriod(getEventPeriod(event));
                 diagnosisFormRepository.save(diagnosisForm);
             }
 
@@ -121,5 +122,10 @@ public class DiagnosisFormController {
 
         return mappedT9FormElements;
 
+    }
+    
+    private String getEventPeriod(Event event){
+        String[] eventDates=event.getEventDate().split("-");
+        return eventDates[0]+eventDates[1];
     }
 }

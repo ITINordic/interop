@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head th:inline="text">
+        <title>Diagnosis Forms</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link th:include="imports :: css" th:remove="tag" />
+    </head>
+    <body>
+        
+         <div th:include="topNav :: topNav"></div>
+       
+        <div class="container">
+
+
+            <h2>T9 DataSet Values</h2>
+
+           
+
+            <div th:if="${!dataSetValues.empty}" style="background: #fff">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Data Element</th>
+                            <th>Period</th>
+                            <th>OrgUnit</th> 
+                            <th>CategoryOptionCombo</th> 
+                            <th>Value</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="dataSetValue: ${dataSetValues}">
+                            <td th:text="${dataSetValue.formElement.dataElement.dhisName}"></td>
+                            <td th:text="${dataSetValue.eventPeriod}"></td>
+                            <td th:text="${dataSetValue.organizationUnit.dhisName}"></td>
+                            <td th:text="${dataSetValue.formElement.categoryOptionComboId}"></td>
+                            <td th:text="${dataSetValue.count}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+          <script th:include="imports :: javascript" th:remove="tag"></script>
+    </body>
+</html>

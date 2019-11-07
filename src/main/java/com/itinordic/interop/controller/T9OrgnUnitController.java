@@ -61,19 +61,6 @@ public class T9OrgnUnitController {
         return "redirect:/admin/t9/organizationUnits";
     }
 
-    @RequestMapping(value = "/admin/t9/organizationUnits/upload", method = RequestMethod.POST)
-    public String upload(MultipartFile csvInput, Principal principal, Model model) throws IOException {
-        if (csvInput != null && !csvInput.isEmpty()) {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(csvInput.getBytes())))) {
-
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }
-
-        }
-
-        return "redirect:/admin/t9/organizationUnits";
-
-    }
+   
 
 }

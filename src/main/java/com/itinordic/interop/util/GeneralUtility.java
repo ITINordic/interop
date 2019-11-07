@@ -399,12 +399,8 @@ public class GeneralUtility {
     }
 
     public static void main(String[] args) {
-        //System.out.println("facebook:accessToken".split("facebook:")[1]);
-        Date date = new Date();
-        for (int i = 1; i < 25; i++) {
-            date = getNextAmortizationStartDate(date);
-            System.out.println(new DateTime(date));
-        }
+        String[] eventDates="2019-10-10T00:00:00.000".split("-");
+        System.out.println(eventDates[0]+eventDates[1]);
     }
 
 }

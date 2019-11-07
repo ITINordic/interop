@@ -37,6 +37,8 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     private T9OrganizationUnit t9OrgUnit;
     @Column(unique=true, nullable=false)
     private String dhisId;
+    @Column(nullable=false)
+    private String eventPeriod;
 
     public Long getId() {
         return id;
@@ -101,6 +103,16 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     public void setT9OrgUnit(T9OrganizationUnit t9OrgUnit) {
         this.t9OrgUnit = t9OrgUnit;
     }
+
+    public String getEventPeriod() {
+        return eventPeriod;
+    }
+
+    public void setEventPeriod(String eventPeriod) {
+        this.eventPeriod = eventPeriod;
+    }
+    
+    
     
     @Override
     public int hashCode() {

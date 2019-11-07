@@ -141,6 +141,7 @@ public class T9DataElementController {
                         List<DiagnosisOption> newDiagnosisOptionList = new ArrayList<>();
                         for (String optionCode : optionCodesArray) {
                             if (!GeneralUtility.isEmpty(optionCode)) {
+                                optionCode=optionCode.trim();
                                 DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisCode(optionCode);
                                 if (diagnosisOption != null) {
                                     newDiagnosisOptionList.add(diagnosisOption);
