@@ -47,9 +47,9 @@
                     </thead>
                     <tbody>
                         <tr th:each="dataElement: ${dataElements}">
-                            <td th:text="${dataElement.dhisId}"></td>
-                            <td th:text="${dataElement.dhisCode}"></td>
+                            <td th:text="${dataElement.dhisId}"></td>                            
                             <td th:text="${dataElement.dhisName}"></td>
+                            <td th:text="${dataElement.dhisCode}"></td>
                             <td th:text="${dataElement.optionsAsCodes}"></td>
                         </tr>
                     </tbody>

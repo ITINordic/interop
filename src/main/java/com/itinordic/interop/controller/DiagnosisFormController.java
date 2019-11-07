@@ -76,13 +76,18 @@ public class DiagnosisFormController {
             String diagnosisOptionCode = getValue(event, DiagnosisFormUtility.DIAGNOSIS_DATA_ELEMENT_ID);
             DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisCode(diagnosisOptionCode);
             if (diagnosisOption == null) {
-                logger.info("DiagnosisOption with code %s not found", diagnosisOptionCode);
+                logger.info("DiagnosisOption with code {} not found", diagnosisOptionCode);
                 continue;
             }
 
             DiagnosisOrganizationUnit diagnosisOrgUnit = diagnosisOrganizationUnitRepository.findByDhisId(event.getOrgUnit());
             if (diagnosisOrgUnit == null) {
-                logger.info("DiagnosisOrganizationUnit with id %s not found", event.getOrgUnit());
+                logger.info("DiagnosisOrganizationUnit with id {} not found", event.getOrgUnit());
+                continue;
+            }
+            
+            if (age==null) {
+                logger.info("Null age for formId={}",event.getEvent());
                 continue;
             }
 
@@ -101,16 +106,19 @@ public class DiagnosisFormController {
                 logger.info("T9OrganizationUnit not found for " + diagnosisOrgUnit);
                 continue;
             }
+            
+            double dAge=Double.valueOf(age);
+            int intAge=(int)dAge;
 
-            List<T9FormElement> mappedT9FormElements = getMappedT9FormElements(diagnosisOption, outcome, Integer.valueOf(age));
+            List<T9FormElement> mappedT9FormElements = getMappedT9FormElements(diagnosisOption, outcome,intAge);
             if (GeneralUtility.isEmpty(mappedT9FormElements)) {
-                logger.info("MappedT9FormElements not found for option.code=%s, age=%s, outcome=%s",diagnosisOption.getDhisCode(),age,outcome);
+                logger.info("MappedT9FormElements not found for option.code={}, age={}, outcome={}",diagnosisOption.getDhisCode(),age,outcome);
                 continue;
             }
 
             diagnosisForm.setDiagnosisOption(diagnosisOption);
             diagnosisForm.setOutcome(outcome);
-            diagnosisForm.setAge(Integer.valueOf(age));
+            diagnosisForm.setAge(intAge);
             diagnosisForm.setDiagnosisOrgUnit(diagnosisOrgUnit);
             diagnosisForm.setT9OrgUnit(t9OrganizationUnit);
             diagnosisForm.setFormElements(mappedT9FormElements);
