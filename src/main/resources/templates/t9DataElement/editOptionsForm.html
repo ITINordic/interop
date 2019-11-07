@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Data Element Option Mapping</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <link th:include="imports :: css" th:remove="tag" />
+    </head>
+    <body>
+
+         <div th:include="topNav :: topNav"></div>
+
+        <div class="container">
+
+            
+            
+            <div class="row">
+                <div class="col-md-5">
+                    <div>
+                        <h3><b><span th:text="${fixedDataElement.dhisName}"></span></b></h3>
+                    </div>
+
+                    <form role="form" th:object="${dataElement}" method="post">
+
+                        <div class="row" style="color: red" th:if="${#fields.hasAnyErrors()}">
+                            <div class="large-12 columns">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row client-errors-container" style="color: red; display: none;">
+                            <div class="large-12 columns">
+                                <ul class="client-errors">
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                       
+                        <div class="form-group">
+                            <label><strong>Options*</strong></label>
+                            <select th:field="*{options}" class="form-control areas-input" multiple="multiple" style="width: 100%;">
+                                <option th:if="${dataElement.hasOptions()}" th:each="option: ${dataElement.options}"  th:value="${option.id}" th:text="${option.dhisName}"></option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <a  th:href="@{/admin/t9/dataElements}" class="btn btn-default">Cancel</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+         <script th:include="imports :: javascript" th:remove="tag"></script>
+
+         <script type="text/javascript" th:inline="javascript">           
+            var myOptionsUrl = /*[[@{/admin/diagnosis/optionsJson}]]*/ '/fakeUrl';
+            $(".areas-input").select2({
+                placeholder: 'Choose options',
+                allowClear: true,
+                ajax: {
+                    url: myOptionsUrl,
+                    data: function (params) {
+                        var query = {
+                            q: params.term,
+                            page: params.page || 1
+                        };
+                        return query;
+                    }
+                }
+            });
+        </script>
+        
+        
+    </body>
+</html>

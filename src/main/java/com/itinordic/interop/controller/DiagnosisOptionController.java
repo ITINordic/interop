@@ -8,10 +8,9 @@ import com.itinordic.interop.util.ImmisOptionSetRestUtility;
 import com.itinordic.interop.util.Option;
 import com.itinordic.interop.util.OptionSet;
 import com.itinordic.interop.util.PageUtil;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
+import com.itinordic.interop.util.Select2Object;
+import com.itinordic.interop.util.Select2ObjectBag;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.security.Principal;
 import java.util.List;
 import org.slf4j.Logger;
@@ -23,7 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -31,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 public class DiagnosisOptionController {
-    
+
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -46,16 +45,15 @@ public class DiagnosisOptionController {
         PageUtil.injectPageAspects(model, optionsPage);
         return "diagnosisOption/diagnosisOptions";
     }
-    
-    
+
     @RequestMapping(value = "/admin/diagnosis/options/sync", method = RequestMethod.POST)
     public synchronized String sync(Principal principal, Model model) throws IOException {
-        OptionSet optionSet=ImmisOptionSetRestUtility.getOptionSet();
-        List<Option> options=optionSet.getOptions();
-        for(Option option:options){
-            DiagnosisOption diagnosisOption=diagnosisOptionRepository.findByDhisId(option.getId());
-            if(diagnosisOption==null){
-                diagnosisOption=new DiagnosisOption();
+        OptionSet optionSet = ImmisOptionSetRestUtility.getOptionSet();
+        List<Option> options = optionSet.getOptions();
+        for (Option option : options) {
+            DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisId(option.getId());
+            if (diagnosisOption == null) {
+                diagnosisOption = new DiagnosisOption();
                 diagnosisOption.setDhisCode(option.getCode());
                 diagnosisOption.setDhisName(option.getName());
                 diagnosisOption.setDhisId(option.getId());
@@ -66,19 +64,16 @@ public class DiagnosisOptionController {
 
     }
 
-    @RequestMapping(value = "/admin/diagnosis/options/upload", method = RequestMethod.POST)
-    public String upload(MultipartFile csvInput, Principal principal, Model model) throws IOException {
-        if (csvInput != null && !csvInput.isEmpty()) {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(csvInput.getBytes())))) {
-
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }
-
+    @ResponseBody
+    @RequestMapping(value = "/admin/diagnosis/optionsJson", method = RequestMethod.GET)
+    public Select2ObjectBag getStationsInJson(DiagnosisOptionSearchDto searchDto) {
+        Select2ObjectBag bag = new Select2ObjectBag();
+        Page<DiagnosisOption> optionsPage = diagnosisOptionService.findDiagnosisOptions(searchDto, "dhisName", false, 10);
+        bag.setMore(optionsPage.hasNext());
+        for (DiagnosisOption option : optionsPage.getContent()) {
+            bag.add(new Select2Object(option.getId().toString(), option.getDhisName()));
         }
-
-        return "redirect:/admin/diagnosis/options";
-
+        return bag;
     }
 
 }

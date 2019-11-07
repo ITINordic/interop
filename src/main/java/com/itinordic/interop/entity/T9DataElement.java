@@ -101,6 +101,15 @@ public class T9DataElement extends BaseEntity implements Serializable {
         return string;
     }
     
+    public boolean hasOptions(){
+        return !GeneralUtility.isEmpty(options);
+    }
+    
+    public T9DataElement copy(T9DataElement srcDataElement){
+        this.options=srcDataElement.options;
+        return this;
+    }
+    
     
 
     @Override

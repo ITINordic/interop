@@ -4,6 +4,9 @@
         "th:if": {},
         "th:text": {},
         "th:include": {},
+        "th:object": {
+            "context": "form"
+        },
         "th:unless": {},
         "th:src": {
             "context": "script"
@@ -20,6 +23,9 @@
         },
         "th:fragment": {
             "context": "div"
+        },
+        "th:field": {
+            "context": "input"
         }
     }
 }

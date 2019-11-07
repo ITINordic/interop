@@ -3,6 +3,7 @@ package com.itinordic.interop.controller;
 import com.itinordic.interop.criteria.T9FormElementSearchDto;
 import com.itinordic.interop.entity.T9DataElement;
 import com.itinordic.interop.entity.T9FormElement;
+import com.itinordic.interop.exceptions.NonAjaxNotFoundException;
 import com.itinordic.interop.repo.T9DataElementRepository;
 import com.itinordic.interop.repo.T9FormElementRepository;
 import com.itinordic.interop.service.T9FormElementService;
@@ -11,18 +12,22 @@ import com.itinordic.interop.util.CategoryOptionCombo;
 import com.itinordic.interop.util.DataElement;
 import com.itinordic.interop.util.DataSet;
 import com.itinordic.interop.util.DataSetElement;
+import static com.itinordic.interop.util.GeneralUtility.parseIdLong;
 import com.itinordic.interop.util.NhisDataSetRestUtility;
 import com.itinordic.interop.util.PageUtil;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -49,6 +54,9 @@ public class T9FormElementController {
         PageUtil.injectPageAspects(model, formElementsPage);
         return "t9FormElement/t9FormElements";
     }
+    
+    
+   
 
     @RequestMapping(value = "/admin/t9/formElements/sync", method = RequestMethod.POST)
     public synchronized String sync(Principal principal, Model model) throws IOException {

@@ -3,6 +3,7 @@ package com.itinordic.interop.controller;
 import com.itinordic.interop.criteria.T9DataElementSearchDto;
 import com.itinordic.interop.entity.DiagnosisOption;
 import com.itinordic.interop.entity.T9DataElement;
+import com.itinordic.interop.exceptions.NonAjaxNotFoundException;
 import com.itinordic.interop.repo.DiagnosisOptionRepository;
 import com.itinordic.interop.repo.T9DataElementRepository;
 import com.itinordic.interop.service.T9DataElementService;
@@ -10,6 +11,7 @@ import com.itinordic.interop.util.DataElement;
 import com.itinordic.interop.util.DataSet;
 import com.itinordic.interop.util.DataSetElement;
 import com.itinordic.interop.util.GeneralUtility;
+import static com.itinordic.interop.util.GeneralUtility.parseIdLong;
 import com.itinordic.interop.util.MappingRestUtility;
 import com.itinordic.interop.util.MappingResult;
 import com.itinordic.interop.util.NhisDataSetRestUtility;
@@ -23,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.validation.Valid;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -33,7 +36,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -81,6 +86,40 @@ public class T9DataElementController {
         return "redirect:/admin/t9/dataElements";
 
     }
+    
+    
+     
+    @RequestMapping(value = "/admin/t9/formElements/{dataElementId}/edit", method = RequestMethod.GET)
+    public String initEditT9DataElement(@PathVariable("dataElementId") String dataElementId, Principal principal, Model model) {
+        T9DataElement dataElement = t9DataElementRepository.getOne(parseIdLong(dataElementId));
+        model.addAttribute("dataElement", dataElement);
+        model.addAttribute("fixedDataElement", dataElement);
+        return "t9DataElement/editOptionsForm";
+    }
+
+    @RequestMapping(value = "/admin/t9/formElements/{dataElementId}/edit", method = RequestMethod.POST)
+    public String processEditT9DataElement(@PathVariable("dataElementId") String dataElementId, @Valid @ModelAttribute("dataElement") T9DataElement dataElement, BindingResult result, Principal principal, Model model) throws IOException {
+        T9DataElement $dataElement = t9DataElementRepository.getOne(parseIdLong(dataElementId));
+        if ($dataElement == null) {
+            throw new NonAjaxNotFoundException();
+        }
+        
+        if(!dataElement.hasOptions()){
+            result.rejectValue("options", "noOptionsCode", "Please select one or more options");
+        }
+
+        dataElement.setId(parseIdLong(dataElementId));
+
+        if (result.hasErrors()) {
+            model.addAttribute("fixedDataElement", $dataElement);
+            return "t9DataElement/editOptionsForm";
+        }
+        $dataElement.copy(dataElement);
+        t9DataElementRepository.save($dataElement);
+        return "redirect:/admin/t9/dataElements";
+
+    }
+
 
     @RequestMapping(value = "/admin/t9/dataElements/autoBindOptions", method = RequestMethod.POST)
     public synchronized String autoBindOptions(Principal principal, Model model) throws IOException {
