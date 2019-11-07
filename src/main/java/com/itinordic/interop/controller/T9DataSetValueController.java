@@ -2,11 +2,8 @@ package com.itinordic.interop.controller;
 
 import com.itinordic.interop.criteria.DiagnosisFormSearchDto;
 import com.itinordic.interop.dao.DataSetValueDao;
-import com.itinordic.interop.entity.DiagnosisForm;
-import com.itinordic.interop.util.PageUtil;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;

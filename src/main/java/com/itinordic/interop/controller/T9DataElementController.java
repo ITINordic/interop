@@ -52,9 +52,9 @@ public class T9DataElementController {
 
     @RequestMapping(value = "/admin/t9/dataElements", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") T9DataElementSearchDto searchDto) {
-        Page<T9DataElement> citiesPage = t9DataElementService.findT9DataElements(searchDto, "modificationDateTime", true, 10);
-        model.addAttribute("dataElements", citiesPage);
-        PageUtil.injectPageAspects(model, citiesPage);
+        Page<T9DataElement> dataElementsPage = t9DataElementService.findT9DataElements(searchDto, "modificationDateTime", true, 10);
+        model.addAttribute("dataElements", dataElementsPage);
+        PageUtil.injectPageAspects(model, dataElementsPage);
         return "t9DataElement/t9DataElements";
     }
 

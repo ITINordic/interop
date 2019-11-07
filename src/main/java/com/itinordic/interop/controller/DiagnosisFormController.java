@@ -49,9 +49,9 @@ public class DiagnosisFormController {
 
     @RequestMapping(value = "/admin/diagnosis/forms", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") DiagnosisFormSearchDto searchDto) {
-        Page<DiagnosisForm> citiesPage = diagnosisFormService.findDiagnosisForms(searchDto, "id", true, 10);
-        model.addAttribute("forms", citiesPage);
-        PageUtil.injectPageAspects(model, citiesPage);
+        Page<DiagnosisForm> diagnosisFormPage = diagnosisFormService.findDiagnosisForms(searchDto, "id", true, 10);
+        model.addAttribute("forms", diagnosisFormPage);
+        PageUtil.injectPageAspects(model, diagnosisFormPage);
         return "diagnosisForm/diagnosisForms";
     }
 

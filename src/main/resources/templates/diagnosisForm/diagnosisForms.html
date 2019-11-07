@@ -27,16 +27,20 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>ID</th> 
+                            <th>ID</th>
+                            <th>Option</th>
+                            <th>OrgUnit</th> 
+                            <th>Age</th> 
+                            <th>Outcome</th> 
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="form: ${forms}">
-                            <td th:text="${form.dhisName}"></td>
-                            <td th:text="${form.dhisCode}"></td>
                             <td th:text="${form.dhisId}"></td>
+                            <td th:text="${form.diagnosisOption.dhisCode}"></td>
+                            <td th:text="${form.t9OrgUnit.dhisId}"></td>
+                            <td th:text="${form.age}"></td>
+                            <td th:text="${form.outcome}"></td>
                         </tr>
                     </tbody>
                 </table>

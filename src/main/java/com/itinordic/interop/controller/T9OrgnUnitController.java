@@ -7,10 +7,7 @@ import com.itinordic.interop.service.T9OrgnUnitService;
 import com.itinordic.interop.util.NhisOrganizationUnitRestUtility;
 import com.itinordic.interop.util.OrganizationUnit;
 import com.itinordic.interop.util.PageUtil;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -37,9 +33,9 @@ public class T9OrgnUnitController {
 
     @RequestMapping(value = "/admin/t9/organizationUnits", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") T9OrgnUnitSearchDto searchDto) {
-        Page<T9OrganizationUnit> citiesPage = t9OrgnUnitService.findT9OrganizationUnits(searchDto, "dhisName", false, 10);
-        model.addAttribute("organizationUnits", citiesPage);
-        PageUtil.injectPageAspects(model, citiesPage);
+        Page<T9OrganizationUnit> organizationUnitsPage = t9OrgnUnitService.findT9OrganizationUnits(searchDto, "dhisName", false, 10);
+        model.addAttribute("organizationUnits", organizationUnitsPage);
+        PageUtil.injectPageAspects(model, organizationUnitsPage);
         return "t9OrgUnit/t9OrgnUnits";
     }
     

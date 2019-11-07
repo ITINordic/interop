@@ -38,9 +38,9 @@ public class DiagnosisOptionController {
 
     @RequestMapping(value = "/admin/diagnosis/options", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") DiagnosisOptionSearchDto searchDto) {
-        Page<DiagnosisOption> citiesPage = diagnosisOptionService.findDiagnosisOptions(searchDto, "dhisName", false, 10);
-        model.addAttribute("options", citiesPage);
-        PageUtil.injectPageAspects(model, citiesPage);
+        Page<DiagnosisOption> optionsPage = diagnosisOptionService.findDiagnosisOptions(searchDto, "dhisName", false, 10);
+        model.addAttribute("options", optionsPage);
+        PageUtil.injectPageAspects(model, optionsPage);
         return "diagnosisOption/diagnosisOptions";
     }
     

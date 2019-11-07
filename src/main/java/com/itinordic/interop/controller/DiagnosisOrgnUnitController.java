@@ -33,9 +33,9 @@ public class DiagnosisOrgnUnitController {
 
     @RequestMapping(value = "/admin/diagnosis/organizationUnits", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") DiagnosisOrgnUnitSearchDto searchDto) {
-        Page<DiagnosisOrganizationUnit> citiesPage = diagnosisOrgnUnitService.findDiagnosisOrganizationUnits(searchDto, "dhisName", false, 10);
-        model.addAttribute("organizationUnits", citiesPage);
-        PageUtil.injectPageAspects(model, citiesPage);
+        Page<DiagnosisOrganizationUnit> organizationUnitsPage = diagnosisOrgnUnitService.findDiagnosisOrganizationUnits(searchDto, "dhisName", false, 10);
+        model.addAttribute("organizationUnits", organizationUnitsPage);
+        PageUtil.injectPageAspects(model, organizationUnitsPage);
         return "diagnosisOrgUnit/diagnosisOrgnUnits";
     }
 
