@@ -7,9 +7,9 @@
         <link th:include="imports :: css" th:remove="tag" />
     </head>
     <body>
-        
+
         <div th:include="topNav :: topNav"></div>
-        
+
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -45,6 +45,7 @@
                         <div>
                             <hr />
                             <button type="submit" class="btn btn-primary" style="margin-right: 30px;"><strong>Save</strong></button>
+                            <a  th:href="@{/admin/t9/dataElements}" class="btn btn-default">Cancel</a>
                         </div>
 
                     </form>
