@@ -32,6 +32,7 @@
                             <th>Name</th>
                             <th>Code</th>
                             <th>ID</th> 
+                            <th>Data Elements</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,6 +40,12 @@
                             <td th:text="${option.dhisName}"></td>
                             <td th:text="${option.dhisCode}"></td>
                             <td th:text="${option.dhisId}"></td>
+                            <td style="max-width: 50px;">
+                                <span th:each="dataElement, count: ${option.dataElements}" style="max-width: 40px;">
+                                    <span th:text="${count.count}"></span><span>)</span><span th:text="${dataElement.dhisName}"></span><span>.</span>
+                                </span>
+                            </td>
+                            
                         </tr>
                     </tbody>
                 </table>

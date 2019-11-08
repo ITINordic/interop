@@ -1,5 +1,6 @@
 package com.itinordic.interop.entity;
 
+import com.itinordic.interop.util.GeneralUtility;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -70,6 +71,10 @@ public class DiagnosisOption extends BaseEntity implements Serializable {
 
     public void setDataElements(List<T9DataElement> dataElements) {
         this.dataElements = dataElements;
+    }
+    
+    public boolean hasDataElements(){
+        return !GeneralUtility.isEmpty(dataElements);
     }
     
     @Override
