@@ -45,6 +45,15 @@ public class DiagnosisOptionController {
         PageUtil.injectPageAspects(model, optionsPage);
         return "diagnosisOption/diagnosisOptions";
     }
+    
+    @RequestMapping(value = "/admin/diagnosis/options/unmapped", method = RequestMethod.GET)
+    public String getUnmapped(Principal principal, Model model, @ModelAttribute("defaultSearchDto") DiagnosisOptionSearchDto searchDto) {
+        searchDto.setNoDataElements(true);
+        Page<DiagnosisOption> optionsPage = diagnosisOptionService.findDiagnosisOptions(searchDto, "dhisName", false, 10);
+        model.addAttribute("options", optionsPage);
+        PageUtil.injectPageAspects(model, optionsPage);
+        return "diagnosisOption/unmappedDiagnosisOptions";
+    }
 
     @RequestMapping(value = "/admin/diagnosis/options/sync", method = RequestMethod.POST)
     public synchronized String sync(Principal principal, Model model) throws IOException {

@@ -23,7 +23,9 @@ import com.itinordic.interop.util.Pager;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,7 +152,7 @@ public class DiagnosisFormController {
     }
 
     private List<T9FormElement> getMappedT9FormElements(DiagnosisOption diagnosisOption, String outcome, Integer age) {
-        List<T9FormElement> mappedT9FormElements = new ArrayList<>();
+        Set<T9FormElement> mappedT9FormElements = new HashSet<>();
 
         List<T9DataElement> dataElements = diagnosisOption.getDataElements();
         for (T9DataElement dataElement : dataElements) {
@@ -162,16 +164,20 @@ public class DiagnosisFormController {
                 //Outcome and age mapping
                 String mappedCategoryOptionComboId = CategoryOptionComboUtility.getCategoryOptionComboId(outcome, age);
                 T9FormElement ageOutcomeT9FormElement = getT9FormElement(formElements, mappedCategoryOptionComboId);
-                mappedT9FormElements.add(ageOutcomeT9FormElement);
+                if (ageOutcomeT9FormElement != null) {
+                    mappedT9FormElements.add(ageOutcomeT9FormElement);
+                }
 
                 //Total per age mapping (C or Cases or Total)
                 String mappedTotalCategoryOptionComboId = CategoryOptionComboUtility.getTotalCategoryOptionComboId(age);
                 T9FormElement totalAgeT9FormElement = getT9FormElement(formElements, mappedTotalCategoryOptionComboId);
-                mappedT9FormElements.add(totalAgeT9FormElement);
+                if (totalAgeT9FormElement != null) {
+                    mappedT9FormElements.add(totalAgeT9FormElement);
+                }
             }
         }
 
-        return mappedT9FormElements;
+        return new ArrayList<>(mappedT9FormElements);
 
     }
 

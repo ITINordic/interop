@@ -14,8 +14,16 @@ public class DiagnosisOptionPredicateUtil {
         BooleanExpression exp = null;        
          if (diagnosisOptionSearchDto.getQ() != null && !diagnosisOptionSearchDto.getQ().trim().isEmpty()) {
             BooleanExpression nameExp = QDiagnosisOption.diagnosisOption.dhisName.like("%" + diagnosisOptionSearchDto.getQ().trim() + "%");
+            nameExp = nameExp.or(QDiagnosisOption.diagnosisOption.dhisCode.like("%" + diagnosisOptionSearchDto.getQ().trim() + "%"));
+            nameExp = nameExp.or(QDiagnosisOption.diagnosisOption.dhisId.like("%" + diagnosisOptionSearchDto.getQ().trim() + "%"));
             exp = exp != null ? exp.and(nameExp) : nameExp;
         }
+         
+          if (diagnosisOptionSearchDto.getNoDataElements() != null && diagnosisOptionSearchDto.getNoDataElements()) {
+            BooleanExpression noDataElementsExp = QDiagnosisOption.diagnosisOption.dataElements.isEmpty();
+            exp = exp != null ? exp.and(noDataElementsExp) : noDataElementsExp;
+        }
+
 
         return exp;
     }
