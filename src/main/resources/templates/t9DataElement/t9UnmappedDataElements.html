@@ -17,7 +17,21 @@
             
             <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${dataElements.totalElements}"></span></b></h4>
 
-            
+             <hr />
+
+            <form class="form-inline" method="get" th:object="${defaultSearchDto}">
+
+                <div class="form-group">
+                    <input th:field="*{q}" type="text" placeholder="Name" maxlength="240" class="form-control" />
+                </div>
+
+                <input type="hidden" name="directSearch" value="true" />
+
+                <button type="submit" class="btn btn-default" style="margin-right: 120px;"><i class="fa fa-search"></i> Search</button>
+
+            </form>
+
+            <hr />
 
 
             <div th:if="${!dataElements.content.empty}" style="background: #fff">

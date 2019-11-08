@@ -153,11 +153,6 @@ public class T9DataElementController {
         }
         return "redirect:/admin/t9/dataElements";
     }
-
-    @RequestMapping(value = "/admin/t9/dataElements/bindOptionsFromFile", method = RequestMethod.GET)
-    public String getUploadForm(Model model, Principal principal) {
-        return "t9DataElement/bindOptionsFromFile";
-    }
     
     @RequestMapping(value = "/admin/t9/dataElements/unmapped", method = RequestMethod.GET)
     public String unmappedDataElements(Principal principal, Model model, @ModelAttribute("defaultSearchDto") T9DataElementSearchDto searchDto) {
@@ -168,6 +163,13 @@ public class T9DataElementController {
         return "t9DataElement/t9UnmappedDataElements";
     }
 
+
+    @RequestMapping(value = "/admin/t9/dataElements/bindOptionsFromFile", method = RequestMethod.GET)
+    public String getUploadForm(Model model, Principal principal) {
+        return "t9DataElement/bindOptionsFromFile";
+    }
+    
+  
     @RequestMapping(value = "/admin/t9/dataElements/bindOptionsFromFile", method = RequestMethod.POST)
     public synchronized String upload(MultipartFile excelInput, Principal principal, Model model) throws IOException {
         if (excelInput != null && !excelInput.isEmpty()) {
@@ -228,6 +230,8 @@ public class T9DataElementController {
 
             }
 
+        }else{
+             return "t9DataElement/bindOptionsFromFile";
         }
 
         return "redirect:/admin/t9/dataElements";

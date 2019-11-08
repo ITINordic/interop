@@ -14,27 +14,51 @@
 
 
             <h2>T9 Data Elements</h2>
-            
+
             <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${dataElements.totalElements}"></span></b></h4>
 
-            <div style="margin-bottom: 10px;">
+            <hr />
 
-                <div style="margin-bottom: 10px;">
+            <form class="form-inline" method="get" th:object="${defaultSearchDto}">
+
+                <div class="form-group">
+                    <input th:field="*{q}" type="text" placeholder="Name" maxlength="240" class="form-control" />
+                </div>
+
+                <input type="hidden" name="directSearch" value="true" />
+
+                <button type="submit" class="btn btn-default" style="margin-right: 120px;"><i class="fa fa-search"></i> Search</button>
+
+            </form>
+
+            <hr />
+
+
+
+            <div>
+                <div class="pull-left">
                     <form th:action="@{/admin/t9/dataElements/sync}" method="post">
                         <button class="btn btn-primary"  type="submit">Sync Data Elements</button>
                     </form>
                 </div>
 
-                <div style="margin-bottom: 10px;">
+                <div class="pull-right" style="margin-right: 20px;">
                     <form th:action="@{/admin/t9/dataElements/autoBindOptions}" method="post">
                         <button class="btn btn-success"  type="submit">Auto bind options</button>
                     </form>
                 </div>
+                
+                
 
-                <form th:action="@{/admin/t9/dataElements/bindOptionsFromFile}" method="post">
-                    <button class="btn btn-default"  type="submit">Bind options from File</button>
-                </form>
+                <div class="pull-right" style="margin-right: 20px;">
+                    <form th:action="@{/admin/t9/dataElements/bindOptionsFromFile}" method="get">
+                        <button class="btn btn-default"  type="submit">Bind options from File</button>
+                    </form>
+                </div>
             </div>
+            
+            <div class="clearfix"></div>
+            <hr />
 
 
             <div th:if="${!dataElements.content.empty}" style="background: #fff">
