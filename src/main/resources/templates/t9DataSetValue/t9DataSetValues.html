@@ -16,10 +16,10 @@
             <h2>T9 DataSet Values</h2>
             
             <div>
-                <a th:href="@{|/admin/report/t9DataSetValues/download|}">Download Csv</a>
+                <a th:href="@{/admin/report/t9DataSetValues/download(eventPeriod=${defaultSearchDto.eventPeriod})}">Download Csv</a>
             </div>
             <div>
-                 <a th:href="@{|/admin/report/t9DataSetValues/downloadInZip|}">Download Zipped File</a>
+                 <a th:href="@{/admin/report/t9DataSetValues/downloadInZip(eventPeriod=${defaultSearchDto.eventPeriod})}">Download Zipped File</a>
             </div>
 
            

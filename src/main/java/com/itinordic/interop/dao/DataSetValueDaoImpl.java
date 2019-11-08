@@ -14,14 +14,21 @@ import org.springframework.stereotype.Repository;
 public class DataSetValueDaoImpl implements DataSetValueDao{
     
     
-     @PersistenceContext
+    @PersistenceContext
     private EntityManager entityManager;
     
     
-     @Override
+    @Override
     public List<DataSetValueElement> findDataSetValueElements() {      
         return entityManager.createQuery("select new com.itinordic.interop.util.DataSetValueElement(count(df),df.eventPeriod,fe,df.t9OrgUnit) from DiagnosisForm df join df.formElements fe group by df.eventPeriod,df.t9OrgUnit,fe")
                     .getResultList();
+    }
+    
+     @Override
+    public List<DataSetValueElement> findDataSetValueElements(String eventPeriod) {      
+        return entityManager.createQuery("select new com.itinordic.interop.util.DataSetValueElement(count(df),df.eventPeriod,fe,df.t9OrgUnit) from DiagnosisForm df join df.formElements fe where df.eventPeriod=:eventPeriod  group by df.eventPeriod,df.t9OrgUnit,fe")
+                .setParameter("eventPeriod", eventPeriod)
+                .getResultList();
     }
     
 }

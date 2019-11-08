@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Monthly T9 DataSet Values Report</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link th:include="imports :: css" th:remove="tag" />
+    </head>
+    <body>
+
+        <div th:include="topNav :: topNav"></div>
+
+        <div class="container">
+
+
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div>
+                        <h3><b>Monthly T9 DataSet Values Report</b></h3>
+                    </div>
+
+                    <form role="form" th:object="${reportInput}" method="post">
+
+                        <div class="row" style="color: red" th:if="${#fields.hasAnyErrors()}">
+                            <div class="large-12 columns">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row client-errors-container" style="color: red; display: none;">
+                            <div class="large-12 columns">
+                                <ul class="client-errors">
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                           
+                            <div class="col-md-4">
+                                <select th:field="*{month}" class="month form-control">
+                                    <option value="">Month</option>
+                                    <option th:each="month : ${months}" th:value="${month.number}" th:text="${month.name}"></option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <select th:field="*{year}" class="year form-control">
+                                    <option value="">Year</option>
+                                    <option th:each="year : ${#numbers.sequence(currentYear,currentYear-111)}" th:value="${year}" th:text="${year}"></option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <hr />
+                            <button type="submit" class="btn btn-primary">Generate Report</button>
+                            <a  th:href="@{/}" class="btn btn-default">Cancel</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+        <script th:include="imports :: javascript" th:remove="tag"></script>
+
+
+
+
+    </body>
+</html>
