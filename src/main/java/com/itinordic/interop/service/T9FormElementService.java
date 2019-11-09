@@ -10,5 +10,7 @@ import org.springframework.data.domain.Page;
  */
 public interface T9FormElementService {
     
+    public long getT9FormElementCount(T9FormElementSearchDto t9FormElementSearchDto);
+    
     public Page<T9FormElement> findT9FormElements(T9FormElementSearchDto diagnosisOptionSearchDto, String orderField, boolean desc, Integer pageSize);
 }

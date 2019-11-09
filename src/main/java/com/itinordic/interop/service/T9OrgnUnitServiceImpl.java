@@ -1,5 +1,7 @@
 package com.itinordic.interop.service;
 
+import com.itinordic.interop.criteria.T9DataElementPredicateUtil;
+import com.itinordic.interop.criteria.T9DataElementSearchDto;
 import com.itinordic.interop.criteria.T9OrgnUnitPredicateUtil;
 import com.itinordic.interop.criteria.T9OrgnUnitSearchDto;
 import com.itinordic.interop.entity.T9OrganizationUnit;
@@ -16,25 +18,32 @@ import org.springframework.stereotype.Service;
  * @author Charles Chigoriwa
  */
 @Service
-public class T9OrgnUnitServiceImpl implements T9OrgnUnitService{
-    
-    
+public class T9OrgnUnitServiceImpl implements T9OrgnUnitService {
+
     @Autowired
-    private T9OrganizationUnitRepository diagnosisOrganizationUnitRepository;
+    private T9OrganizationUnitRepository t9OrganizationUnitRepository;
 
     @Override
-    public Page<T9OrganizationUnit> findT9OrganizationUnits(T9OrgnUnitSearchDto diagnosisOrgnUnitSearchDto, String orderField, boolean desc, Integer pageSize) {
+    public Page<T9OrganizationUnit> findT9OrganizationUnits(T9OrgnUnitSearchDto t9OrgnUnitSearchDto, String orderField, boolean desc, Integer pageSize) {
         Sort.Direction sortDirection = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
-        int pageNumber =diagnosisOrgnUnitSearchDto.getPageNumber();
+        int pageNumber = t9OrgnUnitSearchDto.getPageNumber();
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize, sortDirection, orderField);
-        
-        Predicate predicate = T9OrgnUnitPredicateUtil.getPredicate(diagnosisOrgnUnitSearchDto);
+
+        Predicate predicate = T9OrgnUnitPredicateUtil.getPredicate(t9OrgnUnitSearchDto);
         if (predicate != null) {
-            return diagnosisOrganizationUnitRepository.findAll(predicate, pageRequest);
+            return t9OrganizationUnitRepository.findAll(predicate, pageRequest);
         } else {
-            return diagnosisOrganizationUnitRepository.findAll(pageRequest);
+            return t9OrganizationUnitRepository.findAll(pageRequest);
         }
     }
-    
-    
+
+    @Override
+    public long getOrganizationUnitCount(T9OrgnUnitSearchDto t9OrgnUnitSearchDto) {
+        if (t9OrgnUnitSearchDto == null) {
+            return t9OrganizationUnitRepository.count();
+        }
+        Predicate predicate = T9OrgnUnitPredicateUtil.getPredicate(t9OrgnUnitSearchDto);
+        return t9OrganizationUnitRepository.count(predicate);
+    }
+
 }

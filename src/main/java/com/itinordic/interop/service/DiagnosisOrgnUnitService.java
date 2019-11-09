@@ -10,5 +10,9 @@ import org.springframework.data.domain.Page;
  */
 public interface DiagnosisOrgnUnitService {
     
+    public long getOrganizationUnitCount(DiagnosisOrgnUnitSearchDto diagnosisOrgnUnitSearchDto);
+    
     public Page<DiagnosisOrganizationUnit> findDiagnosisOrganizationUnits(DiagnosisOrgnUnitSearchDto diagnosisOrgnUnitSearchDto, String orderField, boolean desc, Integer pageSize);
+    
+    
 }

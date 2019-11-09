@@ -11,4 +11,7 @@ import org.springframework.data.domain.Page;
 public interface T9OrgnUnitService {
     
     public Page<T9OrganizationUnit> findT9OrganizationUnits(T9OrgnUnitSearchDto diagnosisOrgnUnitSearchDto, String orderField, boolean desc, Integer pageSize);
+
+    public long getOrganizationUnitCount(T9OrgnUnitSearchDto t9OrgnUnitSearchDto);
+
 }

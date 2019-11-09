@@ -52,6 +52,14 @@ public class DataInitializingBean implements InitializingBean {
     private T9DataElementService t9DataElementService;
     @Autowired
     private T9FormElementRepository t9FormElementRepository;
+    @Autowired
+    private DiagnosisOptionService diagnosisOptionService;
+    @Autowired
+    private DiagnosisOrgnUnitService diagnosisOrgnUnitService;
+    @Autowired
+    private T9FormElementService t9FormElementService;
+    @Autowired
+    private T9OrgnUnitService t9OrgnUnitService;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -63,7 +71,7 @@ public class DataInitializingBean implements InitializingBean {
     }
 
     private void downloadImmisOrganizationUnits() {
-        if (diagnosisOrganizationUnitRepository.findAll().isEmpty()) {
+        if (diagnosisOrgnUnitService.getOrganizationUnitCount(null) == 0) {
             List<OrganizationUnit> organizationUnits = organizationUnitService.getOrganizationUnits(DhisSystem.IMMIS);
             for (OrganizationUnit organizationUnit : organizationUnits) {
                 DiagnosisOrganizationUnit diagnosisOrganizationUnit = diagnosisOrganizationUnitRepository.findByDhisId(organizationUnit.getId());
@@ -80,7 +88,7 @@ public class DataInitializingBean implements InitializingBean {
     }
 
     private void downloadNhisOrganizationUnits() {
-        if (t9OrganizationUnitRepository.findAll().isEmpty()) {
+        if (t9OrgnUnitService.getOrganizationUnitCount(null) == 0) {
             List<OrganizationUnit> organizationUnits = organizationUnitService.getOrganizationUnits(DhisSystem.NHIS);
             for (OrganizationUnit organizationUnit : organizationUnits) {
                 T9OrganizationUnit t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisId(organizationUnit.getId());
@@ -98,7 +106,7 @@ public class DataInitializingBean implements InitializingBean {
     }
 
     private void downloadOptions() {
-        if (diagnosisOptionRepository.findAll().isEmpty()) {
+        if (diagnosisOptionService.getDiagnosisOptionCount(null) == 0) {
             OptionSet optionSet = optionSetService.getOptionSet();
             List<Option> options = optionSet.getOptions();
             for (Option option : options) {
@@ -112,7 +120,7 @@ public class DataInitializingBean implements InitializingBean {
                 }
             }
 
-            if (!t9DataElementRepository.findAll().isEmpty()) {
+            if (t9DataElementService.getT9DataElementCount(null) > 0) {
                 t9DataElementService.autoBindOptions();
             }
         }
@@ -120,7 +128,7 @@ public class DataInitializingBean implements InitializingBean {
     }
 
     private void downloadDataElements() {
-        if (t9DataElementRepository.findAll().isEmpty()) {
+        if (t9DataElementService.getT9DataElementCount(null) == 0) {
             DataSet dataSet = dataSetService.getDataSet();
             List<DataSetElement> dataSetElements = dataSet.getDataSetElements();
             for (DataSetElement dataSetElement : dataSetElements) {
@@ -135,7 +143,7 @@ public class DataInitializingBean implements InitializingBean {
                 }
             }
 
-            if (!diagnosisOptionRepository.findAll().isEmpty()) {
+            if (diagnosisOptionService.getDiagnosisOptionCount(null) > 0) {
                 t9DataElementService.autoBindOptions();
             }
 
@@ -144,7 +152,7 @@ public class DataInitializingBean implements InitializingBean {
     }
 
     private void downloadFormElements() {
-        if (t9FormElementRepository.findAll().isEmpty()) {
+        if (t9FormElementService.getT9FormElementCount(null)==0) {
             DataSet dataSet = dataSetService.getDataSet();
             List<DataSetElement> dataSetElements = dataSet.getDataSetElements();
             for (DataSetElement dataSetElement : dataSetElements) {

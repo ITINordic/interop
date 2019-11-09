@@ -12,8 +12,6 @@ import com.itinordic.interop.repo.T9DataElementRepository;
 import com.itinordic.interop.util.GeneralUtility;
 import com.itinordic.interop.util.MappingResult;
 import com.querydsl.core.types.Predicate;
-import java.io.IOException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +24,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 /**
  *
@@ -93,6 +90,9 @@ public class T9DataElementServiceImpl implements T9DataElementService {
 
     @Override
     public long getT9DataElementCount(T9DataElementSearchDto dataElementSearchDto) {
+        if(dataElementSearchDto==null){
+           return t9DataElementRepository.count(); 
+        }
         Predicate predicate = T9DataElementPredicateUtil.getPredicate(dataElementSearchDto);
         return t9DataElementRepository.count(predicate);
     }

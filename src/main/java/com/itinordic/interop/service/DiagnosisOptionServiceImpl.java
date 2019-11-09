@@ -17,18 +17,17 @@ import org.springframework.stereotype.Service;
  * @author Charles Chigoriwa
  */
 @Service
-public class DiagnosisOptionServiceImpl implements DiagnosisOptionService{
-    
-    
+public class DiagnosisOptionServiceImpl implements DiagnosisOptionService {
+
     @Autowired
     private DiagnosisOptionRepository diagnosisOptionRepository;
 
     @Override
     public Page<DiagnosisOption> findDiagnosisOptions(DiagnosisOptionSearchDto diagnosisOptionSearchDto, String orderField, boolean desc, Integer pageSize) {
         Sort.Direction sortDirection = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
-        int pageNumber =diagnosisOptionSearchDto.getPageNumber();
+        int pageNumber = diagnosisOptionSearchDto.getPageNumber();
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize, sortDirection, orderField);
-        
+
         Predicate predicate = DiagnosisOptionPredicateUtil.getPredicate(diagnosisOptionSearchDto);
         if (predicate != null) {
             return diagnosisOptionRepository.findAll(predicate, pageRequest);
@@ -39,9 +38,12 @@ public class DiagnosisOptionServiceImpl implements DiagnosisOptionService{
 
     @Override
     public long getDiagnosisOptionCount(DiagnosisOptionSearchDto diagnosisOptionSearchDto) {
-        Predicate predicate =DiagnosisOptionPredicateUtil.getPredicate(diagnosisOptionSearchDto);
+        if (diagnosisOptionSearchDto == null) {
+            return diagnosisOptionRepository.count();
+        }
+
+        Predicate predicate = DiagnosisOptionPredicateUtil.getPredicate(diagnosisOptionSearchDto);
         return diagnosisOptionRepository.count(predicate);
     }
-    
-    
+
 }
