@@ -33,7 +33,7 @@ public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
         Page<DiagnosisForm> diagnosisFormPage;
         DiagnosisFormSearchDto diagnosisFormSearchDto=new DiagnosisFormSearchDto(true);
         do {
-            diagnosisFormSearchDto.setPage(String.valueOf(page++));
+            diagnosisFormSearchDto.setPage(String.valueOf(page));
             diagnosisFormPage = diagnosisFormService.findDiagnosisForms(diagnosisFormSearchDto, "random", true, 50);
             for (DiagnosisForm diagnosisForm:diagnosisFormPage.getContent()) {
                 List<T9FormElement> t9FormElements = diagnosisFormService.computeMappedT9FormElements(diagnosisForm);
@@ -42,7 +42,7 @@ public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
                     diagnosisFormRepository.save(diagnosisForm);
                 }
             }
-        } while (page <=  diagnosisFormPage.getTotalPages());
+        } while (++page <=  diagnosisFormPage.getTotalPages());
 
     }
 

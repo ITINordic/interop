@@ -54,7 +54,7 @@ public class EventSyncServiceImpl implements EventSyncService {
         int page = 1;
         Pager pager;
         do {
-            EventList eventList = eventService.getEventList(page++);
+            EventList eventList = eventService.getEventList(page);
             pager = eventList.getPager();
             List<Event> events = eventList.getEvents();
             for (Event event : events) {
@@ -65,14 +65,14 @@ public class EventSyncServiceImpl implements EventSyncService {
 
             }
 
-        } while (page <= pager.getPageCount());
+        } while (++page <= pager.getPageCount());
     }
 
     private void routineSync(Date lastUpdatedStartDate, Date lastUpdatedEndDate) {
         int page = 1;
         Pager pager;
         do {
-            EventList eventList = eventService.getEventList(lastUpdatedStartDate, page++, lastUpdatedEndDate);
+            EventList eventList = eventService.getEventList(lastUpdatedStartDate, page, lastUpdatedEndDate);
             pager = eventList.getPager();
             List<Event> events = eventList.getEvents();
             for (Event event : events) {
@@ -82,7 +82,7 @@ public class EventSyncServiceImpl implements EventSyncService {
                 }
 
             }
-        } while (page <= pager.getPageCount());
+        } while (++page <= pager.getPageCount());
     }
 
 }
