@@ -55,7 +55,7 @@
                         <tr th:each="formElement: ${formElements}">
                             <td th:text="${formElement.dataElement.dhisName}"></td>
                             <td th:text="${formElement.categoryOptionComboId}"></td>
-                            <td th:text="${formElement.categoryOptionComboName}"></td>
+                            <td th:text="${@categoryOptionComboService.getCategoryOptionComboName(formElement.categoryOptionComboId)}"></td>
                         </tr>
                     </tbody>
                 </table>

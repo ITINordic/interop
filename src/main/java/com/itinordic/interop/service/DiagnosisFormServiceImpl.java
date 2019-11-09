@@ -13,9 +13,7 @@ import com.itinordic.interop.repo.DiagnosisFormRepository;
 import com.itinordic.interop.repo.DiagnosisOptionRepository;
 import com.itinordic.interop.repo.DiagnosisOrganizationUnitRepository;
 import com.itinordic.interop.repo.T9OrganizationUnitRepository;
-import com.itinordic.interop.util.CategoryOptionComboUtility;
 import static com.itinordic.interop.util.DateUtility.parseLongDhisDate;
-import com.itinordic.interop.util.DiagnosisFormUtility;
 import com.itinordic.interop.util.GeneralUtility;
 import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
@@ -42,15 +40,21 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
+    public static final String OUTCOME_DATA_ELEMENT_ID = "emFE351TuNs";
+    public static final String AGE_DATA_ELEMENT_ID = "bl1Dflv1nag";
+    public static final String DIAGNOSIS_DATA_ELEMENT_ID = "PvciLByskeE";
+
     @Autowired
     private DiagnosisFormRepository diagnosisFormRepository;
-     @Autowired
+    @Autowired
     private DiagnosisOptionRepository diagnosisOptionRepository;
     @Autowired
     private DiagnosisOrganizationUnitRepository diagnosisOrganizationUnitRepository;
     @Autowired
     private T9OrganizationUnitRepository t9OrganizationUnitRepository;
-    
+    @Autowired
+    private CategoryOptionComboService categoryOptionComboService;
+
     @Override
     public List<T9FormElement> computeMappedT9FormElements(DiagnosisForm diagnosisForm) {
         return getMappedT9FormElements(diagnosisForm.getDiagnosisOption(), diagnosisForm.getOutcome(), diagnosisForm.getAge());
@@ -79,9 +83,9 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
             diagnosisForm.setDhisId(event.getEvent());
         }
 
-        String outcome = getValue(event, DiagnosisFormUtility.OUTCOME_DATA_ELEMENT_ID);
-        String age = getValue(event, DiagnosisFormUtility.AGE_DATA_ELEMENT_ID);
-        String diagnosisOptionCode = getValue(event, DiagnosisFormUtility.DIAGNOSIS_DATA_ELEMENT_ID);
+        String outcome = getValue(event, OUTCOME_DATA_ELEMENT_ID);
+        String age = getValue(event, AGE_DATA_ELEMENT_ID);
+        String diagnosisOptionCode = getValue(event, DIAGNOSIS_DATA_ELEMENT_ID);
         DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisCode(diagnosisOptionCode);
         if (diagnosisOption == null) {
             logger.info("DiagnosisOption with code {} not found", diagnosisOptionCode);
@@ -91,7 +95,7 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
         DiagnosisOrganizationUnit diagnosisOrgUnit = diagnosisOrganizationUnitRepository.findByDhisId(event.getOrgUnit());
         if (diagnosisOrgUnit == null) {
             logger.info("DiagnosisOrganizationUnit with id {} not found", event.getOrgUnit());
-             return Optional.empty();
+            return Optional.empty();
         }
 
         if (age == null) {
@@ -150,18 +154,18 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
         for (T9DataElement dataElement : dataElements) {
             List<T9FormElement> formElements = dataElement.getFormElements();
             //Default mapping/Bed Days
-            if (formElements.size() == 1 && formElements.get(0).getCategoryOptionComboId().equals(CategoryOptionComboUtility.DEFAULT)) {
+            if (formElements.size() == 1 && formElements.get(0).getCategoryOptionComboId().equals(categoryOptionComboService.DEFAULT)) {
                 mappedT9FormElements.add(formElements.get(0));
             } else {
                 //Outcome and age mapping
-                String mappedCategoryOptionComboId = CategoryOptionComboUtility.getCategoryOptionComboId(outcome, age);
+                String mappedCategoryOptionComboId = categoryOptionComboService.getCategoryOptionComboId(outcome, age);
                 T9FormElement ageOutcomeT9FormElement = getT9FormElement(formElements, mappedCategoryOptionComboId);
                 if (ageOutcomeT9FormElement != null) {
                     mappedT9FormElements.add(ageOutcomeT9FormElement);
                 }
 
                 //Total per age mapping (C or Cases or Total)
-                String mappedTotalCategoryOptionComboId = CategoryOptionComboUtility.getTotalCategoryOptionComboId(age);
+                String mappedTotalCategoryOptionComboId = categoryOptionComboService.getTotalCategoryOptionComboId(age);
                 T9FormElement totalAgeT9FormElement = getT9FormElement(formElements, mappedTotalCategoryOptionComboId);
                 if (totalAgeT9FormElement != null) {
                     mappedT9FormElements.add(totalAgeT9FormElement);
@@ -186,7 +190,5 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
         }
         return null;
     }
-
-   
 
 }

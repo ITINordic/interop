@@ -11,8 +11,8 @@ import com.itinordic.interop.dhis.ProgramIndicator;
 import com.itinordic.interop.dhis.service.MappingService;
 import com.itinordic.interop.dhis.service.ProgramIndicatorService;
 import com.itinordic.interop.dhis.service.ProgramService;
-import static com.itinordic.interop.util.CategoryOptionComboUtility.*;
-import static com.itinordic.interop.util.CategoryOptionComboUtility.getCategoryOptionComboName;
+import com.itinordic.interop.service.CategoryOptionComboService;
+import static com.itinordic.interop.service.CategoryOptionComboService.*;
 import com.itinordic.interop.util.CodeGenerator;
 import com.itinordic.interop.util.MappingResult;
 import com.itinordic.interop.util.SimpleGeneralUtility;
@@ -37,6 +37,8 @@ public class ProgramIndicatorController {
     private MappingService mappingService;
     @Autowired
     private ProgramService programService;
+    @Autowired
+    private CategoryOptionComboService categoryOptionComboService;
 
     public void saveIndicators() {
         List<ProgramIndicator> programIndicators = getProgramIndicators();
@@ -114,30 +116,45 @@ public class ProgramIndicatorController {
         if (!categoryOptionComboId.equals(DEFAULT)) {
             filter += " and ";
         }
-        if (categoryOptionComboId.equals(UNDER_1_A)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'A' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
-        } else if (categoryOptionComboId.equals(UNDER_1_C)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'C' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
-        } else if (categoryOptionComboId.equals(UNDER_1_D)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'D' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
-        } else if (categoryOptionComboId.equals(UNDER_1_T)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
-        } else if (categoryOptionComboId.equals(_1_TO_4_A)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'A' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
-        } else if (categoryOptionComboId.equals(_1_TO_4_C)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'C' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
-        } else if (categoryOptionComboId.equals(_1_TO_4_D)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'D' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
-        } else if (categoryOptionComboId.equals(_1_TO_4_T)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
-        } else if (categoryOptionComboId.equals(_5_PLUS_A)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'A' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
-        } else if (categoryOptionComboId.equals(_5_PLUS_C)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'C' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
-        } else if (categoryOptionComboId.equals(_5_PLUS_D)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'D' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
-        } else if (categoryOptionComboId.equals(_5_PLUS_T)) {
-            filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
+        switch (categoryOptionComboId) {
+            case UNDER_1_A:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'A' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
+                break;
+            case UNDER_1_C:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'C' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
+                break;
+            case UNDER_1_D:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'D' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
+                break;
+            case UNDER_1_T:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
+                break;
+            case _1_TO_4_A:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'A' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
+                break;
+            case _1_TO_4_C:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'C' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
+                break;
+            case _1_TO_4_D:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'D' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
+                break;
+            case _1_TO_4_T:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
+                break;
+            case _5_PLUS_A:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'A' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
+                break;
+            case _5_PLUS_C:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'C' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
+                break;
+            case _5_PLUS_D:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'D' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
+                break;
+            case _5_PLUS_T:
+                filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
+                break;
+            default:
+                break;
         }
 
         return filter;
@@ -146,7 +163,7 @@ public class ProgramIndicatorController {
     public String getIndicatorName(DataElement dataElement, CategoryOptionCombo categoryOptionCombo) {
         String name = "Inpatient " + dataElement.getName().split("-")[1].trim();
         String categoryOptionComboId = categoryOptionCombo.getId();
-        return name + " " + getCategoryOptionComboName(categoryOptionComboId);
+        return name + " " + categoryOptionComboService.getCategoryOptionComboName(categoryOptionComboId);
     }
 
 }

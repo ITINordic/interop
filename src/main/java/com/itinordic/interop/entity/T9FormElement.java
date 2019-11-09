@@ -1,6 +1,6 @@
 package com.itinordic.interop.entity;
 
-import com.itinordic.interop.util.CategoryOptionComboUtility;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -64,10 +64,6 @@ public class T9FormElement extends BaseEntity implements Serializable {
 
     public void setDiagnosisForms(List<DiagnosisForm> diagnosisForms) {
         this.diagnosisForms = diagnosisForms;
-    }
-    
-    public String getCategoryOptionComboName(){
-        return CategoryOptionComboUtility.getCategoryOptionComboName(categoryOptionComboId);
     }
 
     @Override
