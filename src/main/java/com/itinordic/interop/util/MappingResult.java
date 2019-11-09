@@ -1,5 +1,8 @@
 package com.itinordic.interop.util;
 
+import com.itinordic.interop.dhis.DataSet;
+import com.itinordic.interop.dhis.DataElement;
+import com.itinordic.interop.dhis.Option;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;

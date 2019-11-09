@@ -1,4 +1,4 @@
-package com.itinordic.interop.util;
+package com.itinordic.interop.dhis;
 
 import java.util.List;
 
@@ -17,7 +17,9 @@ public class Event {
     private String created;
     private String lastUpdated;
     private String completedDate;
-    private String dueDate;    
+    private String dueDate;   
+    private boolean deleted;
+    private String attributeCategoryOptions;
     private List<DataValue> dataValues;
 
     public String getProgram() {
@@ -98,6 +100,22 @@ public class Event {
 
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getAttributeCategoryOptions() {
+        return attributeCategoryOptions;
+    }
+
+    public void setAttributeCategoryOptions(String attributeCategoryOptions) {
+        this.attributeCategoryOptions = attributeCategoryOptions;
     }
 
     public List<DataValue> getDataValues() {

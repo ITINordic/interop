@@ -1,5 +1,7 @@
 package com.itinordic.interop.util;
 
+import com.itinordic.interop.dhis.Option;
+import com.itinordic.interop.dhis.OptionSet;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

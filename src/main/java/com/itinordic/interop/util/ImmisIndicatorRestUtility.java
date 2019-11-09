@@ -1,5 +1,13 @@
 package com.itinordic.interop.util;
 
+import com.itinordic.interop.dhis.DataSet;
+import com.itinordic.interop.dhis.DataElement;
+import com.itinordic.interop.dhis.DataSetElement;
+import com.itinordic.interop.dhis.Option;
+import com.itinordic.interop.dhis.ProgramIndicator;
+import com.itinordic.interop.dhis.Program;
+import com.itinordic.interop.dhis.CategoryCombo;
+import com.itinordic.interop.dhis.CategoryOptionCombo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
 import java.util.Arrays;

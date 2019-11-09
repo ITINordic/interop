@@ -1,6 +1,7 @@
 package com.itinordic.interop.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -23,22 +25,30 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    @JoinColumn(nullable=false)
+    @JoinColumn(nullable = false)
     private DiagnosisOption diagnosisOption;
     private Integer age;
-    private String outcome;    
+    private String outcome;
     @ManyToMany
     private List<T9FormElement> formElements;
     @ManyToOne
-    @JoinColumn(nullable=false)
+    @JoinColumn(nullable = false)
     private DiagnosisOrganizationUnit diagnosisOrgUnit;
     @ManyToOne
-    @JoinColumn(nullable=false)
+    @JoinColumn(nullable = false)
     private T9OrganizationUnit t9OrgUnit;
-    @Column(unique=true, nullable=false)
+    @Column(unique = true, nullable = false)
     private String dhisId;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String eventPeriod;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date dhisEventDate;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date dhisCreated;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date dhisLastUpdated;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date dhisCompletedDate;
 
     public Long getId() {
         return id;
@@ -79,7 +89,7 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     public void setFormElements(List<T9FormElement> formElements) {
         this.formElements = formElements;
     }
-   
+
     public String getDhisId() {
         return dhisId;
     }
@@ -111,9 +121,41 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     public void setEventPeriod(String eventPeriod) {
         this.eventPeriod = eventPeriod;
     }
+
+    public Date getDhisEventDate() {
+        return dhisEventDate;
+    }
+
+    public void setDhisEventDate(Date dhisEventDate) {
+        this.dhisEventDate = dhisEventDate;
+    }
+
+    public Date getDhisCreated() {
+        return dhisCreated;
+    }
+
+    public void setDhisCreated(Date dhisCreated) {
+        this.dhisCreated = dhisCreated;
+    }
+
+    public Date getDhisLastUpdated() {
+        return dhisLastUpdated;
+    }
+
+    public void setDhisLastUpdated(Date dhisLastUpdated) {
+        this.dhisLastUpdated = dhisLastUpdated;
+    }
+
+    public Date getDhisCompletedDate() {
+        return dhisCompletedDate;
+    }
+
+    public void setDhisCompletedDate(Date dhisCompletedDate) {
+        this.dhisCompletedDate = dhisCompletedDate;
+    }
     
     
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -134,5 +176,5 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     public String toString() {
         return "com.itinordic.interop.entity.DiagnosisForm[ id=" + id + " ]";
     }
-    
+
 }

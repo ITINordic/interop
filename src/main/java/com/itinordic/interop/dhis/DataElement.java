@@ -1,5 +1,7 @@
-package com.itinordic.interop.util;
+package com.itinordic.interop.dhis;
 
+import com.itinordic.interop.dhis.OptionSet;
+import com.itinordic.interop.dhis.CategoryCombo;
 import java.util.Objects;
 
 /**

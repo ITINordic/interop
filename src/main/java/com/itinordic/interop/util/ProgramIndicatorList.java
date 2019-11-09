@@ -1,5 +1,6 @@
 package com.itinordic.interop.util;
 
+import com.itinordic.interop.dhis.ProgramIndicator;
 import java.util.List;
 
 /**

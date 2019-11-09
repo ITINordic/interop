@@ -1,4 +1,4 @@
-package com.itinordic.interop.util;
+package com.itinordic.interop.dhis;
 
 import java.util.Objects;
 

@@ -5,7 +5,7 @@ import com.itinordic.interop.entity.T9OrganizationUnit;
 import com.itinordic.interop.repo.T9OrganizationUnitRepository;
 import com.itinordic.interop.service.T9OrgnUnitService;
 import com.itinordic.interop.util.NhisOrganizationUnitRestUtility;
-import com.itinordic.interop.util.OrganizationUnit;
+import com.itinordic.interop.dhis.OrganizationUnit;
 import com.itinordic.interop.util.PageUtil;
 import java.io.IOException;
 import java.security.Principal;

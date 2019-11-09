@@ -1,5 +1,6 @@
 package com.itinordic.interop.util;
 
+import com.itinordic.interop.dhis.Event;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.http.HttpEntity;

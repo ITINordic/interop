@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.itinordic.interop.util;
+package com.itinordic.interop.dhis;
 
+import com.itinordic.interop.util.ProgramStageDataElement;
 import java.util.List;
 
 /**

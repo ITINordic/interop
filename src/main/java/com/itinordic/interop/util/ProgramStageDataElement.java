@@ -1,5 +1,7 @@
 package com.itinordic.interop.util;
 
+import com.itinordic.interop.dhis.DataElement;
+
 /**
  *
  * @author Charles Chigoriwa

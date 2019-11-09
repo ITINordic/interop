@@ -1,5 +1,10 @@
 package com.itinordic.interop.util;
 
+import com.itinordic.interop.dhis.DataSet;
+import com.itinordic.interop.dhis.DataElement;
+import com.itinordic.interop.dhis.DataSetElement;
+import com.itinordic.interop.dhis.CategoryCombo;
+import com.itinordic.interop.dhis.CategoryOptionCombo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
