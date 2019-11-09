@@ -154,7 +154,7 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
         for (T9DataElement dataElement : dataElements) {
             List<T9FormElement> formElements = dataElement.getFormElements();
             //Default mapping/Bed Days
-            if (formElements.size() == 1 && formElements.get(0).getCategoryOptionComboId().equals(categoryOptionComboService.DEFAULT)) {
+            if (formElements.size() == 1 && formElements.get(0).getCategoryOptionComboId().equals(CategoryOptionComboService.DEFAULT)) {
                 mappedT9FormElements.add(formElements.get(0));
             } else {
                 //Outcome and age mapping
