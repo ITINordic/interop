@@ -45,6 +45,15 @@ public class DiagnosisFormController {
         PageUtil.injectPageAspects(model, diagnosisFormPage);
         return "diagnosisForm/diagnosisForms";
     }
+    
+    @RequestMapping(value = "/admin/diagnosis/forms/unmapped", method = RequestMethod.GET)
+    public String getUnmapped(Principal principal, Model model, @ModelAttribute("defaultSearchDto") DiagnosisFormSearchDto searchDto) {
+        searchDto.setNoT9FormElements(true);
+        Page<DiagnosisForm> diagnosisFormPage = diagnosisFormService.findDiagnosisForms(searchDto, "id", true, 10);
+        model.addAttribute("forms", diagnosisFormPage);
+        PageUtil.injectPageAspects(model, diagnosisFormPage);
+        return "diagnosisForm/unmappedDiagnosisForms";
+    }
 
     @RequestMapping(value = "/admin/diagnosis/forms/sync", method = RequestMethod.POST)
     public synchronized String sync(Principal principal, Model model) throws IOException {

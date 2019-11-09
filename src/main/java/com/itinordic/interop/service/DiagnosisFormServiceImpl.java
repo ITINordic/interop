@@ -2,6 +2,8 @@ package com.itinordic.interop.service;
 
 import com.itinordic.interop.criteria.DiagnosisFormPredicateUtil;
 import com.itinordic.interop.criteria.DiagnosisFormSearchDto;
+import com.itinordic.interop.criteria.T9DataElementPredicateUtil;
+import com.itinordic.interop.criteria.T9DataElementSearchDto;
 import com.itinordic.interop.dhis.Event;
 import com.itinordic.interop.entity.DiagnosisForm;
 import com.itinordic.interop.entity.DiagnosisOption;
@@ -40,7 +42,6 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-
     @Autowired
     private DiagnosisFormRepository diagnosisFormRepository;
     @Autowired
@@ -69,6 +70,19 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
         } else {
             return diagnosisFormRepository.findAll(pageRequest);
         }
+    }
+
+    @Override
+    public long getDiagnosisFormCount(DiagnosisFormSearchDto diagnosisFormSearchDto) {
+        if (diagnosisFormSearchDto == null) {
+            return diagnosisFormRepository.count();
+        }
+        Predicate predicate = DiagnosisFormPredicateUtil.getPredicate(diagnosisFormSearchDto);
+        if (predicate == null) {
+            return diagnosisFormRepository.count();
+        }
+
+        return diagnosisFormRepository.count(predicate);
     }
 
     @Override

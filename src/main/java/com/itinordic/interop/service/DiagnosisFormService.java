@@ -13,8 +13,8 @@ import org.springframework.data.domain.Page;
  *
  * @author Charles Chigoriwa
  */
-public interface DiagnosisFormService {    
-    
+public interface DiagnosisFormService {
+
     public static final String OUTCOME_DATA_ELEMENT_ID = "emFE351TuNs";
     public static final String AGE_DATA_ELEMENT_ID = "bl1Dflv1nag";
     public static final String DIAGNOSIS_DATA_ELEMENT_ID = "PvciLByskeE";
@@ -25,4 +25,7 @@ public interface DiagnosisFormService {
     public Optional<DiagnosisForm> transform(Event event);
 
     public Page<DiagnosisForm> findDiagnosisForms(DiagnosisFormSearchDto diagnosisFormSearchDto, String orderField, boolean desc, Integer pageSize);
+
+    public long getDiagnosisFormCount(DiagnosisFormSearchDto diagnosisFormSearchDto);
+    
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head th:inline="text">
+        <title>Diagnosis Forms</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link th:include="imports :: css" th:remove="tag" />
+    </head>
+    <body>
+        
+         <div th:include="topNav :: topNav"></div>
+       
+        <div class="container">
+
+
+            <h2>Unmapped Diagnosis Forms</h2>
+            
+            <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${forms.totalElements}"></span></b></h4>
+
+
+            <div th:if="${!forms.content.empty}" style="background: #fff">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Option</th>
+                            <th>OrgUnit</th> 
+                            <th>Period</th> 
+                            <th>Age</th> 
+                            <th>Outcome</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="form: ${forms}">
+                            <td th:text="${form.dhisId}"></td>
+                            <td th:text="${form.diagnosisOption.dhisName}"></td>
+                            <td th:text="${form.t9OrgUnit.dhisId}"></td>
+                            <td th:text="${form.eventPeriod}"></td>
+                            <td th:text="${form.age}"></td>
+                            <td th:text="${form.outcome}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div th:if="${defaultSearchDto.directSearch and forms.content.empty}">No Forms found</div>
+                <div th:unless="${forms.content.empty}" th:include="pagination :: pagination (baseUrl=@{|~/admin/diagnosis/forms/unmapped|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
+            </div>
+
+        </div>
+          <script th:include="imports :: javascript" th:remove="tag"></script>
+    </body>
+</html>

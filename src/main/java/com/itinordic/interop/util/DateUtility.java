@@ -57,5 +57,13 @@ public class DateUtility {
             }
         }
     }
+    
+    public static String formatToLongDhisDate(Date date){
+        if(date==null){
+            return null;
+        }else{
+            return formatDate(date, DHIS_LONG_DATE_FORMAT);
+        }
+    }
 
 }

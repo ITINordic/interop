@@ -25,21 +25,21 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventList getEventList(int page) {
-        String uri = "/events?program=SXNeRfGsKcW&totalPages=true&page={page}";
+        String uri = "/events?program=SXNeRfGsKcW&totalPages=true&page={page}&order=lastUpdated:ASC";
         EventList eventList = restTemplate.getForObject(uri, EventList.class, page);
         return eventList;
     }
 
     @Override
     public List<Event> getEvents() {
-        String uri = "/events?program=SXNeRfGsKcW&paging=false";
+        String uri = "/events?program=SXNeRfGsKcW&paging=false&order=lastUpdated:ASC";
         EventList eventList = restTemplate.getForObject(uri, EventList.class);
         return eventList.getEvents();
     }
 
     @Override
     public List<Event> getEvents(String startDate, String endDate) {
-        String uri = "/events?program=SXNeRfGsKcW&paging=false&startDate={startDate}&endDate={endDate}";
+        String uri = "/events?program=SXNeRfGsKcW&paging=false&startDate={startDate}&endDate={endDate}&order=lastUpdated:ASC";
         EventList eventList = restTemplate.getForObject(uri, EventList.class, startDate, endDate);
         return eventList.getEvents();
     }

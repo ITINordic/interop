@@ -53,6 +53,25 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="col-md-4" th:if="${alertUnmappedDiagnosisForms}">
+
+                        <div class="panel panel-warning">
+                            <div class="panel-heading"><b><span th:text="${unmappedDiagnosisFormCount}"></span> unmapped diagnosis forms</b></div>
+                            <div class="panel-body">
+                                
+                                <span><i class="fa fa-forms"></i></span>
+                                
+                                <span style="font-size: 50px; text-align: center; color: grey;" th:text="${unmappedDiagnosisFormCount}"></span>
+
+                                <div>
+                                    <a class="btn btn-warning" th:href="@{|/admin/diagnosis/forms/unmapped|}"><b>View unmapped diagnosis forms</b></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
                 </div>
             </div>
 
