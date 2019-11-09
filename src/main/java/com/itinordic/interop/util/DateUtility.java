@@ -3,8 +3,6 @@ package com.itinordic.interop.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.joda.time.DateTime;
 
 /**
@@ -58,10 +56,6 @@ public class DateUtility {
                throw new RuntimeException(ex);
             }
         }
-    }
-
-    public static void main(String[] args) throws ParseException {
-        System.out.println(toDate("2019-10-24T18:16:03.138", DHIS_LONG_DATE_FORMAT));
     }
 
 }

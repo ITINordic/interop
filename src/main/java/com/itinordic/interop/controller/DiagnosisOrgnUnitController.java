@@ -4,7 +4,6 @@ import com.itinordic.interop.criteria.DiagnosisOrgnUnitSearchDto;
 import com.itinordic.interop.entity.DiagnosisOrganizationUnit;
 import com.itinordic.interop.repo.DiagnosisOrganizationUnitRepository;
 import com.itinordic.interop.service.DiagnosisOrgnUnitService;
-import com.itinordic.interop.util.ImmisOrganizationUnitRestUtility;
 import com.itinordic.interop.dhis.OrganizationUnit;
 import com.itinordic.interop.dhis.service.OrganizationUnitService;
 import com.itinordic.interop.util.DhisSystem;

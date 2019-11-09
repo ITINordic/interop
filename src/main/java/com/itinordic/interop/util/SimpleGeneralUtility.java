@@ -15,9 +15,4 @@ public class SimpleGeneralUtility {
         return string.substring(0,maxLength);
     }
     
-    
-    public static void main(String[] args){
-        System.out.println(getSubstring("Inpatient Retinal detachments and breaks 1 to 4 yrs with C", 50));
-    }
-    
 }
