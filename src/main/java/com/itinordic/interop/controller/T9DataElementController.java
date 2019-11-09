@@ -13,11 +13,7 @@ import com.itinordic.interop.dhis.DataSet;
 import com.itinordic.interop.dhis.DataSetElement;
 import com.itinordic.interop.util.GeneralUtility;
 import static com.itinordic.interop.util.GeneralUtility.parseIdLong;
-import com.itinordic.interop.util.MappingResult;
-import com.itinordic.interop.dhis.Option;
 import com.itinordic.interop.dhis.service.DataSetService;
-import com.itinordic.interop.dhis.service.MappingService;
-import com.itinordic.interop.util.DataSetValueElement;
 import com.itinordic.interop.util.FileDto;
 import static com.itinordic.interop.util.GeneralUtility.encloseCsvString;
 import com.itinordic.interop.util.PageUtil;
@@ -30,8 +26,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -75,8 +69,6 @@ public class T9DataElementController {
     private T9DataElementService t9DataElementService;
     @Autowired
     private DataSetService dataSetService;
-    @Autowired
-    private MappingService mappingService;
 
     @RequestMapping(value = "/admin/t9/dataElements", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") T9DataElementSearchDto searchDto) {
@@ -139,34 +131,7 @@ public class T9DataElementController {
 
     @RequestMapping(value = "/admin/t9/dataElements/autoBindOptions", method = RequestMethod.POST)
     public synchronized String autoBindOptions(Principal principal, Model model) throws IOException {
-        MappingResult mappingResult = mappingService.getMappingResult();
-        Map<DataElement, Set<Option>> mapped = mappingResult.getMapped();
-        for (DataElement dataElement : mapped.keySet()) {
-            T9DataElement t9DataElement = t9DataElementRepository.findByDhisId(dataElement.getId());
-            if (t9DataElement != null) {
-
-                Set<Option> options = mapped.get(dataElement);
-                if (!GeneralUtility.isEmpty(options)) {
-                    List<DiagnosisOption> newDiagnosisOptionList = new ArrayList<>();
-
-                    for (Option option : options) {
-                        DiagnosisOption diagnosisOption = diagnosisOptionRepository.findByDhisId(option.getId());
-                        if (diagnosisOption != null) {
-                            newDiagnosisOptionList.add(diagnosisOption);
-                        } else {
-                            logger.info("DiagnosisOption with id %s not found", option.getId());
-                        }
-                    }
-
-                    if (!newDiagnosisOptionList.isEmpty()) {
-                        t9DataElement.setOptions(newDiagnosisOptionList);
-                        t9DataElement.setModificationDateTime(new Date());
-                        t9DataElementRepository.save(t9DataElement);
-                    }
-                }
-
-            }
-        }
+        t9DataElementService.autoBindOptions();
         return "redirect:/admin/t9/dataElements";
     }
 

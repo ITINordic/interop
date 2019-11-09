@@ -15,6 +15,7 @@ public class T9FormElementPredicateUtil {
             BooleanExpression nameExp = QT9FormElement.t9FormElement.dataElement.dhisName.like("%" + t9FormElementSearchDto.getQ().trim() + "%");
             nameExp = nameExp.or(QT9FormElement.t9FormElement.dataElement.dhisCode.like("%" + t9FormElementSearchDto.getQ().trim() + "%"));
             nameExp = nameExp.or(QT9FormElement.t9FormElement.dataElement.dhisId.like("%" + t9FormElementSearchDto.getQ().trim() + "%"));
+            nameExp = nameExp.or(QT9FormElement.t9FormElement.categoryOptionComboId.like("%" + t9FormElementSearchDto.getQ().trim() + "%"));
             exp = exp != null ? exp.and(nameExp) : nameExp;
         }
 

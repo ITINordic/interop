@@ -40,9 +40,6 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public static final String OUTCOME_DATA_ELEMENT_ID = "emFE351TuNs";
-    public static final String AGE_DATA_ELEMENT_ID = "bl1Dflv1nag";
-    public static final String DIAGNOSIS_DATA_ELEMENT_ID = "PvciLByskeE";
 
     @Autowired
     private DiagnosisFormRepository diagnosisFormRepository;
