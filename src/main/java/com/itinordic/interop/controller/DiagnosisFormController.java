@@ -5,6 +5,7 @@ import com.itinordic.interop.entity.DiagnosisForm;
 import com.itinordic.interop.repo.DiagnosisFormRepository;
 import com.itinordic.interop.service.DiagnosisFormService;
 import com.itinordic.interop.dhis.Event;
+import com.itinordic.interop.dhis.service.EventService;
 import com.itinordic.interop.util.EventList;
 import com.itinordic.interop.util.ImmisEventRestUtility;
 import com.itinordic.interop.util.PageUtil;
@@ -35,6 +36,8 @@ public class DiagnosisFormController {
     private DiagnosisFormRepository diagnosisFormRepository;
     @Autowired
     private DiagnosisFormService diagnosisFormService;
+    @Autowired
+    private EventService eventService;
 
     @RequestMapping(value = "/admin/diagnosis/forms", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") DiagnosisFormSearchDto searchDto) {
@@ -53,7 +56,7 @@ public class DiagnosisFormController {
 
         do {
 
-            EventList eventList = ImmisEventRestUtility.getEventList(page);
+            EventList eventList = eventService.getEventList(page);
             pager = eventList.getPager();
 
             List<Event> events = eventList.getEvents();
