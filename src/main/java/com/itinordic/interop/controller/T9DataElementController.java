@@ -1,5 +1,6 @@
 package com.itinordic.interop.controller;
 
+import com.itinordic.interop.criteria.DataSetValueSearchDto;
 import com.itinordic.interop.criteria.T9DataElementSearchDto;
 import com.itinordic.interop.entity.DiagnosisOption;
 import com.itinordic.interop.entity.T9DataElement;
@@ -12,19 +13,28 @@ import com.itinordic.interop.dhis.DataSet;
 import com.itinordic.interop.dhis.DataSetElement;
 import com.itinordic.interop.util.GeneralUtility;
 import static com.itinordic.interop.util.GeneralUtility.parseIdLong;
-import com.itinordic.interop.util.MappingRestUtility;
 import com.itinordic.interop.util.MappingResult;
-import com.itinordic.interop.util.NhisDataSetRestUtility;
 import com.itinordic.interop.dhis.Option;
+import com.itinordic.interop.dhis.service.DataSetService;
+import com.itinordic.interop.dhis.service.MappingService;
+import com.itinordic.interop.util.DataSetValueElement;
+import com.itinordic.interop.util.FileDto;
+import static com.itinordic.interop.util.GeneralUtility.encloseCsvString;
 import com.itinordic.interop.util.PageUtil;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -33,7 +43,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,6 +73,10 @@ public class T9DataElementController {
     private DiagnosisOptionRepository diagnosisOptionRepository;
     @Autowired
     private T9DataElementService t9DataElementService;
+    @Autowired
+    private DataSetService dataSetService;
+    @Autowired
+    private MappingService mappingService;
 
     @RequestMapping(value = "/admin/t9/dataElements", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") T9DataElementSearchDto searchDto) {
@@ -69,7 +88,7 @@ public class T9DataElementController {
 
     @RequestMapping(value = "/admin/t9/dataElements/sync", method = RequestMethod.POST)
     public synchronized String sync(Principal principal, Model model) throws IOException {
-        DataSet dataSet = NhisDataSetRestUtility.getDataSet();
+        DataSet dataSet = dataSetService.getDataSet();
         List<DataSetElement> dataSetElements = dataSet.getDataSetElements();
         for (DataSetElement dataSetElement : dataSetElements) {
             DataElement dataElement = dataSetElement.getDataElement();
@@ -86,9 +105,7 @@ public class T9DataElementController {
         return "redirect:/admin/t9/dataElements";
 
     }
-    
-    
-     
+
     @RequestMapping(value = "/admin/t9/formElements/{dataElementId}/edit", method = RequestMethod.GET)
     public String initEditT9DataElement(@PathVariable("dataElementId") String dataElementId, Principal principal, Model model) {
         T9DataElement dataElement = t9DataElementRepository.getOne(parseIdLong(dataElementId));
@@ -103,8 +120,8 @@ public class T9DataElementController {
         if ($dataElement == null) {
             throw new NonAjaxNotFoundException();
         }
-        
-        if(!dataElement.hasOptions()){
+
+        if (!dataElement.hasOptions()) {
             result.rejectValue("options", "noOptionsCode", "Please select one or more options");
         }
 
@@ -120,10 +137,9 @@ public class T9DataElementController {
 
     }
 
-
     @RequestMapping(value = "/admin/t9/dataElements/autoBindOptions", method = RequestMethod.POST)
     public synchronized String autoBindOptions(Principal principal, Model model) throws IOException {
-        MappingResult mappingResult = MappingRestUtility.getMappingResult();
+        MappingResult mappingResult = mappingService.getMappingResult();
         Map<DataElement, Set<Option>> mapped = mappingResult.getMapped();
         for (DataElement dataElement : mapped.keySet()) {
             T9DataElement t9DataElement = t9DataElementRepository.findByDhisId(dataElement.getId());
@@ -153,7 +169,7 @@ public class T9DataElementController {
         }
         return "redirect:/admin/t9/dataElements";
     }
-    
+
     @RequestMapping(value = "/admin/t9/dataElements/unmapped", method = RequestMethod.GET)
     public String unmappedDataElements(Principal principal, Model model, @ModelAttribute("defaultSearchDto") T9DataElementSearchDto searchDto) {
         searchDto.setNoOptions(true);
@@ -163,13 +179,11 @@ public class T9DataElementController {
         return "t9DataElement/t9UnmappedDataElements";
     }
 
-
     @RequestMapping(value = "/admin/t9/dataElements/bindOptionsFromFile", method = RequestMethod.GET)
     public String getUploadForm(Model model, Principal principal) {
         return "t9DataElement/bindOptionsFromFile";
     }
-    
-  
+
     @RequestMapping(value = "/admin/t9/dataElements/bindOptionsFromFile", method = RequestMethod.POST)
     public synchronized String upload(MultipartFile excelInput, Principal principal, Model model) throws IOException {
         if (excelInput != null && !excelInput.isEmpty()) {
@@ -230,11 +244,79 @@ public class T9DataElementController {
 
             }
 
-        }else{
-             return "t9DataElement/bindOptionsFromFile";
+        } else {
+            return "t9DataElement/bindOptionsFromFile";
         }
 
         return "redirect:/admin/t9/dataElements";
+
+    }
+    
+    @RequestMapping(path = "/admin/t9/dataElements/download", method = RequestMethod.GET)
+    public ResponseEntity<Resource> downloadDataElements(DataSetValueSearchDto searchDto) throws IOException {
+        FileDto fileDto = getFileDto( dataSetService.getDataSet());
+        ByteArrayInputStream bas = new ByteArrayInputStream(fileDto.getContent().getBytes(Charset.forName("UTF-8")));
+        Resource resource = new InputStreamResource(bas);
+        String fileName = fileDto.getName().replaceAll("\\s+", "");
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .contentType(MediaType.parseMediaType("application/csv"))
+                .body(resource);
+    }
+
+    @RequestMapping(value = "/admin/t9/dataElements/downloadInZip", produces = "application/zip")
+    public void downloadDataElementsInZip(HttpServletResponse response,DataSetValueSearchDto searchDto) throws IOException {
+        FileDto fileDto = getFileDto( dataSetService.getDataSet());
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.addHeader("Content-Disposition", "attachment; filename=\"DataElements.zip\"");
+
+        try (ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream())) {
+            zipOutputStream.putNextEntry(new ZipEntry(fileDto.getName()));
+            zipOutputStream.write(fileDto.getContent().getBytes());
+            zipOutputStream.closeEntry();
+        }
+
+    }
+
+    protected FileDto getFileDto(DataSet dataSet) {
+
+        FileDto fileDto = new FileDto();
+        String fileName = "DataElements" + ".csv";
+        fileDto.setName(fileName);
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+
+        String[] fields = {"data_element_id", "data_element_code", "data_element_name"};
+        for (int i = 0; i < fields.length; i++) {
+            if (i > 0) {
+                printWriter.print(",");
+            }
+            printWriter.print(encloseCsvString(fields[i]));
+
+        }
+
+        for (DataSetElement dataSetElement : dataSet.getDataSetElements()) {
+            DataElement dataElement = dataSetElement.getDataElement();
+            printWriter.println();
+            String[] data = {
+                dataElement.getId(),
+                dataElement.getCode(),
+                dataElement.getName()
+            };
+
+            for (int i = 0; i < fields.length; i++) {
+                if (i > 0) {
+                    printWriter.print(",");
+                }
+
+                printWriter.print(encloseCsvString(data[i]));
+
+            }
+        }
+
+        printWriter.flush();
+        fileDto.setContent(stringWriter.toString());
+        return fileDto;
 
     }
 

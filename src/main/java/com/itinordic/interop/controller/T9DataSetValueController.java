@@ -5,6 +5,7 @@ import com.itinordic.interop.dao.DataSetValueDao;
 import com.itinordic.interop.util.DataSetValueElement;
 import com.itinordic.interop.util.FileDto;
 import com.itinordic.interop.util.GeneralUtility;
+import static com.itinordic.interop.util.GeneralUtility.encloseCsvString;
 import com.itinordic.interop.util.MonthFactory;
 import com.itinordic.interop.util.ReportInput;
 import java.io.ByteArrayInputStream;
@@ -104,7 +105,7 @@ public class T9DataSetValueController {
             if (i > 0) {
                 printWriter.print(",");
             }
-            printWriter.print(enclose(fields[i]));
+            printWriter.print(encloseCsvString(fields[i]));
 
         }
 
@@ -124,7 +125,7 @@ public class T9DataSetValueController {
                     printWriter.print(",");
                 }
 
-                printWriter.print(enclose(data[i]));
+                printWriter.print(encloseCsvString(data[i]));
 
             }
         }
@@ -135,10 +136,7 @@ public class T9DataSetValueController {
 
     }
 
-    private String enclose(String string) {
-        return "" + string + "";
-    }
-
+   
     @ModelAttribute
     public void modelAttributes(Model model) {
         model.addAttribute("currentYear", GeneralUtility.getCurrentYear());

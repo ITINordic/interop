@@ -6,6 +6,8 @@ import com.itinordic.interop.repo.DiagnosisOrganizationUnitRepository;
 import com.itinordic.interop.service.DiagnosisOrgnUnitService;
 import com.itinordic.interop.util.ImmisOrganizationUnitRestUtility;
 import com.itinordic.interop.dhis.OrganizationUnit;
+import com.itinordic.interop.dhis.service.OrganizationUnitService;
+import com.itinordic.interop.util.DhisSystem;
 import com.itinordic.interop.util.PageUtil;
 import java.io.IOException;
 import java.security.Principal;
@@ -33,6 +35,10 @@ public class DiagnosisOrgnUnitController {
     private DiagnosisOrganizationUnitRepository diagnosisOrganizationUnitRepository;
     @Autowired
     private DiagnosisOrgnUnitService diagnosisOrgnUnitService;
+    @Autowired
+    private OrganizationUnitService organizationUnitService;
+        
+
 
     @RequestMapping(value = "/admin/diagnosis/organizationUnits", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") DiagnosisOrgnUnitSearchDto searchDto) {
@@ -44,7 +50,7 @@ public class DiagnosisOrgnUnitController {
 
     @RequestMapping(value = "/admin/diagnosis/organizationUnits/sync", method = RequestMethod.POST)
     public synchronized String sync(Principal principal, Model model) throws IOException {
-        List<OrganizationUnit> organizationUnits = ImmisOrganizationUnitRestUtility.getOrganizationUnits();
+        List<OrganizationUnit> organizationUnits = organizationUnitService.getOrganizationUnits(DhisSystem.IMMIS);
         for (OrganizationUnit organizationUnit : organizationUnits) {
             DiagnosisOrganizationUnit diagnosisOrganizationUnit = diagnosisOrganizationUnitRepository.findByDhisId(organizationUnit.getId());
             if (diagnosisOrganizationUnit == null) {

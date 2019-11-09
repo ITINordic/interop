@@ -48,7 +48,7 @@ public class NhisDataSetRestUtility {
                     printWriter.print("data_element_name,");
                     printWriter.print("categories,");
                     printWriter.print("category_option_combo_id,");
-                    printWriter.print("category_option_combo_name,");
+                    printWriter.print("category_option_combo_name");
                     printWriter.println();
                     for (DataSetElement dataSetElement : dataSet.getDataSetElements()) {
                         DataElement dataElement = dataSetElement.getDataElement();

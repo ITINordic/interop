@@ -6,6 +6,8 @@ import com.itinordic.interop.repo.T9OrganizationUnitRepository;
 import com.itinordic.interop.service.T9OrgnUnitService;
 import com.itinordic.interop.util.NhisOrganizationUnitRestUtility;
 import com.itinordic.interop.dhis.OrganizationUnit;
+import com.itinordic.interop.dhis.service.OrganizationUnitService;
+import com.itinordic.interop.util.DhisSystem;
 import com.itinordic.interop.util.PageUtil;
 import java.io.IOException;
 import java.security.Principal;
@@ -31,9 +33,10 @@ public class T9OrgnUnitController {
 
     @Autowired
     private T9OrganizationUnitRepository t9OrganizationUnitRepository;
-
     @Autowired
     private T9OrgnUnitService t9OrgnUnitService;
+    @Autowired
+    private OrganizationUnitService organizationUnitService;
 
     @RequestMapping(value = "/admin/t9/organizationUnits", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") T9OrgnUnitSearchDto searchDto) {
@@ -46,7 +49,7 @@ public class T9OrgnUnitController {
     
     @RequestMapping(value = "/admin/t9/organizationUnits/sync", method = RequestMethod.POST)
     public synchronized String sync(Principal principal, Model model) throws IOException {
-        List<OrganizationUnit> organizationUnits = NhisOrganizationUnitRestUtility.getOrganizationUnits();
+        List<OrganizationUnit> organizationUnits =organizationUnitService.getOrganizationUnits(DhisSystem.NHIS);
         for (OrganizationUnit organizationUnit : organizationUnits) {
             T9OrganizationUnit t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisId(organizationUnit.getId());
             if (t9OrganizationUnit == null) {

@@ -7,7 +7,6 @@ import com.itinordic.interop.service.DiagnosisFormService;
 import com.itinordic.interop.dhis.Event;
 import com.itinordic.interop.dhis.service.EventService;
 import com.itinordic.interop.util.EventList;
-import com.itinordic.interop.util.ImmisEventRestUtility;
 import com.itinordic.interop.util.PageUtil;
 import com.itinordic.interop.util.Pager;
 import java.io.IOException;

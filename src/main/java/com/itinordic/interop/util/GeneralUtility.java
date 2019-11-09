@@ -32,7 +32,6 @@ import org.springframework.web.util.HtmlUtils;
  */
 public class GeneralUtility {
 
-
     public static boolean isEmpty(String value) {
         return (value == null || value.trim().isEmpty());
     }
@@ -44,7 +43,6 @@ public class GeneralUtility {
     public static boolean isEmpty(Object object) {
         return object == null;
     }
-
 
     public static Long parseIdLong(String string) {
         try {
@@ -187,7 +185,6 @@ public class GeneralUtility {
         }
     }
 
-
     public static String toBase64String(byte[] bytes) {
         return Base64.getEncoder().encodeToString(bytes);
     }
@@ -293,9 +290,6 @@ public class GeneralUtility {
         return false;
     }
 
-  
-
-
     public static double getLoanAmount(BigDecimal standPrice, BigDecimal depositRatePercentage) {
         double depositRate = depositRatePercentage.doubleValue();
         double loanAmount = standPrice.doubleValue() * (100.0 - depositRate) / 100.0;
@@ -397,25 +391,23 @@ public class GeneralUtility {
         return new DateTime(year, month, 25, 12, 12).toDate();
 
     }
-   
-    
-    public static boolean in(String string, String... otherStrings){
-        if(otherStrings==null || otherStrings.length < 1){
+
+    public static boolean in(String string, String... otherStrings) {
+        if (otherStrings == null || otherStrings.length < 1) {
             return false;
         }
-        
-        for(String otherString: otherStrings){
-            if(otherString.equalsIgnoreCase(string)){
+
+        for (String otherString : otherStrings) {
+            if (otherString.equalsIgnoreCase(string)) {
                 return true;
             }
         }
-        
-        
+
         return false;
     }
 
-    public static void main(String[] args) {
-      
+    public static String encloseCsvString(String string) {
+        return "" + string + "";
     }
 
 }
