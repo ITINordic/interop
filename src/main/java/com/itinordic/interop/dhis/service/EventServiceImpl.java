@@ -1,7 +1,9 @@
 package com.itinordic.interop.dhis.service;
 
 import com.itinordic.interop.dhis.Event;
+import com.itinordic.interop.util.DateUtility;
 import com.itinordic.interop.util.EventList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,16 @@ public class EventServiceImpl implements EventService {
     @Autowired
     public EventServiceImpl(@Nonnull @Qualifier("immisRestTemplate") RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+    }
+
+    @Override
+    public EventList getEventList(Date lastUpdatedStartDate, int page, Date lastUpdatedEndDate) {
+        String uri = "/events?program={program}&totalPages=true&page={page}&includeDeleted=true&lastUpdatedStartDate={lastUpdatedStartDate}&lastUpdatedEndDate={lastUpdatedEndDate}&order=lastUpdated:ASC";
+        String program = "SXNeRfGsKcW";
+        String strLastUpdatedStartDate = DateUtility.formatToLongDhisDate(lastUpdatedStartDate);
+        String strLastUpdatedEndDate = DateUtility.formatToLongDhisDate(lastUpdatedEndDate);
+        EventList eventList = restTemplate.getForObject(uri, EventList.class, program, page, strLastUpdatedStartDate,strLastUpdatedEndDate);
+        return eventList;
     }
 
     @Override

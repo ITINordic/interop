@@ -17,7 +17,7 @@
             
             <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${forms.totalElements}"></span></b></h4>
 
-            <div style="margin-bottom: 10px;">
+            <div style="margin-bottom: 10px;" th:if="${false}">
                 
                 <form th:action="@{/admin/diagnosis/forms/sync}" method="post">
                     <button class="btn btn-primary"  type="submit">Sync Forms</button>
