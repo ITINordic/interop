@@ -7,6 +7,8 @@ import com.itinordic.interop.repo.DiagnosisFormRepository;
 import com.itinordic.interop.service.DiagnosisFormService;
 import com.itinordic.interop.util.GeneralUtility;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
     
-    
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private DiagnosisFormService diagnosisFormService;
@@ -29,6 +31,7 @@ public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
 
     @Scheduled(fixedDelay = 60000 * 2, initialDelay = 60000 * 2)
     public void syncDiagnosisFormsWithT9FormElements() {
+        logger.info("Diagnosis Forms -> T9 Form Elements synchronization started");
         int page = 1;
         Page<DiagnosisForm> diagnosisFormPage;
         DiagnosisFormSearchDto diagnosisFormSearchDto=new DiagnosisFormSearchDto(true);
@@ -43,7 +46,7 @@ public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
                 }
             }
         } while (++page <=  diagnosisFormPage.getTotalPages());
-
+        logger.info("Diagnosis Forms -> T9 Form Elements synchronization ended");
     }
 
 }

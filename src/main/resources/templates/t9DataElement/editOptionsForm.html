@@ -64,7 +64,7 @@
             var myOptionsUrl = /*[[@{/admin/diagnosis/optionsJson}]]*/ '/fakeUrl';
             $(".areas-input").select2({
                 placeholder: 'Choose options',
-                allowClear: true,
+                allowClear: false,
                 ajax: {
                     url: myOptionsUrl,
                     data: function (params) {
