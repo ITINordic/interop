@@ -4,6 +4,8 @@ import com.itinordic.interop.criteria.DataSetValueSearchDto;
 import com.itinordic.interop.dao.DataSetValueDao;
 import com.itinordic.interop.util.DataSetValueElement;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DataSetValueServiceImpl implements DataSetValueService {
+    
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private DataSetValueDao dataSetValueDao;

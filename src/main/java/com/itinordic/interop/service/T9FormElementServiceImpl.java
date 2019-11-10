@@ -1,12 +1,12 @@
 package com.itinordic.interop.service;
 
-import com.itinordic.interop.criteria.T9DataElementPredicateUtil;
-import com.itinordic.interop.criteria.T9DataElementSearchDto;
 import com.itinordic.interop.criteria.T9FormElementPredicateUtil;
 import com.itinordic.interop.criteria.T9FormElementSearchDto;
 import com.itinordic.interop.entity.T9FormElement;
 import com.itinordic.interop.repo.T9FormElementRepository;
 import com.querydsl.core.types.Predicate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class T9FormElementServiceImpl implements T9FormElementService {
+    
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private T9FormElementRepository t9FormElementRepository;

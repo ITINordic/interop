@@ -1,9 +1,13 @@
 package com.itinordic.interop.security;
 
+import com.itinordic.interop.exceptions.UnauthorizedApiException;
+import com.itinordic.interop.exceptions.InteropException;
 import com.itinordic.interop.InteropConfig;
 import com.itinordic.interop.util.GeneralUtility;
 import java.io.IOException;
 import javax.annotation.Nonnull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,6 +21,8 @@ import org.springframework.security.core.AuthenticationException;
  * @author Charles Chigoriwa
  */
 public class DhisAuthenticationProvider implements AuthenticationProvider {
+    
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private Environment environment;

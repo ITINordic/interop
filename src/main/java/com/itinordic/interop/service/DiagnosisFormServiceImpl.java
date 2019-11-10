@@ -2,8 +2,6 @@ package com.itinordic.interop.service;
 
 import com.itinordic.interop.criteria.DiagnosisFormPredicateUtil;
 import com.itinordic.interop.criteria.DiagnosisFormSearchDto;
-import com.itinordic.interop.criteria.T9DataElementPredicateUtil;
-import com.itinordic.interop.criteria.T9DataElementSearchDto;
 import com.itinordic.interop.dhis.Event;
 import com.itinordic.interop.entity.DiagnosisForm;
 import com.itinordic.interop.entity.DiagnosisOption;

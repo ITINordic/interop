@@ -6,6 +6,8 @@ import com.itinordic.interop.criteria.T9DataElementPredicateUtil;
 import com.itinordic.interop.entity.DiagnosisOption;
 import com.itinordic.interop.repo.DiagnosisOptionRepository;
 import com.querydsl.core.types.Predicate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DiagnosisOptionServiceImpl implements DiagnosisOptionService {
+    
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private DiagnosisOptionRepository diagnosisOptionRepository;

@@ -1,6 +1,8 @@
 package com.itinordic.interop.security;
 
 
+import com.itinordic.interop.exceptions.ApiException;
+import com.itinordic.interop.exceptions.UnauthorizedApiException;
 import com.itinordic.interop.util.GeneralUtility;
 import java.io.IOException;
 import java.io.InputStream;

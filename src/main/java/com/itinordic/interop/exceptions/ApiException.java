@@ -1,4 +1,4 @@
-package com.itinordic.interop.security;
+package com.itinordic.interop.exceptions;
 
 /**
  *
