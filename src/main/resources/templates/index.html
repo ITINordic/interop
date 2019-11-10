@@ -23,6 +23,25 @@
                 <hr />
 
                 <div class="row">
+                    
+                    
+                    <div class="col-md-4" th:if="${alertChosenButUnmappedOptions}">
+
+                        <div class="panel panel-danger">
+                            <div class="panel-heading"><b><span th:text="${chosenButUnmappedOptionCount}"></span> chosen but unmapped options</b></div>
+                            <div class="panel-body">
+                                
+                                <span style="font-size: 50px; text-align: center; color: grey;" th:text="${chosenButUnmappedOptionCount}"></span>
+
+                                 <div>
+                                    <a class="btn btn-danger" th:href="@{|/admin/diagnosis/options/unmapped/chosen|}"><b>View chosen but unmapped options</b></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
                     <div class="col-md-4" th:if="${alertUnmappedDataElements}">
 
                         <div class="panel panel-warning">

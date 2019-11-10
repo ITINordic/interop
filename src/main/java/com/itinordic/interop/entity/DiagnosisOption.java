@@ -6,10 +6,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -29,6 +27,10 @@ public class DiagnosisOption extends BaseEntity implements Serializable {
     private String dhisName;
     @ManyToMany(mappedBy = "options",fetch = FetchType.EAGER)
     private List<T9DataElement> dataElements;
+    @OneToMany(mappedBy = "diagnosisOption")
+    private List<DiagnosisForm> diagnosisForms;
+
+   
 
     public String getDhisId() {
         return dhisId;
@@ -61,6 +63,16 @@ public class DiagnosisOption extends BaseEntity implements Serializable {
     public void setDataElements(List<T9DataElement> dataElements) {
         this.dataElements = dataElements;
     }
+
+    public List<DiagnosisForm> getDiagnosisForms() {
+        return diagnosisForms;
+    }
+
+    public void setDiagnosisForms(List<DiagnosisForm> diagnosisForms) {
+        this.diagnosisForms = diagnosisForms;
+    }
+    
+    
     
     public boolean hasDataElements(){
         return !GeneralUtility.isEmpty(dataElements);

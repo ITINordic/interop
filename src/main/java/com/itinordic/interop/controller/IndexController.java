@@ -38,12 +38,19 @@ public class IndexController {
         long unmappedOptionCount = diagnosisOptionService.getDiagnosisOptionCount(diagnosisOptionSearchDto);
         long unmappedDiagnosisFormCount = diagnosisFormService.getDiagnosisFormCount(diagnosisFormSearchDto);
         
+        diagnosisOptionSearchDto.setChosen(true);
+        long chosenButUnmappedOptionCount = diagnosisOptionService.getDiagnosisOptionCount(diagnosisOptionSearchDto);
+        
+        
+        
         model.addAttribute("unmappedDataElementCount", unmappedDataElementCount);
         model.addAttribute("alertUnmappedDataElements", unmappedDataElementCount > 0);
         model.addAttribute("unmappedOptionCount", unmappedOptionCount);
         model.addAttribute("alertUnmappedOptions", unmappedOptionCount > 0);
         model.addAttribute("unmappedDiagnosisFormCount", unmappedDiagnosisFormCount);
         model.addAttribute("alertUnmappedDiagnosisForms", unmappedDiagnosisFormCount > 0);
+        model.addAttribute("chosenButUnmappedOptionCount", chosenButUnmappedOptionCount);
+        model.addAttribute("alertChosenButUnmappedOptions", chosenButUnmappedOptionCount > 0);
 
         return "index";
     }
