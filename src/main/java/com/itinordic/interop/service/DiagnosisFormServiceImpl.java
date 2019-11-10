@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.annotation.Nonnull;
+import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +52,14 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
     @Autowired
     private CategoryOptionComboService categoryOptionComboService;
 
+    
+    @Transactional
     @Override
     public List<T9FormElement> computeMappedT9FormElements(DiagnosisForm diagnosisForm) {
         return getMappedT9FormElements(diagnosisForm.getDiagnosisOption(), diagnosisForm.getOutcome(), diagnosisForm.getAge());
     }
 
+    @Transactional
     @Override
     public Page<DiagnosisForm> findDiagnosisForms(DiagnosisFormSearchDto diagnosisFormSearchDto, String orderField, boolean desc, Integer pageSize) {
         Sort.Direction sortDirection = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
@@ -83,6 +87,7 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
         return diagnosisFormRepository.count(predicate);
     }
 
+    @Transactional
     @Override
     @Nonnull
     public Optional<DiagnosisForm> transform(Event event) {

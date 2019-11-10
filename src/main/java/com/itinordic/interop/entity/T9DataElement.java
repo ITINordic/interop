@@ -21,9 +21,7 @@ public class T9DataElement extends BaseEntity implements Serializable {
 
    
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    
     @Column(unique=true,nullable=false)
     private String dhisId;
     @Column(unique=true,nullable=true)
@@ -35,17 +33,6 @@ public class T9DataElement extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "dataElement")
     private List<T9FormElement> formElements;
    
-
-   
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getDhisId() {
         return dhisId;
     }

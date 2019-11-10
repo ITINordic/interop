@@ -21,9 +21,7 @@ import javax.persistence.Temporal;
 public class DiagnosisForm extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+   
     @ManyToOne
     @JoinColumn(nullable = false)
     private DiagnosisOption diagnosisOption;
@@ -50,13 +48,6 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dhisCompletedDate;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public DiagnosisOption getDiagnosisOption() {
         return diagnosisOption;

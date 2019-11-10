@@ -44,7 +44,11 @@ public class GeneralUtility {
         return object == null;
     }
 
-    public static Long parseIdLong(String string) {
+    public static UUID parseIdUuid(String string) {
+       return UUID.fromString(string);
+    }
+    
+    public static Long parseIdLong2(String string) {
         try {
             return Long.parseLong(string);
         } catch (NumberFormatException ex) {

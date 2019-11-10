@@ -12,7 +12,6 @@ import com.itinordic.interop.dhis.DataElement;
 import com.itinordic.interop.dhis.DataSet;
 import com.itinordic.interop.dhis.DataSetElement;
 import com.itinordic.interop.util.GeneralUtility;
-import static com.itinordic.interop.util.GeneralUtility.parseIdLong;
 import com.itinordic.interop.dhis.service.DataSetService;
 import com.itinordic.interop.util.FileDto;
 import static com.itinordic.interop.util.GeneralUtility.encloseCsvString;
@@ -51,6 +50,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import static com.itinordic.interop.util.GeneralUtility.parseIdUuid;
 
 /**
  *
@@ -100,7 +100,7 @@ public class T9DataElementController {
 
     @RequestMapping(value = "/admin/t9/dataElements/{dataElementId}/edit", method = RequestMethod.GET)
     public String initEditT9DataElement(@PathVariable("dataElementId") String dataElementId, Principal principal, Model model) {
-        T9DataElement dataElement = t9DataElementRepository.getOne(parseIdLong(dataElementId));
+        T9DataElement dataElement = t9DataElementRepository.getOne(parseIdUuid(dataElementId));
         model.addAttribute("dataElement", dataElement);
         model.addAttribute("fixedDataElement", dataElement);
         return "t9DataElement/editOptionsForm";
@@ -108,7 +108,7 @@ public class T9DataElementController {
 
     @RequestMapping(value = "/admin/t9/dataElements/{dataElementId}/edit", method = RequestMethod.POST)
     public String processEditT9DataElement(@PathVariable("dataElementId") String dataElementId, @Valid @ModelAttribute("dataElement") T9DataElement dataElement, BindingResult result, Principal principal, Model model) throws IOException {
-        T9DataElement $dataElement = t9DataElementRepository.getOne(parseIdLong(dataElementId));
+        T9DataElement $dataElement = t9DataElementRepository.getOne(parseIdUuid(dataElementId));
         if ($dataElement == null) {
             throw new NonAjaxNotFoundException();
         }
@@ -117,7 +117,7 @@ public class T9DataElementController {
             result.rejectValue("options", "noOptionsCode", "Please select one or more options");
         }
 
-        dataElement.setId(parseIdLong(dataElementId));
+        dataElement.setId(parseIdUuid(dataElementId));
 
         if (result.hasErrors()) {
             model.addAttribute("fixedDataElement", $dataElement);

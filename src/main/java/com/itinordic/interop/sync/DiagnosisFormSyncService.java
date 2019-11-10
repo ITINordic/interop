@@ -6,4 +6,6 @@ package com.itinordic.interop.sync;
  */
 public interface DiagnosisFormSyncService {
     
+    public void syncDiagnosisForms();
+    
 }

@@ -16,23 +16,13 @@ public class DiagnosisOrganizationUnit extends BaseEntity implements Serializabl
 
    
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+   
     @Column(unique=true, nullable=false)
     private String dhisId;
     private String dhisName;
     @Column(unique=true, nullable=true)
     private String dhisCode;
     private String dhisShortName;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getDhisId() {
         return dhisId;

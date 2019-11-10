@@ -9,6 +9,7 @@ import com.itinordic.interop.util.EventList;
 import com.itinordic.interop.util.Pager;
 import java.util.Date;
 import java.util.List;
+import javax.transaction.Transactional;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,12 +32,15 @@ public class EventSyncServiceImpl implements EventSyncService {
     private DiagnosisFormService diagnosisFormService;
     @Autowired
     private EventService eventService;
+    //To enable transaction management
+    private final EventSyncService eventSyncService=this;
 
     @Scheduled(fixedDelay = 60_000, initialDelay = 60_000)
     public void scheduleSyncEvents() {
-        syncEvents();
+        eventSyncService.syncEvents();
     }
 
+    @Transactional
     @Override
     public synchronized void syncEvents() {
         logger.info("Event synchronization started");
@@ -46,7 +50,8 @@ public class EventSyncServiceImpl implements EventSyncService {
         if (maximumDhisLastUpdate == null) {
             lastUpdatedStartDate = DateTime.now().minusYears(100).toDate();
         } else {
-            lastUpdatedStartDate = maximumDhisLastUpdate;
+            int toleranceMillis=2000;
+            lastUpdatedStartDate = new DateTime(maximumDhisLastUpdate).minusMillis(toleranceMillis).toDate();
         }
         lastUpdatedEndDate = new Date();
         routineSync(lastUpdatedStartDate, lastUpdatedEndDate);

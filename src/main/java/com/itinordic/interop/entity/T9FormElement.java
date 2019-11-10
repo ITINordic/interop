@@ -24,23 +24,12 @@ public class T9FormElement extends BaseEntity implements Serializable {
 
     
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    
     @ManyToOne
     private T9DataElement dataElement;    
     private String categoryOptionComboId;
     @ManyToMany(mappedBy = "formElements")
     private List<DiagnosisForm> diagnosisForms;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public T9DataElement getDataElement() {
         return dataElement;

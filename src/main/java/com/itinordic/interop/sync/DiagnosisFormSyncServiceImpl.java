@@ -7,6 +7,7 @@ import com.itinordic.interop.repo.DiagnosisFormRepository;
 import com.itinordic.interop.service.DiagnosisFormService;
 import com.itinordic.interop.util.GeneralUtility;
 import java.util.List;
+import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,21 @@ public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
     private DiagnosisFormService diagnosisFormService;
     @Autowired
     private DiagnosisFormRepository diagnosisFormRepository;
+    //To enable transaction management
+    private final DiagnosisFormSyncService diagnosisFormSyncService=this;
     
 
     @Scheduled(fixedDelay = 60000 * 2, initialDelay = 60000 * 2)
     public void syncDiagnosisFormsWithT9FormElements() {
         logger.info("Diagnosis Forms -> T9 Form Elements synchronization started");
-        int page = 1;
+        diagnosisFormSyncService.syncDiagnosisForms();
+        logger.info("Diagnosis Forms -> T9 Form Elements synchronization ended");
+    }
+    
+    @Transactional
+    @Override
+    public synchronized void syncDiagnosisForms(){
+         int page = 1;
         Page<DiagnosisForm> diagnosisFormPage;
         DiagnosisFormSearchDto diagnosisFormSearchDto=new DiagnosisFormSearchDto(true);
         do {
@@ -46,7 +56,6 @@ public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
                 }
             }
         } while (++page <=  diagnosisFormPage.getTotalPages());
-        logger.info("Diagnosis Forms -> T9 Form Elements synchronization ended");
     }
 
 }

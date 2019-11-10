@@ -1,21 +1,30 @@
 package com.itinordic.interop.entity;
 
+import com.itinordic.interop.dao.UuidIdentifiable;
 import com.itinordic.interop.util.GeneralUtility;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author Charles Chigoriwa
  */
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable{
+public abstract class BaseEntity implements Serializable, UuidIdentifiable{
     
+    
+    @GeneratedValue( generator = "custom-uuid2" )
+    @GenericGenerator( name = "custom-uuid2", strategy = "com.itinordic.interop.dao.CustomUuidGenerator" )
+    @Id
+    protected UUID id;    
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(nullable = false, updatable = false)
     protected Date creationDateTime = new Date();
@@ -28,6 +37,18 @@ public abstract class BaseEntity implements Serializable{
     protected Integer random=new Random().nextInt();
     protected String creatorUserName;
     protected String updatorUserName;
+
+    @Override
+    public UUID getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    
+    
 
     public Date getCreationDateTime() {
         return creationDateTime;
