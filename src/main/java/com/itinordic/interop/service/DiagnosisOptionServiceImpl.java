@@ -2,7 +2,6 @@ package com.itinordic.interop.service;
 
 import com.itinordic.interop.criteria.DiagnosisOptionPredicateUtil;
 import com.itinordic.interop.criteria.DiagnosisOptionSearchDto;
-import com.itinordic.interop.criteria.T9DataElementPredicateUtil;
 import com.itinordic.interop.entity.DiagnosisOption;
 import com.itinordic.interop.repo.DiagnosisOptionRepository;
 import com.querydsl.core.types.Predicate;

@@ -9,6 +9,7 @@ import com.itinordic.interop.util.EventList;
 import com.itinordic.interop.util.Pager;
 import java.util.Date;
 import java.util.List;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class EventSyncServiceImpl implements EventSyncService {
     @Autowired
     private EventService eventService;
 
-    @Scheduled(fixedDelay = 60000, initialDelay = 60000)
+    @Scheduled(fixedDelay = 60_000, initialDelay = 60_000)
     public void scheduleSyncEvents() {
         syncEvents();
     }
@@ -39,33 +40,17 @@ public class EventSyncServiceImpl implements EventSyncService {
     @Override
     public synchronized void syncEvents() {
         logger.info("Event synchronization started");
+        Date lastUpdatedStartDate;
+        Date lastUpdatedEndDate;
         Date maximumDhisLastUpdate = diagnosisFormRepository.getMaximumDhisLastUpdateDate();
         if (maximumDhisLastUpdate == null) {
-            initSync();
+            lastUpdatedStartDate = DateTime.now().minusYears(100).toDate();
         } else {
-            Date lastUpdatedStartDate = maximumDhisLastUpdate;
-            Date lastUpdatedEndDate = new Date();
-            routineSync(lastUpdatedStartDate, lastUpdatedEndDate);
+            lastUpdatedStartDate = maximumDhisLastUpdate;
         }
+        lastUpdatedEndDate = new Date();
+        routineSync(lastUpdatedStartDate, lastUpdatedEndDate);
         logger.info("Event synchronization end");
-    }
-
-    private void initSync() {
-        int page = 1;
-        Pager pager;
-        do {
-            EventList eventList = eventService.getEventList(page);
-            pager = eventList.getPager();
-            List<Event> events = eventList.getEvents();
-            for (Event event : events) {
-                DiagnosisForm diagnosisForm = diagnosisFormService.transform(event).orElse(null);
-                if (diagnosisForm != null) {
-                    diagnosisFormRepository.save(diagnosisForm);
-                }
-
-            }
-
-        } while (++page <= pager.getPageCount());
     }
 
     private void routineSync(Date lastUpdatedStartDate, Date lastUpdatedEndDate) {

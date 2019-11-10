@@ -125,7 +125,6 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
 
         if (t9OrganizationUnit == null) {
             logger.info("T9OrganizationUnit not found for " + diagnosisOrgUnit);
-            return Optional.empty();
         }
 
         double dAge = Double.valueOf(age);
