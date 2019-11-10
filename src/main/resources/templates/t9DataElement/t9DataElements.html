@@ -69,6 +69,7 @@
                             <th>Name</th>
                             <th>Code</th>
                             <th>Options</th>
+                            <th>LU</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
@@ -78,6 +79,7 @@
                             <td th:text="${dataElement.dhisName}"></td>
                             <td th:text="${dataElement.dhisCode}"></td>
                             <td th:text="${dataElement.optionsAsCodes}"></td>
+                            <td th:text="${dataElement.updatorUserName}"></td>
                             <td>
                                 <a  th:href="@{|/admin/t9/formElements/${dataElement.id}/edit|}">Set options</a>
                             </td>

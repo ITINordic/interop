@@ -1,5 +1,6 @@
 package com.itinordic.interop.entity;
 
+import com.itinordic.interop.util.GeneralUtility;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Random;
@@ -24,7 +25,9 @@ public abstract class BaseEntity implements Serializable{
     protected String uuid = UUID.randomUUID().toString();
     protected boolean deleted;
     @Column(updatable = false)
-    private Integer random=new Random().nextInt();
+    protected Integer random=new Random().nextInt();
+    protected String creatorUserName;
+    protected String updatorUserName;
 
     public Date getCreationDateTime() {
         return creationDateTime;
@@ -64,6 +67,30 @@ public abstract class BaseEntity implements Serializable{
 
     public void setRandom(Integer random) {
         this.random = random;
+    }
+
+    public String getCreatorUserName() {
+        return creatorUserName;
+    }
+
+    public void setCreatorUserName(String creatorUserName) {
+        this.creatorUserName = creatorUserName;
+    }
+
+    public String getUpdatorUserName() {
+        return updatorUserName;
+    }
+
+    public void setUpdatorUserName(String updatorUserName) {
+        this.updatorUserName = updatorUserName;
+    }
+    
+    public boolean hasUpdatorUserName(){
+        return !GeneralUtility.isEmpty(updatorUserName);
+    }
+    
+    public boolean hasCreatorUserName(){
+        return !GeneralUtility.isEmpty(creatorUserName);
     }
     
     

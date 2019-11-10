@@ -19,6 +19,10 @@
                     <div>
                         <h3><b><span th:text="${fixedDataElement.dhisName}"></span></b></h3>
                     </div>
+                    
+                    <div style="color: grey;" th:if="${fixedDataElement.hasUpdatorUserName()}">
+                        <span>Last updated by:</span> <span th:text="${fixedDataElement.updatorUserName}"></span>
+                    </div>
 
                     <form role="form" th:object="${dataElement}" method="post">
 

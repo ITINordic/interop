@@ -35,7 +35,7 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     @JoinColumn(nullable = false)
     private DiagnosisOrganizationUnit diagnosisOrgUnit;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = true)
     private T9OrganizationUnit t9OrgUnit;
     @Column(unique = true, nullable = false)
     private String dhisId;

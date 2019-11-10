@@ -124,6 +124,7 @@ public class T9DataElementController {
             return "t9DataElement/editOptionsForm";
         }
         $dataElement.copy(dataElement);
+        $dataElement.setUpdatorUserName(principal.getName());
         t9DataElementRepository.save($dataElement);
         return "redirect:/admin/t9/dataElements";
 
@@ -205,6 +206,7 @@ public class T9DataElementController {
 
                 t9DataElement.setOptions(newDiagnosisOptionList);
                 t9DataElement.setModificationDateTime(new Date());
+                t9DataElement.setUpdatorUserName(principal.getName());
                 t9DataElementRepository.save(t9DataElement);
 
             }
