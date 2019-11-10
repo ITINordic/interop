@@ -5,6 +5,7 @@ import com.itinordic.interop.criteria.T9OrgnUnitSearchDto;
 import com.itinordic.interop.entity.T9OrganizationUnit;
 import com.itinordic.interop.repo.T9OrganizationUnitRepository;
 import com.querydsl.core.types.Predicate;
+import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Charles Chigoriwa
  */
+@Transactional
 @Service
 public class T9OrgnUnitServiceImpl implements T9OrgnUnitService {
     

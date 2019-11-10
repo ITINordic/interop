@@ -5,6 +5,7 @@ import com.itinordic.interop.criteria.DiagnosisOptionSearchDto;
 import com.itinordic.interop.entity.DiagnosisOption;
 import com.itinordic.interop.repo.DiagnosisOptionRepository;
 import com.querydsl.core.types.Predicate;
+import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Charles Chigoriwa
  */
+@Transactional
 @Service
 public class DiagnosisOptionServiceImpl implements DiagnosisOptionService {
     

@@ -4,6 +4,7 @@ import com.itinordic.interop.criteria.DataSetValueSearchDto;
 import com.itinordic.interop.dao.DataSetValueDao;
 import com.itinordic.interop.util.DataSetValueElement;
 import java.util.List;
+import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Charles Chigoriwa
  */
+@Transactional
 @Service
 public class DataSetValueServiceImpl implements DataSetValueService {
     
