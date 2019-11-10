@@ -21,7 +21,7 @@
                     </div>
                     
                     <div style="color: grey;" th:if="${fixedDataElement.hasUpdatorUserName()}">
-                        <span>Last updated by:</span> <span th:text="${fixedDataElement.updatorUserName}"></span>
+                        <span>Last updated by:</span> <b><span th:text="${fixedDataElement.updatorUserName}"></span></b>
                     </div>
 
                     <form role="form" th:object="${dataElement}" method="post">
@@ -44,7 +44,7 @@
 
                        
                         <div class="form-group">
-                            <label><strong>Options*</strong></label>
+                            <label><b>Options*</b></label>
                             <select th:field="*{options}" class="form-control areas-input" multiple="multiple" style="width: 100%;">
                                 <option th:if="${dataElement.hasOptions()}" th:each="option: ${dataElement.options}"  th:value="${option.id}" th:text="${option.dhisName}"></option>
                             </select>

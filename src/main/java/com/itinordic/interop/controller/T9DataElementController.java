@@ -98,7 +98,7 @@ public class T9DataElementController {
 
     }
 
-    @RequestMapping(value = "/admin/t9/formElements/{dataElementId}/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/t9/dataElements/{dataElementId}/edit", method = RequestMethod.GET)
     public String initEditT9DataElement(@PathVariable("dataElementId") String dataElementId, Principal principal, Model model) {
         T9DataElement dataElement = t9DataElementRepository.getOne(parseIdLong(dataElementId));
         model.addAttribute("dataElement", dataElement);
@@ -106,7 +106,7 @@ public class T9DataElementController {
         return "t9DataElement/editOptionsForm";
     }
 
-    @RequestMapping(value = "/admin/t9/formElements/{dataElementId}/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/t9/dataElements/{dataElementId}/edit", method = RequestMethod.POST)
     public String processEditT9DataElement(@PathVariable("dataElementId") String dataElementId, @Valid @ModelAttribute("dataElement") T9DataElement dataElement, BindingResult result, Principal principal, Model model) throws IOException {
         T9DataElement $dataElement = t9DataElementRepository.getOne(parseIdLong(dataElementId));
         if ($dataElement == null) {

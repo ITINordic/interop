@@ -77,6 +77,10 @@ public class DiagnosisOption extends BaseEntity implements Serializable {
         return !GeneralUtility.isEmpty(dataElements);
     }
     
+    public String getLinkStatus(){
+        return hasDataElements()? "linked" : "unlinked";
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

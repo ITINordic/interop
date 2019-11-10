@@ -110,6 +110,10 @@ public class T9DataElement extends BaseEntity implements Serializable {
         return this;
     }
     
+     public String getLinkStatus(){
+        return hasOptions()? "L" : "U";
+    }
+    
     
 
     @Override

@@ -97,7 +97,7 @@ public class DiagnosisOptionController {
         Page<DiagnosisOption> optionsPage = diagnosisOptionService.findDiagnosisOptions(searchDto, "dhisName", false, 10);
         bag.setMore(optionsPage.hasNext());
         for (DiagnosisOption option : optionsPage.getContent()) {
-            bag.add(new Select2Object(option.getId().toString(), option.getDhisName()));
+            bag.add(new Select2Object(option.getId().toString(), option.getDhisName() + " ("+option.getLinkStatus()+")"));
         }
         return bag;
     }
