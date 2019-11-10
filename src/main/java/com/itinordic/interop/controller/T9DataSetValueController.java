@@ -2,11 +2,13 @@ package com.itinordic.interop.controller;
 
 import com.itinordic.interop.criteria.DataSetValueSearchDto;
 import com.itinordic.interop.dao.DataSetValueDao;
+import com.itinordic.interop.service.DataSetValueService;
 import com.itinordic.interop.util.DataSetValueElement;
 import com.itinordic.interop.util.FileDto;
 import com.itinordic.interop.util.GeneralUtility;
 import static com.itinordic.interop.util.GeneralUtility.encloseCsvString;
 import com.itinordic.interop.util.MonthFactory;
+import com.itinordic.interop.util.PageUtil;
 import com.itinordic.interop.util.ReportInput;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -45,10 +48,14 @@ public class T9DataSetValueController {
 
     @Autowired
     private DataSetValueDao dataSetValueDao;
+    @Autowired
+    private DataSetValueService dataSetValueService;
 
     @RequestMapping(value = "/admin/report/t9DataSetValues", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") DataSetValueSearchDto searchDto) {
-        model.addAttribute("dataSetValues", getDataSetValues(searchDto));
+        Page<DataSetValueElement> dataSetValuePage = dataSetValueService.getDataSetValueElements(searchDto,10);
+        model.addAttribute("dataSetValues", dataSetValuePage);
+        PageUtil.injectPageAspects(model,dataSetValuePage);
         return "t9DataSetValue/t9DataSetValues";
     }
 

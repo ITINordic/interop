@@ -13,4 +13,12 @@ public interface DataSetValueDao {
 
     public List<DataSetValueElement> findDataSetValueElements();
 
+    public Long findDataSetValueElementCount(String eventPeriod);
+
+    public Long findDataSetValueElementCount();
+
+    public List<DataSetValueElement> findDataSetValueElements(int pageNumber, int perPage);
+
+    public List<DataSetValueElement> findDataSetValueElements(String eventPeriod, int pageNumber, int perPage);
+
 }
