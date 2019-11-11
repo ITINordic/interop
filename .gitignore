@@ -30,7 +30,7 @@ build/
 ### VS Code ###
 .vscode/
 
-###Output and logs####
+###Output, logs and config####
 output/
-/logs/
 logs/
+config/
