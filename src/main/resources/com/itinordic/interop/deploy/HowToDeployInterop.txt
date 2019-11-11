@@ -25,7 +25,7 @@ cd /etc/interop/interop && sudo git pull
 cd /etc/interop/interop && sudo mvn package
 sudo cp /etc/interop/interop/target/interop-0.0.1-SNAPSHOT.jar /etc/interop
 cd /etc/interop && sudo nohup java -jar interop-0.0.1-SNAPSHOT.jar > ~/interop.log &
-curl -L http://localhost:8080/interop
+curl -L http://localhost:9090/interop
 
 
 

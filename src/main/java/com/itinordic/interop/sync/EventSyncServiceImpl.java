@@ -33,14 +33,13 @@ public class EventSyncServiceImpl implements EventSyncService {
     @Autowired
     private EventService eventService;
     //To enable transaction management
-    private final EventSyncService eventSyncService=this;
+    private final EventSyncService eventSyncService = this;
 
     @Scheduled(fixedDelay = 60_000, initialDelay = 60_000)
     public void scheduleSyncEvents() {
         eventSyncService.syncEvents();
     }
 
-    
     @Override
     public synchronized void syncEvents() {
         logger.info("Event synchronization started");
@@ -50,31 +49,35 @@ public class EventSyncServiceImpl implements EventSyncService {
         if (maximumDhisLastUpdate == null) {
             lastUpdatedStartDate = DateTime.now().minusYears(100).toDate();
         } else {
-            int toleranceMillis=2000;
+            int toleranceMillis = 2000;
             lastUpdatedStartDate = new DateTime(maximumDhisLastUpdate).minusMillis(toleranceMillis).toDate();
         }
         lastUpdatedEndDate = new Date();
-        eventSyncService.routineSync(lastUpdatedStartDate, lastUpdatedEndDate);
+        routineSync(lastUpdatedStartDate, lastUpdatedEndDate);
         logger.info("Event synchronization end");
     }
 
-    @Transactional
-    @Override
-    public void routineSync(Date lastUpdatedStartDate, Date lastUpdatedEndDate) {
+    private void routineSync(Date lastUpdatedStartDate, Date lastUpdatedEndDate) {
         int page = 1;
         Pager pager;
         do {
             EventList eventList = eventService.getEventList(lastUpdatedStartDate, page, lastUpdatedEndDate);
             pager = eventList.getPager();
             List<Event> events = eventList.getEvents();
-            for (Event event : events) {
-                DiagnosisForm diagnosisForm = diagnosisFormService.transform(event).orElse(null);
-                if (diagnosisForm != null) {
-                    diagnosisFormRepository.saveAndFlush(diagnosisForm);
-                }
-
-            }
+            eventSyncService.savePage(events);
         } while (++page <= pager.getPageCount());
+    }
+
+    @Transactional
+    @Override
+    public void savePage(List<Event> events) {
+        for (Event event : events) {
+            DiagnosisForm diagnosisForm = diagnosisFormService.transform(event).orElse(null);
+            if (diagnosisForm != null) {
+                diagnosisFormRepository.saveAndFlush(diagnosisForm);
+            }
+
+        }
     }
 
 }

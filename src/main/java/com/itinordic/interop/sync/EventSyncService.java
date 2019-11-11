@@ -1,6 +1,7 @@
 package com.itinordic.interop.sync;
 
-import java.util.Date;
+import com.itinordic.interop.dhis.Event;
+import java.util.List;
 
 /**
  *
@@ -10,6 +11,6 @@ public interface EventSyncService {
     
     public void syncEvents();
     
-    public void routineSync(Date lastUpdatedStartDate, Date lastUpdatedEndDate);
+    public void savePage(List<Event> events);
     
 }
