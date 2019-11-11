@@ -19,10 +19,9 @@ import org.springframework.stereotype.Service;
  *
  * @author Charles Chigoriwa
  */
-@Transactional
 @Service
 public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
-    
+
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -30,8 +29,7 @@ public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
     @Autowired
     private DiagnosisFormRepository diagnosisFormRepository;
     //To enable transaction management
-    private final DiagnosisFormSyncService diagnosisFormSyncService=this;
-    
+    private final DiagnosisFormSyncService diagnosisFormSyncService = this;
 
     @Scheduled(fixedDelay = 60000 * 2, initialDelay = 60000 * 2)
     public void syncDiagnosisFormsWithT9FormElements() {
@@ -39,24 +37,30 @@ public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
         diagnosisFormSyncService.syncDiagnosisForms();
         logger.info("Diagnosis Forms -> T9 Form Elements synchronization ended");
     }
-    
-    @Transactional
+
     @Override
-    public synchronized void syncDiagnosisForms(){
-         int page = 1;
-        Page<DiagnosisForm> diagnosisFormPage;
-        DiagnosisFormSearchDto diagnosisFormSearchDto=new DiagnosisFormSearchDto(true);
+    public synchronized void syncDiagnosisForms() {
+        int page = 1;
+        int pageCount;
+        DiagnosisFormSearchDto diagnosisFormSearchDto = new DiagnosisFormSearchDto(true);
         do {
             diagnosisFormSearchDto.setPage(String.valueOf(page));
-            diagnosisFormPage = diagnosisFormService.findDiagnosisForms(diagnosisFormSearchDto, "random", true, 50);
-            for (DiagnosisForm diagnosisForm:diagnosisFormPage.getContent()) {
-                List<T9FormElement> t9FormElements = diagnosisFormService.computeMappedT9FormElements(diagnosisForm);
-                if (!GeneralUtility.isEmpty(t9FormElements)) {
-                    diagnosisForm.setFormElements(t9FormElements);
-                    diagnosisFormRepository.saveAndFlush(diagnosisForm);
-                }
+            pageCount = diagnosisFormSyncService.savePage(diagnosisFormSearchDto);
+        } while (++page <= pageCount);
+    }
+
+    @Transactional
+    @Override
+    public int savePage(DiagnosisFormSearchDto diagnosisFormSearchDto) {
+        Page<DiagnosisForm> diagnosisFormPage = diagnosisFormService.findDiagnosisForms(diagnosisFormSearchDto, "random", true, 50);
+        for (DiagnosisForm diagnosisForm : diagnosisFormPage.getContent()) {
+            List<T9FormElement> t9FormElements = diagnosisFormService.computeMappedT9FormElements(diagnosisForm);
+            if (!GeneralUtility.isEmpty(t9FormElements)) {
+                diagnosisForm.setFormElements(t9FormElements);
+                diagnosisFormRepository.saveAndFlush(diagnosisForm);
             }
-        } while (++page <=  diagnosisFormPage.getTotalPages());
+        }
+        return diagnosisFormPage.getTotalPages();
     }
 
 }
