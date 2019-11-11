@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
  *
  * @author Charles Chigoriwa
  */
-@Transactional
 @Service
 public class EventSyncServiceImpl implements EventSyncService {
 
@@ -41,7 +40,7 @@ public class EventSyncServiceImpl implements EventSyncService {
         eventSyncService.syncEvents();
     }
 
-    @Transactional
+    
     @Override
     public synchronized void syncEvents() {
         logger.info("Event synchronization started");
@@ -55,11 +54,13 @@ public class EventSyncServiceImpl implements EventSyncService {
             lastUpdatedStartDate = new DateTime(maximumDhisLastUpdate).minusMillis(toleranceMillis).toDate();
         }
         lastUpdatedEndDate = new Date();
-        routineSync(lastUpdatedStartDate, lastUpdatedEndDate);
+        eventSyncService.routineSync(lastUpdatedStartDate, lastUpdatedEndDate);
         logger.info("Event synchronization end");
     }
 
-    private void routineSync(Date lastUpdatedStartDate, Date lastUpdatedEndDate) {
+    @Transactional
+    @Override
+    public void routineSync(Date lastUpdatedStartDate, Date lastUpdatedEndDate) {
         int page = 1;
         Pager pager;
         do {

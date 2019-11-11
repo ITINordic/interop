@@ -1,5 +1,7 @@
 package com.itinordic.interop.sync;
 
+import java.util.Date;
+
 /**
  *
  * @author Charles Chigoriwa
@@ -7,5 +9,7 @@ package com.itinordic.interop.sync;
 public interface EventSyncService {
     
     public void syncEvents();
+    
+    public void routineSync(Date lastUpdatedStartDate, Date lastUpdatedEndDate);
     
 }
