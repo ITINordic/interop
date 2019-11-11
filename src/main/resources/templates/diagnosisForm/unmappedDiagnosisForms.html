@@ -18,7 +18,7 @@
                 <li class="active">Unmapped</li>
             </ol>
 
-            <h2>Unmapped Diagnosis Forms (IMMIS)</h2>
+            <h2><span class="glyphicon glyphicon-list-alt"></span> Unmapped Diagnosis Forms (IMMIS)</h2>
 
             <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${@utilityService.format(forms.totalElements)}"></span></b></h4>
 
@@ -27,9 +27,9 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Option</th>
-                            <th>OrgUnit</th> 
+                            <th>IMMIS Event ID</th>
+                            <th>IMMIS Diagnosis Option</th>
+                            <th>Mapped T9 OrgUnit ID</th> 
                             <th>Period</th> 
                             <th>Age</th> 
                             <th>Outcome</th> 

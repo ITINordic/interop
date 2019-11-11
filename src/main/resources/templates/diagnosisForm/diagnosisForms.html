@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head th:inline="text">
-        <title>Diagnosis Forms</title>
+        <title>Diagnosis Forms (IMMIS)</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link th:include="imports :: css" th:remove="tag" />
@@ -22,7 +22,7 @@
             </ol>
 
 
-            <h2>Diagnosis Forms (IMMIS)</h2>
+            <h2><span class="glyphicon glyphicon-list-alt"></span> Diagnosis Forms (IMMIS)</h2>
 
             <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${@utilityService.format(forms.totalElements)}"></span></b></h4>
 
@@ -30,9 +30,9 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Option</th>
-                            <th>OrgUnit</th> 
+                            <th>IMMIS Event ID</th>
+                            <th>IMMIS Diagnosis Option</th>
+                            <th>Mapped T9 OrgUnit Id</th> 
                             <th>Period</th> 
                             <th>Age</th> 
                             <th>Outcome</th> 
