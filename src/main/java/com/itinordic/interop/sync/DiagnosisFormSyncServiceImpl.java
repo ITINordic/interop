@@ -53,7 +53,7 @@ public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
                 List<T9FormElement> t9FormElements = diagnosisFormService.computeMappedT9FormElements(diagnosisForm);
                 if (!GeneralUtility.isEmpty(t9FormElements)) {
                     diagnosisForm.setFormElements(t9FormElements);
-                    diagnosisFormRepository.save(diagnosisForm);
+                    diagnosisFormRepository.saveAndFlush(diagnosisForm);
                 }
             }
         } while (++page <=  diagnosisFormPage.getTotalPages());

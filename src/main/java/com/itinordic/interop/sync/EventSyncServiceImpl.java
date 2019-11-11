@@ -69,7 +69,7 @@ public class EventSyncServiceImpl implements EventSyncService {
             for (Event event : events) {
                 DiagnosisForm diagnosisForm = diagnosisFormService.transform(event).orElse(null);
                 if (diagnosisForm != null) {
-                    diagnosisFormRepository.save(diagnosisForm);
+                    diagnosisFormRepository.saveAndFlush(diagnosisForm);
                 }
 
             }
