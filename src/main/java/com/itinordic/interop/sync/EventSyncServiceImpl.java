@@ -2,14 +2,11 @@ package com.itinordic.interop.sync;
 
 import com.itinordic.interop.dhis.Event;
 import com.itinordic.interop.dhis.service.EventService;
-import com.itinordic.interop.entity.DiagnosisForm;
 import com.itinordic.interop.repo.DiagnosisFormRepository;
-import com.itinordic.interop.service.DiagnosisFormService;
 import com.itinordic.interop.util.EventList;
 import com.itinordic.interop.util.Pager;
 import java.util.Date;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,15 +26,13 @@ public class EventSyncServiceImpl implements EventSyncService {
     @Autowired
     private DiagnosisFormRepository diagnosisFormRepository;
     @Autowired
-    private DiagnosisFormService diagnosisFormService;
-    @Autowired
     private EventService eventService;
-    //To enable transaction management
-    private final EventSyncService eventSyncService = this;
+    @Autowired
+    private EventSyncHelper eventSyncHelper;
 
     @Scheduled(fixedDelay = 60_000, initialDelay = 60_000)
     public void scheduleSyncEvents() {
-        eventSyncService.syncEvents();
+       syncEvents();
     }
 
     @Override
@@ -64,20 +59,9 @@ public class EventSyncServiceImpl implements EventSyncService {
             EventList eventList = eventService.getEventList(lastUpdatedStartDate, page, lastUpdatedEndDate);
             pager = eventList.getPager();
             List<Event> events = eventList.getEvents();
-            eventSyncService.savePage(events);
+            eventSyncHelper.saveBatchOfEvents(events);
         } while (++page <= pager.getPageCount());
     }
 
-    @Transactional
-    @Override
-    public void savePage(List<Event> events) {
-        for (Event event : events) {
-            DiagnosisForm diagnosisForm = diagnosisFormService.transform(event).orElse(null);
-            if (diagnosisForm != null) {
-                diagnosisFormRepository.saveAndFlush(diagnosisForm);
-            }
-
-        }
-    }
 
 }

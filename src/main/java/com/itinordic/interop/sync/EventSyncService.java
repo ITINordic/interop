@@ -1,8 +1,5 @@
 package com.itinordic.interop.sync;
 
-import com.itinordic.interop.dhis.Event;
-import java.util.List;
-
 /**
  *
  * @author Charles Chigoriwa
@@ -10,7 +7,5 @@ import java.util.List;
 public interface EventSyncService {
     
     public void syncEvents();
-    
-    public void savePage(List<Event> events);
     
 }

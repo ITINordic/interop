@@ -1,7 +1,5 @@
 package com.itinordic.interop.sync;
 
-import com.itinordic.interop.criteria.DiagnosisFormSearchDto;
-
 /**
  *
  * @author Charles Chigoriwa
@@ -9,7 +7,5 @@ import com.itinordic.interop.criteria.DiagnosisFormSearchDto;
 public interface DiagnosisFormSyncService {
     
     public void syncDiagnosisForms();
-    
-  public int savePage(DiagnosisFormSearchDto diagnosisFormSearchDto);
     
 }
