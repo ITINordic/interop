@@ -10,12 +10,14 @@ CREATE EXTENSION "uuid-ossp";
 # Exit the console and return to your previous user with \q followed by exit.
 ############1.2 CREATE AND RUN EXECUTABLE JAR################################
 sudo mkdir /etc/interop
+sudo mkdir /etc/interop/config
 cd /etc/interop && sudo git clone https://github.com/ITINordic/interop.git
+sudo cp /etc/interop/interop/src/main/resources/application.properties /etc/interop/config
+sudo vi /etc/interop/config/application.properties
 cd /etc/interop/interop && sudo mvn package
 sudo cp /etc/interop/interop/target/interop-0.0.1-SNAPSHOT.jar /etc/interop
 cd /etc/interop && sudo nohup java -jar interop-0.0.1-SNAPSHOT.jar > ~/interop.log &
-curl -L http://localhost:8080/interop
-
+curl -L http://localhost:9090/interop
 #############2.1 REDEPLOYMENT ##########################################
 sudo netstat -peanut | grep 8080
 sudo kill -9 processId
