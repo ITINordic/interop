@@ -13,6 +13,12 @@
         <div class="container">
 
 
+            <ol class="breadcrumb">
+                <li><a th:href="@{|/|}">Interop</a></li>
+                <li class="active">T9 Data Elements</li>
+            </ol>
+
+
             <h2>T9 Data Elements</h2>
 
             <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${dataElements.totalElements}"></span></b></h4>
@@ -47,8 +53,8 @@
                         <button class="btn btn-success"  type="submit">Auto bind options</button>
                     </form>
                 </div>
-                
-                
+
+
 
                 <div class="pull-right" style="margin-right: 20px;">
                     <form th:action="@{/admin/t9/dataElements/bindOptionsFromFile}" method="get">
@@ -56,7 +62,7 @@
                     </form>
                 </div>
             </div>
-            
+
             <div class="clearfix"></div>
             <hr />
 

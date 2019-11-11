@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head th:inline="text">
-        <title>Unmapped Diagnosis Forms</title>
+        <title>Unmapped Diagnosis Forms (IMMIS)</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link th:include="imports :: css" th:remove="tag" />
     </head>
     <body>
-        
-         <div th:include="topNav :: topNav"></div>
-       
+
+        <div th:include="topNav :: topNav"></div>
+
         <div class="container">
 
+            <ol class="breadcrumb">
+                <li><a th:href="@{|/|}">Interop</a></li>
+                <li><a th:href="@{|/admin/diagnosis/forms|}">Diagnosis Forms (IMMIS)</a></li>
+                <li class="active">Unmapped</li>
+            </ol>
 
-            <h2>Unmapped Diagnosis Forms</h2>
-            
-            <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${forms.totalElements}"></span></b></h4>
+            <h2>Unmapped Diagnosis Forms (IMMIS)</h2>
+
+            <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${@utilityService.format(forms.totalElements)}"></span></b></h4>
 
 
             <div th:if="${!forms.content.empty}" style="background: #fff">
@@ -46,6 +51,6 @@
             </div>
 
         </div>
-          <script th:include="imports :: javascript" th:remove="tag"></script>
+        <script th:include="imports :: javascript" th:remove="tag"></script>
     </body>
 </html>

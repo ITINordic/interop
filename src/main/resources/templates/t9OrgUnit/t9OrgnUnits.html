@@ -11,11 +11,16 @@
          <div th:include="topNav :: topNav"></div>
        
         <div class="container">
+            
+            <ol class="breadcrumb">
+                <li><a th:href="@{|/|}">Interop</a></li>
+                <li class="active">T9 Organization Units</li>
+            </ol>
 
 
             <h2>T9 Organization Units</h2>
             
-            <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${organizationUnits.totalElements}"></span></b></h4>
+            <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${@utilityService.format(organizationUnits.totalElements)}"></span></b></h4>
 
              <hr />
 

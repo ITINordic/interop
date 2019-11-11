@@ -16,7 +16,7 @@
             <h2>T9 DataSet Values</h2>
 
             <h4 style="color: grey;">
-                <span>Total:</span> <b><span th:text="${dataSetValues.totalElements}"></span></b>
+                <span>Total:</span> <b><span th:text="${@utilityService.format(dataSetValues.totalElements)}"></span></b>
                 <span>Period:</span> <b><span th:text="${defaultSearchDto.eventPeriod}"></span></b>
             </h4>
 

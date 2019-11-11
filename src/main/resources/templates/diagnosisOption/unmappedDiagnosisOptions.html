@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head th:inline="text">
-        <title>Unmapped Diagnosis Options</title>
+        <title>Unmapped Diagnosis Options (IMMIS)</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link th:include="imports :: css" th:remove="tag" />
     </head>
     <body>
         
-         <div th:include="topNav :: topNav"></div>
+        <div th:include="topNav :: topNav"></div>
        
         <div class="container">
-
-
-            <h2>Unmapped Diagnosis Options</h2>
             
-            <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${options.totalElements}"></span></b></h4>
+            
+            <ol class="breadcrumb">
+                <li><a th:href="@{|/|}">Interop</a></li>
+                <li><a th:href="@{|/admin/diagnosis/options|}">Diagnosis Options</a></li>
+                <li class="active">Unmapped</li>
+            </ol>
+
+
+            <h2>Unmapped Diagnosis Options (IMMIS)</h2>
+            
+            <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${@utilityService.format(options.totalElements)}"></span></b></h4>
 
              <hr />
 

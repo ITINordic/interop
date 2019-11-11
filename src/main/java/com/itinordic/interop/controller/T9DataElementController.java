@@ -51,6 +51,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import static com.itinordic.interop.util.GeneralUtility.parseIdUuid;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -204,6 +206,14 @@ public class T9DataElementController {
                     continue;
                 }
 
+                //Merge options 
+                List<DiagnosisOption> oldDiagnosisOptionList = t9DataElement.getOptions();
+                if (!GeneralUtility.isEmpty(oldDiagnosisOptionList)) {
+                    Set<DiagnosisOption> mergedOptions = new HashSet<>(oldDiagnosisOptionList);
+                    mergedOptions.addAll(newDiagnosisOptionList);
+                    newDiagnosisOptionList = new ArrayList<>(mergedOptions);
+                }
+
                 t9DataElement.setOptions(newDiagnosisOptionList);
                 t9DataElement.setModificationDateTime(new Date());
                 t9DataElement.setUpdatorUserName(principal.getName());
@@ -218,10 +228,10 @@ public class T9DataElementController {
         return "redirect:/admin/t9/dataElements";
 
     }
-    
+
     @RequestMapping(path = "/admin/t9/dataElements/download", method = RequestMethod.GET)
     public ResponseEntity<Resource> downloadDataElements(DataSetValueSearchDto searchDto) throws IOException {
-        FileDto fileDto = getFileDto( dataSetService.getDataSet());
+        FileDto fileDto = getFileDto(dataSetService.getDataSet());
         ByteArrayInputStream bas = new ByteArrayInputStream(fileDto.getContent().getBytes(Charset.forName("UTF-8")));
         Resource resource = new InputStreamResource(bas);
         String fileName = fileDto.getName().replaceAll("\\s+", "");
@@ -232,8 +242,8 @@ public class T9DataElementController {
     }
 
     @RequestMapping(value = "/admin/t9/dataElements/downloadInZip", produces = "application/zip")
-    public void downloadDataElementsInZip(HttpServletResponse response,DataSetValueSearchDto searchDto) throws IOException {
-        FileDto fileDto = getFileDto( dataSetService.getDataSet());
+    public void downloadDataElementsInZip(HttpServletResponse response, DataSetValueSearchDto searchDto) throws IOException {
+        FileDto fileDto = getFileDto(dataSetService.getDataSet());
         response.setStatus(HttpServletResponse.SC_OK);
         response.addHeader("Content-Disposition", "attachment; filename=\"DataElements.zip\"");
 

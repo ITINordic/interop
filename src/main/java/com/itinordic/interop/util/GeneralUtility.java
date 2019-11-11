@@ -45,9 +45,9 @@ public class GeneralUtility {
     }
 
     public static UUID parseIdUuid(String string) {
-       return UUID.fromString(string);
+        return UUID.fromString(string);
     }
-    
+
     public static Long parseIdLong2(String string) {
         try {
             return Long.parseLong(string);

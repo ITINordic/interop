@@ -11,11 +11,19 @@
          <div th:include="topNav :: topNav"></div>
        
         <div class="container">
+            
+            
+            <ol class="breadcrumb">
+                <li><a th:href="@{|/|}">Interop</a></li>
+                <li><a th:href="@{|/admin/diagnosis/options|}">Diagnosis Options</a></li>
+                <li><a th:href="@{|/admin/diagnosis/options/unmapped|}">Unmapped</a></li>
+                <li class="active">Chosen</li>
+            </ol>
 
 
             <h2>Chosen but Unmapped Diagnosis Options</h2>
             
-            <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${options.totalElements}"></span></b></h4>
+            <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${@utilityService.format(options.totalElements)}"></span></b></h4>
 
              <hr />
 

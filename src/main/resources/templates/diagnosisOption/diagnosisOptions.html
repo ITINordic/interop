@@ -7,17 +7,23 @@
         <link th:include="imports :: css" th:remove="tag" />
     </head>
     <body>
-        
-         <div th:include="topNav :: topNav"></div>
-       
+
+        <div th:include="topNav :: topNav"></div>
+
         <div class="container">
 
 
-            <h2>Diagnosis Options</h2>
-            
-            <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${options.totalElements}"></span></b></h4>
+            <ol class="breadcrumb">
+                <li><a th:href="@{|/|}">Interop</a></li>
+                <li class="active">Diagnosis Options</li>
+            </ol>
 
-             <hr />
+
+            <h2>Diagnosis Options</h2>
+
+            <h4 style="color: grey;"><b><span>Total:</span> <span th:text="${@utilityService.format(options.totalElements)}"></span></b></h4>
+
+            <hr />
 
             <form class="form-inline" method="get" th:object="${defaultSearchDto}">
 
@@ -32,12 +38,12 @@
             </form>
 
             <hr />
-            
-            
-            
-            
+
+
+
+
             <div style="margin-bottom: 10px;">
-                
+
                 <form th:action="@{/admin/diagnosis/options/sync}" method="post">
                     <button class="btn btn-primary"  type="submit">Sync Options</button>
                 </form>
@@ -64,7 +70,7 @@
                                     <span th:text="${count.count}"></span><span>)</span><span th:text="${dataElement.dhisName}"></span><span>.</span>
                                 </span>
                             </td>
-                            
+
                         </tr>
                     </tbody>
                 </table>
@@ -73,6 +79,6 @@
             </div>
 
         </div>
-          <script th:include="imports :: javascript" th:remove="tag"></script>
+        <script th:include="imports :: javascript" th:remove="tag"></script>
     </body>
 </html>
