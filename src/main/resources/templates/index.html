@@ -19,35 +19,39 @@
             </div>
 
             <div>
-                 
+
                 <hr />
 
                 <div class="row">
-                    
-                    
+
+
                     <div class="col-md-4" th:if="${alertChosenButUnmappedOptions}">
 
                         <div class="panel panel-danger">
                             <div class="panel-heading"><b><span th:text="${@utilityService.format(chosenButUnmappedOptionCount)}"></span> chosen but unmapped options</b></div>
                             <div class="panel-body">
-                                
+
+                                <span style="font-size: 50px; text-align: center; color: grey;"><span class="glyphicon glyphicon-ok-circle"></span></span>  &nbsp;
+
                                 <span style="font-size: 50px; text-align: center; color: grey;" th:text="${@utilityService.format(chosenButUnmappedOptionCount)}"></span>
 
-                                 <div>
+                                <div>
                                     <a class="btn btn-danger" th:href="@{|/admin/diagnosis/options/unmapped/chosen|}"><b>View chosen but unmapped options</b></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    
-                    
+
+
+
                     <div class="col-md-4" th:if="${alertUnmappedDataElements}">
 
                         <div class="panel panel-warning">
                             <div class="panel-heading"><b><span th:text="${@utilityService.format(unmappedDataElementCount)}"></span> unmapped data elements</b></div>
                             <div class="panel-body">
-                                
+
+                                <span style="font-size: 50px; text-align: center; color: grey;"><span class="glyphicon glyphicon-tags"></span></span>  &nbsp;
+
                                 <span style="font-size: 50px; text-align: center; color: grey;" th:text="${@utilityService.format(unmappedDataElementCount)}"></span>
 
                                 <div>
@@ -56,31 +60,33 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                     <div class="col-md-4" th:if="${alertUnmappedOptions}">
 
                         <div class="panel panel-danger">
                             <div class="panel-heading"><b><span th:text="${@utilityService.format(unmappedOptionCount)}"></span> unmapped options</b></div>
                             <div class="panel-body">
-                                
+
+                                <span style="font-size: 50px; text-align: center; color: grey;"><span class="glyphicon glyphicon-check"></span></span>  &nbsp;
+
                                 <span style="font-size: 50px; text-align: center; color: grey;" th:text="${@utilityService.format(unmappedOptionCount)}"></span>
 
-                                 <div>
+                                <div>
                                     <a class="btn btn-danger" th:href="@{|/admin/diagnosis/options/unmapped|}"><b>View unmapped options</b></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-4" th:if="${alertUnmappedDiagnosisForms}">
 
                         <div class="panel panel-warning">
                             <div class="panel-heading"><b><span th:text="${@utilityService.format(unmappedDiagnosisFormCount)}"></span> unmapped diagnosis forms</b></div>
                             <div class="panel-body">
-                                
-                                <span><i class="fa fa-forms"></i></span>
-                                
+
+                                <span style="font-size: 50px; text-align: center; color: grey;"><span class="glyphicon glyphicon-list-alt"></span></span>  &nbsp;
+
                                 <span style="font-size: 50px; text-align: center; color: grey;" th:text="${@utilityService.format(unmappedDiagnosisFormCount)}"></span>
 
                                 <div>
@@ -89,8 +95,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
 

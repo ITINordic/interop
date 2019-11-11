@@ -20,17 +20,17 @@
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li><a th:href="@{/}"><b><span class="glyphicon glyphicon-upload"></span> Dashboard</b></a></li>
+                            <li><a th:href="@{/}"><b><span class="glyphicon glyphicon-dashboard"></span> Dashboard</b></a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b><span class="glyphicon glyphicon-list-alt"></span> Data</b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b><span class="glyphicon glyphicon-edit"></span> Maintenance</b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a th:href="@{|/admin/diagnosis/organizationUnits|}"><b><span class="glyphicon glyphicon-list-alt"></span> Diagnosis Orgn Units</b></a></li>
-                                    <li><a th:href="@{|/admin/diagnosis/options|}"><b><span class="glyphicon glyphicon-list-alt"></span> Diagnosis Options</b></a></li>
+                                    <li><a th:href="@{|/admin/diagnosis/organizationUnits|}"><b><span class="glyphicon glyphicon-home"></span> Diagnosis Orgn Units</b></a></li>
+                                    <li><a th:href="@{|/admin/diagnosis/options|}"><b><span class="glyphicon glyphicon-ok-circle"></span> Diagnosis Options</b></a></li>
                                     <li><a th:href="@{|/admin/diagnosis/forms|}"><b><span class="glyphicon glyphicon-list-alt"></span> Diagnosis Forms</b></a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a th:href="@{|/admin/t9/organizationUnits|}"><b><span class="glyphicon glyphicon-list-alt"></span> T9 Orgn Units</b></a></li>
-                                    <li><a th:href="@{|/admin/t9/dataElements|}"><b><span class="glyphicon glyphicon-list-alt"></span> T9 Data Elements</b></a></li>
-                                    <li><a th:href="@{|/admin/t9/formElements|}"><b><span class="glyphicon glyphicon-list-alt"></span> T9 Form/DataSet Elements</b></a></li>
+                                    <li><a th:href="@{|/admin/t9/organizationUnits|}"><b><span class="glyphicon glyphicon-home"></span> T9 Orgn Units</b></a></li>
+                                    <li><a th:href="@{|/admin/t9/dataElements|}"><b><span class="glyphicon glyphicon-tags"></span> T9 Data Elements</b></a></li>
+                                    <li><a th:href="@{|/admin/t9/formElements|}"><b><span class="glyphicon glyphicon-tasks"></span> T9 Form/DataSet Elements</b></a></li>
                                     
                                 </ul>
                             </li>
@@ -44,14 +44,14 @@
                             </li>
                             
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b><span class="glyphicon glyphicon-list-alt"></span> Troubleshoot</b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b><span class="glyphicon glyphicon-asterisk"></span> Troubleshoot</b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a th:href="@{|/admin/diagnosis/options/unmapped/chosen|}"><b><span class="glyphicon glyphicon-list-alt"></span> Chosen but unmapped options</b></a></li>
-                                    <li><a th:href="@{|/admin/diagnosis/options/unmapped|}"><b><span class="glyphicon glyphicon-list-alt"></span> Unmapped options</b></a></li>
-                                    <li><a th:href="@{|/admin/t9/dataElements/unmapped|}"><b><span class="glyphicon glyphicon-list-alt"></span> Unmapped data elements</b></a></li>
+                                    <li><a th:href="@{|/admin/diagnosis/options/unmapped/chosen|}"><b><span class="glyphicon glyphicon-ok-circle"></span> Chosen but unmapped options</b></a></li>
+                                    <li><a th:href="@{|/admin/diagnosis/options/unmapped|}"><b><span class="glyphicon glyphicon-check"></span> Unmapped options</b></a></li>
+                                    <li><a th:href="@{|/admin/t9/dataElements/unmapped|}"><b><span class="glyphicon glyphicon-tags"></span> Unmapped data elements</b></a></li>
                                     <li><a th:href="@{|/admin/diagnosis/forms/unmapped|}"><b><span class="glyphicon glyphicon-list-alt"></span> Unmapped diagnosis forms</b></a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a th:href="@{|/admin/logs|}"><b><span class="glyphicon glyphicon-list-alt"></span> System Logs</b></a></li>
+                                    <li><a th:href="@{|/admin/logs|}"><b><span class="glyphicon glyphicon-wrench"></span> System Logs</b></a></li>
                                 </ul>
                             </li>
                             

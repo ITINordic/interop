@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Charles Chigoriwa
  */
+@Transactional
 @Service
 public class EventSyncServiceImpl implements EventSyncService {
 

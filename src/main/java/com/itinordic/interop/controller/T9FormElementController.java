@@ -61,7 +61,7 @@ public class T9FormElementController {
 
     @RequestMapping(value = "/admin/t9/formElements", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") T9FormElementSearchDto searchDto) {
-        Page<T9FormElement> formElementsPage = t9FormElementService.findT9FormElements(searchDto, "id", false, 13);
+        Page<T9FormElement> formElementsPage = t9FormElementService.findT9FormElements(searchDto, "dataElement.dhisName", false, 13);
         model.addAttribute("formElements", formElementsPage);
         PageUtil.injectPageAspects(model, formElementsPage);
         return "t9FormElement/t9FormElements";
