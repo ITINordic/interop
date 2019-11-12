@@ -6,9 +6,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -19,20 +16,19 @@ import javax.persistence.OneToMany;
 @Entity
 public class T9DataElement extends BaseEntity implements Serializable {
 
-   
     private static final long serialVersionUID = 1L;
-    
-    @Column(unique=true,nullable=false)
+
+    @Column(unique = true, nullable = false)
     private String dhisId;
-    @Column(unique=true,nullable=true)
+    @Column(unique = true, nullable = true)
     private String dhisCode;
-    @Column(unique=true,nullable=false)
+    @Column(unique = true, nullable = false)
     private String dhisName;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<DiagnosisOption> options;
-    @OneToMany(mappedBy = "dataElement")
+    @OneToMany(mappedBy = "dataElement", fetch = FetchType.EAGER)
     private List<T9FormElement> formElements;
-   
+
     public String getDhisId() {
         return dhisId;
     }
@@ -72,36 +68,55 @@ public class T9DataElement extends BaseEntity implements Serializable {
     public void setOptions(List<DiagnosisOption> options) {
         this.options = options;
     }
-    
-    
-    
-    public String getOptionsAsCodes(){
-        String string="";
-        if(!GeneralUtility.isEmpty(options)){
-            for(DiagnosisOption option:options){
-                if(!string.isEmpty()){
-                    string+=", ";
+
+    public boolean hasFormElements() {
+        return !GeneralUtility.isEmpty(formElements);
+    }
+
+    public boolean hasSingleFormElement() {
+        return hasFormElements() && formElements.size() == 1;
+    }
+
+    public T9FormElement getFirstFormElement() {
+        return hasFormElements() ? formElements.get(0) : null;
+    }
+
+    public String getOptionsAsCodes() {
+        String string = "";
+        if (!GeneralUtility.isEmpty(options)) {
+            for (DiagnosisOption option : options) {
+                if (!string.isEmpty()) {
+                    string += ", ";
                 }
-                string+=option.getDhisCode();
+                string += option.getDhisCode();
             }
         }
         return string;
     }
-    
-    public boolean hasOptions(){
+
+    public boolean hasOptions() {
         return !GeneralUtility.isEmpty(options);
     }
-    
-    public T9DataElement copy(T9DataElement srcDataElement){
-        this.options=srcDataElement.options;
+
+    public T9DataElement copy(T9DataElement srcDataElement) {
+        this.options = srcDataElement.options;
         return this;
     }
-    
-     public String getLinkStatus(){
-        return hasOptions()? "L" : "U";
+
+    public String getLinkStatus() {
+        return hasOptions() ? "L" : "U";
     }
-    
-    
+
+    public T9FormElement getT9FormElement(String categoryOptionComboId) {
+        if (hasFormElements()) {
+            for (T9FormElement formElement : formElements) {
+                if (formElement.getCategoryOptionComboId().equals(categoryOptionComboId)) {
+                    return formElement;
+                }
+            }
+        }
+        return null;
+    }
 
     @Override
     public int hashCode() {
@@ -123,5 +138,5 @@ public class T9DataElement extends BaseEntity implements Serializable {
     public String toString() {
         return "com.itinordic.interop.entity.T9DataElement[ id=" + id + " ]";
     }
-    
+
 }

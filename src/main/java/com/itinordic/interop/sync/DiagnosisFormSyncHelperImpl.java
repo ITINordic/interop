@@ -10,6 +10,7 @@ import com.itinordic.interop.entity.DiagnosisForm;
 import com.itinordic.interop.entity.T9FormElement;
 import com.itinordic.interop.repo.DiagnosisFormRepository;
 import com.itinordic.interop.service.DiagnosisFormService;
+import com.itinordic.interop.transform.EventToDiagnosisFormTransformer;
 import com.itinordic.interop.util.GeneralUtility;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -30,6 +31,8 @@ public class DiagnosisFormSyncHelperImpl implements DiagnosisFormSyncHelper{
     private DiagnosisFormService diagnosisFormService;
     @Autowired
     private DiagnosisFormRepository diagnosisFormRepository;
+    @Autowired
+    private EventToDiagnosisFormTransformer eventToDiagnosisFormTransformer;
     
     
     @Transactional
@@ -37,7 +40,7 @@ public class DiagnosisFormSyncHelperImpl implements DiagnosisFormSyncHelper{
     public int syncPage(DiagnosisFormSearchDto diagnosisFormSearchDto) {
         Page<DiagnosisForm> diagnosisFormPage = diagnosisFormService.findDiagnosisForms(diagnosisFormSearchDto, "random", true, 50);
         for (DiagnosisForm diagnosisForm : diagnosisFormPage.getContent()) {
-            List<T9FormElement> t9FormElements = diagnosisFormService.computeMappedT9FormElements(diagnosisForm);
+            List<T9FormElement> t9FormElements = eventToDiagnosisFormTransformer.computeMappedT9FormElements(diagnosisForm);
             if (!GeneralUtility.isEmpty(t9FormElements)) {
                 diagnosisForm.setFormElements(t9FormElements);
                 diagnosisFormRepository.saveAndFlush(diagnosisForm);

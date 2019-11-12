@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -47,6 +44,8 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     private Date dhisLastUpdated;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dhisCompletedDate;
+    @Column(nullable=true)
+    private String status;
 
 
     public DiagnosisOption getDiagnosisOption() {
@@ -144,6 +143,16 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
     public void setDhisCompletedDate(Date dhisCompletedDate) {
         this.dhisCompletedDate = dhisCompletedDate;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
     
     
 
