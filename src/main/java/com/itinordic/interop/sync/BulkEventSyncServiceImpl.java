@@ -27,7 +27,7 @@ public class BulkEventSyncServiceImpl implements BulkEventSyncService {
     @Autowired
     private EventSyncHelper eventSyncHelper;
 
-    @Scheduled(fixedDelay = 60_000 * 20, initialDelay = 60_000 * 20)
+    @Scheduled(fixedDelay = 60_000 * 60, initialDelay = 60_000 * 60)
     public void scheduleSyncEvents() {
        syncEvents();
     }
@@ -38,7 +38,7 @@ public class BulkEventSyncServiceImpl implements BulkEventSyncService {
         Date lastUpdatedStartDate=DateTime.now().minusYears(100).toDate();
         Date lastUpdatedEndDate= new Date();
         routineSync(lastUpdatedStartDate, lastUpdatedEndDate);
-        logger.info("Bulk Event Synchronization end");
+        logger.info("Bulk Event Synchronization ended");
     }
 
     private void routineSync(Date lastUpdatedStartDate, Date lastUpdatedEndDate) {

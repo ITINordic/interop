@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  * @author Charles Chigoriwa
  */
 @Service
-public class EventSyncServiceImpl implements EventSyncService {
+public class LiteEventSyncServiceImpl implements LiteEventSyncService {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -37,7 +37,7 @@ public class EventSyncServiceImpl implements EventSyncService {
 
     @Override
     public synchronized void syncEvents() {
-        logger.info("Event synchronization started");
+        logger.info("Lite Event Synchronization started");
         Date lastUpdatedStartDate;
         Date lastUpdatedEndDate;
         Date maximumDhisLastUpdate = diagnosisFormRepository.getMaximumDhisLastUpdateDate();
@@ -49,7 +49,7 @@ public class EventSyncServiceImpl implements EventSyncService {
         }
         lastUpdatedEndDate = new Date();
         routineSync(lastUpdatedStartDate, lastUpdatedEndDate);
-        logger.info("Event synchronization end");
+        logger.info("Lite Event Synchronization ended");
     }
 
     private void routineSync(Date lastUpdatedStartDate, Date lastUpdatedEndDate) {

@@ -3,7 +3,6 @@ package com.itinordic.interop.controller;
 import com.itinordic.interop.criteria.DiagnosisFormSearchDto;
 import com.itinordic.interop.entity.DiagnosisForm;
 import com.itinordic.interop.service.DiagnosisFormService;
-import com.itinordic.interop.sync.EventSyncService;
 import com.itinordic.interop.util.PageUtil;
 import java.io.IOException;
 import java.security.Principal;
@@ -16,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import com.itinordic.interop.sync.LiteEventSyncService;
 
 /**
  *
@@ -29,7 +29,7 @@ public class DiagnosisFormController {
     @Autowired
     private DiagnosisFormService diagnosisFormService;
     @Autowired
-    private EventSyncService eventSyncService;
+    private LiteEventSyncService eventSyncService;
 
     @RequestMapping(value = "/admin/diagnosis/forms", method = RequestMethod.GET)
     public String getAll(Principal principal, Model model, @ModelAttribute("defaultSearchDto") DiagnosisFormSearchDto searchDto) {
