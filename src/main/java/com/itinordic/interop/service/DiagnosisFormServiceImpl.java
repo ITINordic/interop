@@ -2,27 +2,9 @@ package com.itinordic.interop.service;
 
 import com.itinordic.interop.criteria.DiagnosisFormPredicateUtil;
 import com.itinordic.interop.criteria.DiagnosisFormSearchDto;
-import com.itinordic.interop.dhis.Event;
 import com.itinordic.interop.entity.DiagnosisForm;
-import com.itinordic.interop.entity.DiagnosisOption;
-import com.itinordic.interop.entity.DiagnosisOrganizationUnit;
-import com.itinordic.interop.entity.T9DataElement;
-import com.itinordic.interop.entity.T9FormElement;
-import com.itinordic.interop.entity.T9OrganizationUnit;
 import com.itinordic.interop.repo.DiagnosisFormRepository;
-import com.itinordic.interop.repo.DiagnosisOptionRepository;
-import com.itinordic.interop.repo.DiagnosisOrganizationUnitRepository;
-import com.itinordic.interop.repo.T9OrganizationUnitRepository;
-import static com.itinordic.interop.util.DateUtility.parseLongDhisDate;
-import com.itinordic.interop.util.GeneralUtility;
 import com.querydsl.core.types.Predicate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import javax.annotation.Nonnull;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +52,6 @@ public class DiagnosisFormServiceImpl implements DiagnosisFormService {
         if (predicate == null) {
             return diagnosisFormRepository.count();
         }
-
         return diagnosisFormRepository.count(predicate);
     }
 

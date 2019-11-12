@@ -19,7 +19,7 @@ public class DiagnosisFormSyncServiceImpl implements DiagnosisFormSyncService {
     @Autowired
     private DiagnosisFormSyncHelper diagnosisFormSyncHelper;
 
-    @Scheduled(fixedDelay = 60000 * 2, initialDelay = 60000 * 2)
+    @Scheduled(fixedDelay = 60_000 * 2, initialDelay = 60_000 * 2)
     public void syncDiagnosisFormsWithT9FormElements() {
         logger.info("Diagnosis Forms -> T9 Form Elements synchronization started");
         syncDiagnosisForms();

@@ -84,7 +84,7 @@ public class EventToDiagnosisFormTransformerImpl implements EventToDiagnosisForm
         t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisId(diagnosisOrgUnit.getDhisId());
 
         if (t9OrganizationUnit == null) {
-            if (!GeneralUtility.isEmpty(diagnosisOrgUnit.getDhisCode())) {
+            if (diagnosisOrgUnit.hasDhisCode()) {
                 t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisCode(diagnosisOrgUnit.getDhisCode());
             } else {
                 t9OrganizationUnit = t9OrganizationUnitRepository.findByDhisName(diagnosisOrgUnit.getDhisName());

@@ -1,11 +1,9 @@
 package com.itinordic.interop.entity;
 
+import com.itinordic.interop.util.GeneralUtility;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  *
@@ -57,8 +55,9 @@ public class T9OrganizationUnit extends BaseEntity implements Serializable {
         this.dhisShortName = dhisShortName;
     }
     
-    
-
+    public boolean hasDhisCode(){
+        return !GeneralUtility.isEmpty(dhisCode);
+    }
 
     @Override
     public int hashCode() {

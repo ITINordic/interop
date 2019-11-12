@@ -4,7 +4,7 @@ import com.itinordic.interop.criteria.DiagnosisFormSearchDto;
 
 /**
  *
- * @author developer
+ * @author Charles Chigoriwa
  */
 public interface DiagnosisFormSyncHelper {
     
