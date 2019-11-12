@@ -47,6 +47,14 @@
                         <button class="btn btn-primary"  type="submit">Sync Data Elements</button>
                     </form>
                 </div>
+                
+                
+                
+                <div class="pull-right" style="margin-right: 20px;">
+                    <form th:action="@{/admin/t9/dataElements/withOptions/download}" method="get">
+                        <button class="btn btn-info"  type="submit">Download data elements</button>
+                    </form>
+                </div>
 
                 <div class="pull-right" style="margin-right: 20px;">
                     <form th:action="@{/admin/t9/dataElements/autoBindOptions}" method="post">
@@ -61,6 +69,8 @@
                         <button class="btn btn-default"  type="submit">Bind options from File</button>
                     </form>
                 </div>
+                
+                
             </div>
 
             <div class="clearfix"></div>

@@ -51,8 +51,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import static com.itinordic.interop.util.GeneralUtility.parseIdUuid;
+import java.io.ByteArrayOutputStream;
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.poi.ss.usermodel.Cell;
 
 /**
  *
@@ -256,7 +258,37 @@ public class T9DataElementController {
 
     }
 
-    protected FileDto getFileDto(DataSet dataSet) {
+    @RequestMapping(path = "/admin/t9/dataElements/withOptions/download", method = RequestMethod.GET)
+    public ResponseEntity<Resource> downloadDataElementsWithOptions(DataSetValueSearchDto searchDto) throws IOException {
+        Workbook workbook = createDataElementsWorkbook();
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        workbook.write(bao);
+        ByteArrayInputStream bas = new ByteArrayInputStream(bao.toByteArray());
+        Resource resource = new InputStreamResource(bas);
+        String fileName = "DataElementsWithOptions.xlsx";
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .contentType(MediaType.parseMediaType("application/xlsx"))
+                .body(resource);
+    }
+
+    @RequestMapping(value = "/admin/t9/dataElements/withOptions/downloadInZip", produces = "application/zip")
+    public void downloadDataElementsWithOptionsInZip(HttpServletResponse response, DataSetValueSearchDto searchDto) throws IOException {
+        Workbook workbook = createDataElementsWorkbook();
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        workbook.write(bao);
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.addHeader("Content-Disposition", "attachment; filename=\"DataElementsWithOptions.zip\"");
+
+        try (ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream())) {
+            zipOutputStream.putNextEntry(new ZipEntry("DataElementsWithOptions.xlsx"));
+            zipOutputStream.write(bao.toByteArray());
+            zipOutputStream.closeEntry();
+        }
+
+    }
+
+    private FileDto getFileDto(DataSet dataSet) {
 
         FileDto fileDto = new FileDto();
         String fileName = "DataElements" + ".csv";
@@ -295,6 +327,35 @@ public class T9DataElementController {
         printWriter.flush();
         fileDto.setContent(stringWriter.toString());
         return fileDto;
+
+    }
+
+    private Workbook createDataElementsWorkbook() {
+
+        List<T9DataElement> dataElements = t9DataElementRepository.findAll();
+        Workbook workbook = new XSSFWorkbook();
+
+        Sheet sheet = workbook.createSheet("Data Elements");
+        Row header = sheet.createRow(0);
+
+        String[] headers = {"data_element_id", "data_element_name", "linked_options"};
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = header.createCell(i);
+            cell.setCellValue(headers[i]);
+        }
+
+        for (int i = 0; i < dataElements.size(); i++) {
+            Row row = sheet.createRow(i + 1);
+            T9DataElement dataElement = dataElements.get(i);
+
+            String[] data = {dataElement.getDhisId(), dataElement.getDhisName(), dataElement.getOptionsAsCodes()};
+            for (int j = 0; j < data.length; j++) {
+                Cell cell = row.createCell(j);
+                cell.setCellValue(data[j]);
+            }
+        }
+
+        return workbook;
 
     }
 
