@@ -103,7 +103,7 @@ public class T9DataElementController {
     }
 
     @RequestMapping(value = "/admin/t9/dataElements/{dataElementId}/edit", method = RequestMethod.GET)
-    public String initEditT9DataElement(@PathVariable("dataElementId") String dataElementId, Principal principal, Model model) {
+    public String initEditT9DataElement(@PathVariable("dataElementId") String dataElementId, Principal principal, Model model, @ModelAttribute("defaultSearchDto") T9DataElementSearchDto searchDto) {
         T9DataElement dataElement = t9DataElementRepository.getOne(parseIdUuid(dataElementId));
         model.addAttribute("dataElement", dataElement);
         model.addAttribute("fixedDataElement", dataElement);
@@ -111,7 +111,7 @@ public class T9DataElementController {
     }
 
     @RequestMapping(value = "/admin/t9/dataElements/{dataElementId}/edit", method = RequestMethod.POST)
-    public String processEditT9DataElement(@PathVariable("dataElementId") String dataElementId, @Valid @ModelAttribute("dataElement") T9DataElement dataElement, BindingResult result, Principal principal, Model model) throws IOException {
+    public String processEditT9DataElement(@PathVariable("dataElementId") String dataElementId, @Valid @ModelAttribute("dataElement") T9DataElement dataElement, BindingResult result, Principal principal, Model model, @ModelAttribute("defaultSearchDto") T9DataElementSearchDto searchDto) throws IOException {
         T9DataElement $dataElement = t9DataElementRepository.getOne(parseIdUuid(dataElementId));
         if ($dataElement == null) {
             throw new NonAjaxNotFoundException();
@@ -131,7 +131,13 @@ public class T9DataElementController {
         $dataElement.setUpdatorUserName(principal.getName());
         $dataElement.setModificationDateTime(new Date());
         t9DataElementRepository.save($dataElement);
-        return "redirect:/admin/t9/dataElements";
+
+        String urlSuffix = "?q=" + searchDto.getQ() + "&page=" + searchDto.getPageNumber();
+        if (searchDto.srcEquals("unmapped")) {
+            return "redirect:/admin/t9/dataElements/unmapped" + urlSuffix;
+        } else {
+            return "redirect:/admin/t9/dataElements" + urlSuffix;
+        }
 
     }
 

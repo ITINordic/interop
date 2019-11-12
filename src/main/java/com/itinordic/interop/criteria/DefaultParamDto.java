@@ -14,6 +14,7 @@ public class DefaultParamDto {
     private Long loadTime = new Date().getTime();
     private String page = "";
     private boolean deleted = false;
+    private String src;
 
     public String getTab() {
         return tab;
@@ -53,6 +54,22 @@ public class DefaultParamDto {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getSrc() {
+        return src;
+    }
+
+    public void setSrc(String src) {
+        this.src = src;
+    }
+    
+    public boolean hasSrc(){
+        return !GeneralUtility.isEmpty(src);
+    }
+    
+    public boolean srcEquals(String string){
+        return hasSrc() && string.equalsIgnoreCase(src);
     }
 
     public Date getLoadTimeAsDate() {

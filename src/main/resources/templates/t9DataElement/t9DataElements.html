@@ -97,12 +97,12 @@
                             <td th:text="${dataElement.optionsAsCodes}"></td>
                             <td th:text="${dataElement.updatorUserName}"></td>
                             <td>
-                                <a  th:href="@{|/admin/t9/dataElements/${dataElement.id}/edit|}">Set options</a>
+                                <a  th:href="@{|/admin/t9/dataElements/${dataElement.id}/edit|(src='all',page=${defaultSearchDto.pageNumber},q=${defaultSearchDto.q})}">Set options</a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div th:if="${defaultSearchDto.directSearch and dataElements.content.empty}">No Cities found</div>
+                <div th:if="${defaultSearchDto.directSearch and dataElements.content.empty}">No Data Elements found</div>
                 <div th:unless="${dataElements.content.empty}" th:include="pagination :: pagination (baseUrl=@{|~/admin/t9/dataElements|(q=${defaultSearchDto.q},action=${defaultSearchDto.action})})"></div>
             </div>
 

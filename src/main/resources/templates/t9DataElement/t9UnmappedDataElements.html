@@ -57,7 +57,7 @@
                             <td th:text="${dataElement.dhisName}"></td>
                             <td th:text="${dataElement.dhisCode}"></td>
                             <td>
-                                <a  th:href="@{|/admin/t9/dataElements/${dataElement.id}/edit|}">Set options</a>
+                                <a  th:href="@{|/admin/t9/dataElements/${dataElement.id}/edit|(src='unmapped',page=${defaultSearchDto.pageNumber},q=${defaultSearchDto.q})}">Set options</a>
                             </td>
                         </tr>
                     </tbody>
