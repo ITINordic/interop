@@ -1,5 +1,5 @@
 ############1.1 CREATE DATABASE ################################
-# Create a non-privileged user called dhis-fhir by invoking:
+# Create a non-privileged user called interop by invoking:
 sudo -u postgres createuser -SDRP interop
 # Enter interop as password at the prompt. Create a database called interop by invoking:
 sudo -u postgres createdb -O interop interop

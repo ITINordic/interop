@@ -26,7 +26,7 @@ public class T9DataElement extends BaseEntity implements Serializable {
     private String dhisName;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<DiagnosisOption> options;
-    @OneToMany(mappedBy = "dataElement", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dataElement")
     private List<T9FormElement> formElements;
 
     public String getDhisId() {
