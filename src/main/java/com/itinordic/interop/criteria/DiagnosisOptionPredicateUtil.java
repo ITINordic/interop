@@ -14,9 +14,10 @@ public class DiagnosisOptionPredicateUtil {
     public static BooleanExpression getPredicate(DiagnosisOptionSearchDto diagnosisOptionSearchDto) {
         BooleanExpression exp = null;        
          if (diagnosisOptionSearchDto.getQ() != null && !diagnosisOptionSearchDto.getQ().trim().isEmpty()) {
-            BooleanExpression nameExp = QDiagnosisOption.diagnosisOption.dhisName.like("%" + diagnosisOptionSearchDto.getQ().trim() + "%");
-            nameExp = nameExp.or(QDiagnosisOption.diagnosisOption.dhisCode.like("%" + diagnosisOptionSearchDto.getQ().trim() + "%"));
-            nameExp = nameExp.or(QDiagnosisOption.diagnosisOption.dhisId.like("%" + diagnosisOptionSearchDto.getQ().trim() + "%"));
+             String qLike="%" + diagnosisOptionSearchDto.getQ().trim().toLowerCase() + "%";
+            BooleanExpression nameExp = QDiagnosisOption.diagnosisOption.dhisName.toLowerCase().like(qLike);
+            nameExp = nameExp.or(QDiagnosisOption.diagnosisOption.dhisCode.toLowerCase().like(qLike));
+            nameExp = nameExp.or(QDiagnosisOption.diagnosisOption.dhisId.toLowerCase().like(qLike));
             exp = exp != null ? exp.and(nameExp) : nameExp;
         }
          

@@ -12,9 +12,10 @@ public class T9OrgnUnitPredicateUtil {
     public static BooleanExpression getPredicate(T9OrgnUnitSearchDto t9OrgnUnitSearchDto) {
         BooleanExpression exp = null;        
         if (t9OrgnUnitSearchDto.getQ() != null && !t9OrgnUnitSearchDto.getQ().trim().isEmpty()) {
-            BooleanExpression nameExp = QT9OrganizationUnit.t9OrganizationUnit.dhisName.like("%" + t9OrgnUnitSearchDto.getQ().trim() + "%");
-            nameExp = nameExp.or(QT9OrganizationUnit.t9OrganizationUnit.dhisCode.like("%" + t9OrgnUnitSearchDto.getQ().trim() + "%"));
-            nameExp = nameExp.or(QT9OrganizationUnit.t9OrganizationUnit.dhisId.like("%" + t9OrgnUnitSearchDto.getQ().trim() + "%"));
+            String qLike="%" + t9OrgnUnitSearchDto.getQ().trim().toLowerCase() + "%";            
+            BooleanExpression nameExp = QT9OrganizationUnit.t9OrganizationUnit.dhisName.toLowerCase().like(qLike);
+            nameExp = nameExp.or(QT9OrganizationUnit.t9OrganizationUnit.dhisCode.toLowerCase().like(qLike));
+            nameExp = nameExp.or(QT9OrganizationUnit.t9OrganizationUnit.dhisId.toLowerCase().like(qLike));
             exp = exp != null ? exp.and(nameExp) : nameExp;
         }
 

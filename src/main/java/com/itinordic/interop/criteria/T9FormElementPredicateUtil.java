@@ -12,10 +12,11 @@ public class T9FormElementPredicateUtil {
     public static BooleanExpression getPredicate(T9FormElementSearchDto t9FormElementSearchDto) {
         BooleanExpression exp = null;        
         if (t9FormElementSearchDto.getQ() != null && !t9FormElementSearchDto.getQ().trim().isEmpty()) {
-            BooleanExpression nameExp = QT9FormElement.t9FormElement.dataElement.dhisName.like("%" + t9FormElementSearchDto.getQ().trim() + "%");
-            nameExp = nameExp.or(QT9FormElement.t9FormElement.dataElement.dhisCode.like("%" + t9FormElementSearchDto.getQ().trim() + "%"));
-            nameExp = nameExp.or(QT9FormElement.t9FormElement.dataElement.dhisId.like("%" + t9FormElementSearchDto.getQ().trim() + "%"));
-            nameExp = nameExp.or(QT9FormElement.t9FormElement.categoryOptionComboId.like("%" + t9FormElementSearchDto.getQ().trim() + "%"));
+            String qLike="%" + t9FormElementSearchDto.getQ().trim().toLowerCase() + "%";
+            BooleanExpression nameExp = QT9FormElement.t9FormElement.dataElement.dhisName.toLowerCase().like(qLike);
+            nameExp = nameExp.or(QT9FormElement.t9FormElement.dataElement.dhisCode.toLowerCase().like(qLike));
+            nameExp = nameExp.or(QT9FormElement.t9FormElement.dataElement.dhisId.toLowerCase().like(qLike));
+            nameExp = nameExp.or(QT9FormElement.t9FormElement.categoryOptionComboId.toLowerCase().like(qLike));
             exp = exp != null ? exp.and(nameExp) : nameExp;
         }
 

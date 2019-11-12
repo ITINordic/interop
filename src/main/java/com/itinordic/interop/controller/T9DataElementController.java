@@ -127,6 +127,7 @@ public class T9DataElementController {
         }
         $dataElement.copy(dataElement);
         $dataElement.setUpdatorUserName(principal.getName());
+        $dataElement.setModificationDateTime(new Date());
         t9DataElementRepository.save($dataElement);
         return "redirect:/admin/t9/dataElements";
 

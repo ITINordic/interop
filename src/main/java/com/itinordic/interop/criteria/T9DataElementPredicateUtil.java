@@ -13,9 +13,10 @@ public class T9DataElementPredicateUtil {
         BooleanExpression exp = null;
 
         if (dataElementSearchDto.getQ() != null && !dataElementSearchDto.getQ().trim().isEmpty()) {
-            BooleanExpression nameExp = QT9DataElement.t9DataElement.dhisName.like("%" + dataElementSearchDto.getQ().trim() + "%");
-            nameExp = nameExp.or(QT9DataElement.t9DataElement.dhisCode.like("%" + dataElementSearchDto.getQ().trim() + "%"));
-            nameExp = nameExp.or(QT9DataElement.t9DataElement.dhisId.like("%" + dataElementSearchDto.getQ().trim() + "%"));
+            String qLike="%" + dataElementSearchDto.getQ().trim().toLowerCase() + "%";
+            BooleanExpression nameExp = QT9DataElement.t9DataElement.dhisName.toLowerCase().like(qLike);
+            nameExp = nameExp.or(QT9DataElement.t9DataElement.dhisCode.toLowerCase().like(qLike));
+            nameExp = nameExp.or(QT9DataElement.t9DataElement.dhisId.toLowerCase().like(qLike));
             exp = exp != null ? exp.and(nameExp) : nameExp;
         }
 
