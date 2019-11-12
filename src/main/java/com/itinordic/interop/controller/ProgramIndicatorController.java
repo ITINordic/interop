@@ -121,40 +121,40 @@ public class ProgramIndicatorController {
             filter += " and ";
         }
         switch (categoryOptionComboId) {
-            case UNDER_1_A:
+            case A_UNDER_1:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'A' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
                 break;
-            case UNDER_1_C:
+            case C_UNDER_1:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'C' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
                 break;
-            case UNDER_1_D:
+            case D_UNDER_1:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'D' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
                 break;
-            case UNDER_1_T:
+            case T_UNDER_1:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} < 1";
                 break;
-            case _1_TO_4_A:
+            case A_1_TO_4:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'A' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
                 break;
-            case _1_TO_4_C:
+            case C_1_TO_4:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'C' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
                 break;
-            case _1_TO_4_D:
+            case D_1_TO_4:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'D' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
                 break;
-            case _1_TO_4_T:
+            case T_1_TO_4:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 1 and #{HWvCCLjpiWG.bl1Dflv1nag} <= 4";
                 break;
-            case _5_PLUS_A:
+            case A_5_PLUS:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'A' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
                 break;
-            case _5_PLUS_C:
+            case C_5_PLUS:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'C' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
                 break;
-            case _5_PLUS_D:
+            case D_5_PLUS:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'D' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
                 break;
-            case _5_PLUS_T:
+            case T_5_PLUS:
                 filter += "#{HWvCCLjpiWG.emFE351TuNs} == 'T' and #{HWvCCLjpiWG.bl1Dflv1nag} >= 5";
                 break;
             default:

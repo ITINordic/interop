@@ -16,29 +16,29 @@ public class CategoryOptionComboServiceImpl implements CategoryOptionComboServic
     @Override
     public String getCategoryOptionComboId(String outcome, Integer age) {
         if (age < 1 && outcome.equals("A")) {
-            return UNDER_1_A;
+            return A_UNDER_1;
         } else if (age < 1 && outcome.equals("C")) {
-            return UNDER_1_C;
+            return C_UNDER_1;
         } else if (age < 1 && outcome.equals("D")) {
-            return UNDER_1_D;
+            return D_UNDER_1;
         } else if (age < 1 && outcome.equals("T")) {
-            return UNDER_1_T;
+            return T_UNDER_1;
         } else if (age >= 1 && age <= 4 && outcome.equals("A")) {
-            return _1_TO_4_A;
+            return A_1_TO_4;
         } else if (age >= 1 && age <= 4 && outcome.equals("C")) {
-            return _1_TO_4_C;
+            return C_1_TO_4;
         } else if (age >= 1 && age <= 4 && outcome.equals("D")) {
-            return _1_TO_4_D;
+            return D_1_TO_4;
         } else if (age >= 1 && age <= 4 && outcome.equals("T")) {
-            return _1_TO_4_T;
+            return T_1_TO_4;
         } else if (age >= 5 && outcome.equals("A")) {
-            return _5_PLUS_A;
+            return A_5_PLUS;
         } else if (age >= 5 && outcome.equals("C")) {
-            return _5_PLUS_C;
+            return C_5_PLUS;
         } else if (age >= 5 && outcome.equals("D")) {
-            return _5_PLUS_D;
+            return D_5_PLUS;
         } else if (age >= 5 && outcome.equals("T")) {
-            return _5_PLUS_T;
+            return T_5_PLUS;
         }
 
         return null;
@@ -48,11 +48,11 @@ public class CategoryOptionComboServiceImpl implements CategoryOptionComboServic
     @Override
     public String getTotalCategoryOptionComboId(Integer age) {
         if (age < 1) {
-            return UNDER_1_C;
+            return C_UNDER_1;
         } else if (age >= 1 && age <= 4) {
-            return _1_TO_4_C;
+            return C_1_TO_4;
         } else if (age >= 5) {
-            return _5_PLUS_C;
+            return C_5_PLUS;
         }
         return null;
     }
@@ -64,40 +64,40 @@ public class CategoryOptionComboServiceImpl implements CategoryOptionComboServic
             case DEFAULT:
                 suffix = "default";
                 break;
-            case UNDER_1_A:
+            case A_UNDER_1:
                 suffix = "under 1 year with A";
                 break;
-            case UNDER_1_C:
+            case C_UNDER_1:
                 suffix = "under 1 year with C";
                 break;
-            case UNDER_1_D:
+            case D_UNDER_1:
                 suffix = "under 1 year with D";
                 break;
-            case UNDER_1_T:
+            case T_UNDER_1:
                 suffix = "under 1 year with T";
                 break;
-            case _1_TO_4_A:
+            case A_1_TO_4:
                 suffix = "1 to 4 years with A";
                 break;
-            case _1_TO_4_C:
+            case C_1_TO_4:
                 suffix = "1 to 4 years with C";
                 break;
-            case _1_TO_4_D:
+            case D_1_TO_4:
                 suffix = "1 to 4 years with D";
                 break;
-            case _1_TO_4_T:
+            case T_1_TO_4:
                 suffix = "1 to 4 years with T";
                 break;
-            case _5_PLUS_A:
+            case A_5_PLUS:
                 suffix = "5 plus years with A";
                 break;
-            case _5_PLUS_C:
+            case C_5_PLUS:
                 suffix = "5 plus years with C";
                 break;
-            case _5_PLUS_D:
+            case D_5_PLUS:
                 suffix = "5 plus years with D";
                 break;
-            case _5_PLUS_T:
+            case T_5_PLUS:
                 suffix = "5 plus years with T";
                 break;
             default:
