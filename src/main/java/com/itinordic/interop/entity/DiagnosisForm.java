@@ -152,9 +152,9 @@ public class DiagnosisForm extends BaseEntity implements Serializable {
         this.status = status;
     }
     
-    
-    
-    
+    public boolean hasT9OrgUnit(){
+        return t9OrgUnit!=null;
+    }
 
     @Override
     public int hashCode() {

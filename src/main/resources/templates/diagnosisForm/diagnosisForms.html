@@ -42,7 +42,9 @@
                         <tr th:each="form: ${forms}">
                             <td th:text="${form.dhisId}"></td>
                             <td th:text="${form.diagnosisOption.dhisCode}"></td>
-                            <td th:text="${form.t9OrgUnit.dhisId}"></td>
+                            <td>
+                                <span th:if="${form.hasT9OrgUnit()}" th:text="${form.t9OrgUnit.dhisId}"></span>
+                            </td>
                             <td th:text="${form.eventPeriod}"></td>
                             <td th:text="${form.age}"></td>
                             <td th:text="${form.outcome}"></td>
