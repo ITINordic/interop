@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Data Element Option Mapping</title>
+        <title>T9 Data Element and Immis Option Mapping</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link th:include="imports :: css" th:remove="tag" />
@@ -51,7 +51,7 @@
                         </div>
 
                         <div>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary" style="margin-right: 40px;">Save</button>
                             <a th:if="${defaultSearchDto.srcEquals('unmapped')}"  th:href="@{/admin/t9/dataElements/unmapped(page=${defaultSearchDto.pageNumber},q=${defaultSearchDto.q})}" class="btn btn-default">Cancel</a>
                             <a th:unless="${defaultSearchDto.srcEquals('unmapped')}"  th:href="@{/admin/t9/dataElements(page=${defaultSearchDto.pageNumber},q=${defaultSearchDto.q})}" class="btn btn-default">Cancel</a>
                         </div>
