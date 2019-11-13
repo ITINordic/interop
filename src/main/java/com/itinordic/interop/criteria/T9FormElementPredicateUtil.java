@@ -11,7 +11,7 @@ public class T9FormElementPredicateUtil {
 
     public static BooleanExpression getPredicate(T9FormElementSearchDto t9FormElementSearchDto) {
         BooleanExpression exp = null;        
-        if (t9FormElementSearchDto.getQ() != null && !t9FormElementSearchDto.getQ().trim().isEmpty()) {
+        if (t9FormElementSearchDto.hasQ()) {
             String qLike="%" + t9FormElementSearchDto.getQ().trim().toLowerCase() + "%";
             BooleanExpression nameExp = QT9FormElement.t9FormElement.dataElement.dhisName.toLowerCase().like(qLike);
             nameExp = nameExp.or(QT9FormElement.t9FormElement.dataElement.dhisCode.toLowerCase().like(qLike));

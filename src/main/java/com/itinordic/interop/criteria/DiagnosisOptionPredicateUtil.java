@@ -12,25 +12,24 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 public class DiagnosisOptionPredicateUtil {
 
     public static BooleanExpression getPredicate(DiagnosisOptionSearchDto diagnosisOptionSearchDto) {
-        BooleanExpression exp = null;        
-         if (diagnosisOptionSearchDto.getQ() != null && !diagnosisOptionSearchDto.getQ().trim().isEmpty()) {
-             String qLike="%" + diagnosisOptionSearchDto.getQ().trim().toLowerCase() + "%";
+        BooleanExpression exp = null;
+        if (diagnosisOptionSearchDto.hasQ()) {
+            String qLike = "%" + diagnosisOptionSearchDto.getQ().trim().toLowerCase() + "%";
             BooleanExpression nameExp = QDiagnosisOption.diagnosisOption.dhisName.toLowerCase().like(qLike);
             nameExp = nameExp.or(QDiagnosisOption.diagnosisOption.dhisCode.toLowerCase().like(qLike));
             nameExp = nameExp.or(QDiagnosisOption.diagnosisOption.dhisId.toLowerCase().like(qLike));
             exp = exp != null ? exp.and(nameExp) : nameExp;
         }
-         
+
         if (GeneralUtility.isTrue(diagnosisOptionSearchDto.getNoDataElements())) {
             BooleanExpression noDataElementsExp = QDiagnosisOption.diagnosisOption.dataElements.isEmpty();
             exp = exp != null ? exp.and(noDataElementsExp) : noDataElementsExp;
         }
-        
-        if (GeneralUtility.isTrue(diagnosisOptionSearchDto.getChosen())) {
-            BooleanExpression noDataElementsExp = QDiagnosisOption.diagnosisOption.diagnosisForms.isNotEmpty();
-            exp = exp != null ? exp.and(noDataElementsExp) : noDataElementsExp;
-        }
 
+        if (GeneralUtility.isTrue(diagnosisOptionSearchDto.getChosen())) {
+            BooleanExpression chosenExp = QDiagnosisOption.diagnosisOption.diagnosisForms.isNotEmpty();
+            exp = exp != null ? exp.and(chosenExp) : chosenExp;
+        }
 
         return exp;
     }

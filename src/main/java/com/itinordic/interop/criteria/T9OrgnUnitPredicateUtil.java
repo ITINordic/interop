@@ -11,7 +11,7 @@ public class T9OrgnUnitPredicateUtil {
 
     public static BooleanExpression getPredicate(T9OrgnUnitSearchDto t9OrgnUnitSearchDto) {
         BooleanExpression exp = null;        
-        if (t9OrgnUnitSearchDto.getQ() != null && !t9OrgnUnitSearchDto.getQ().trim().isEmpty()) {
+        if (t9OrgnUnitSearchDto.hasQ()) {
             String qLike="%" + t9OrgnUnitSearchDto.getQ().trim().toLowerCase() + "%";            
             BooleanExpression nameExp = QT9OrganizationUnit.t9OrganizationUnit.dhisName.toLowerCase().like(qLike);
             nameExp = nameExp.or(QT9OrganizationUnit.t9OrganizationUnit.dhisCode.toLowerCase().like(qLike));

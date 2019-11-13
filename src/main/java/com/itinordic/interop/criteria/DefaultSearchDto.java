@@ -1,5 +1,7 @@
 package com.itinordic.interop.criteria;
 
+import com.itinordic.interop.util.GeneralUtility;
+
 /**
  *
  * @author Charles Chigoriwa
@@ -27,6 +29,10 @@ public class DefaultSearchDto extends DefaultParamDto {
 
     public void setDirectSearch(boolean directSearch) {
         this.directSearch = directSearch;
+    }
+    
+    public boolean hasQ(){
+        return !GeneralUtility.isEmpty(q);
     }
 
 }

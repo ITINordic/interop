@@ -13,7 +13,7 @@ public class DiagnosisOrgnUnitPredicateUtil {
     public static BooleanExpression getPredicate(DiagnosisOrgnUnitSearchDto diagnosisOrgnUnitSearchDto) {
         BooleanExpression exp = null;    
         
-        if (diagnosisOrgnUnitSearchDto.getQ() != null && !diagnosisOrgnUnitSearchDto.getQ().trim().isEmpty()) {
+        if (diagnosisOrgnUnitSearchDto.hasQ()) {
             String qLike="%" + diagnosisOrgnUnitSearchDto.getQ().trim().toLowerCase() + "%";
             BooleanExpression nameExp = QDiagnosisOrganizationUnit.diagnosisOrganizationUnit.dhisName.toLowerCase().like(qLike);
             nameExp = nameExp.or(QDiagnosisOrganizationUnit.diagnosisOrganizationUnit.dhisCode.toLowerCase().like(qLike));
