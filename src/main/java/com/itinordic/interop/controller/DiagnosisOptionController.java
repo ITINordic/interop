@@ -107,7 +107,12 @@ public class DiagnosisOptionController {
         Page<DiagnosisOption> optionsPage = diagnosisOptionService.findDiagnosisOptions(searchDto, "dhisName", false, 10);
         bag.setMore(optionsPage.hasNext());
         for (DiagnosisOption option : optionsPage.getContent()) {
-            bag.add(new Select2Object(option.getId().toString(), option.getDhisName() + " ("+option.getLinkStatus()+")"));
+            boolean includeStatus=false;
+            String optionName=option.getDhisName();
+            if(includeStatus){
+                optionName+=" ("+option.getLinkStatus()+")";
+            }
+            bag.add(new Select2Object(option.getId().toString(), optionName));
         }
         return bag;
     }
