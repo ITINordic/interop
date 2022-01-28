@@ -15,9 +15,9 @@ sudo -u postgres createdb -O interop interop
 ´´´
 
 Add the uuid extension to the created database by invoking:
-´´´
+```
 sudo -u postgres psql interop
-´´´
+
 
 Enter the following command into the console:
 ´´´
