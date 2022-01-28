@@ -1,9 +1,9 @@
 # interop
 Repository for synchronizing aggregate data between Zimbabwe National Malaria Control Program(immis) and Zimbabwe Health Information System (nhis) 
 
-# how to deploy
+## how to deploy
 
-############1.1 CREATE DATABASE ################################
+### 1.1 CREATE DATABASE
 Create a non-privileged user called interop by invoking:
 ```
 sudo -u postgres createuser -SDRP interop
@@ -25,7 +25,8 @@ CREATE EXTENSION "uuid-ossp";
 ```
 
 Exit the console and return to your previous user with \q followed by exit.
-############1.2 CREATE AND RUN EXECUTABLE JAR#################
+
+### 1.2 CREATE AND RUN EXECUTABLE JAR
 ```
 sudo mkdir /etc/interop
 
@@ -46,7 +47,7 @@ cd /etc/interop && sudo nohup java -jar interop-0.0.1-SNAPSHOT.jar > ~/interop.l
 curl -L http://localhost:9090/interop
 
 ```
-#############2.1 REDEPLOYMENT #################################
+### 2.1 REDEPLOYMENT
 ```
 sudo netstat -peanut | grep 9090
 
